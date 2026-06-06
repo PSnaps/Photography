@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSnaps — Photography</title>
+<title>PSnaps — Photography &amp; Fine Art Prints</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
@@ -208,6 +208,7 @@
     background: var(--mid);
     height: 420px; 
     margin-bottom: 1.2rem;
+    cursor: pointer;
   }
 
   .photo-card img {
@@ -259,6 +260,7 @@
     position: relative;
     overflow: hidden;
     background: var(--dark);
+    cursor: pointer;
   }
 
   @media (min-width: 769px) {
@@ -423,6 +425,186 @@
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* 🖼️ EVOLVED LIGHTBOX WITH PRINT CONFIGURATOR */
+  .lightbox-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10, 10, 8, 0.98);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: 2rem;
+  }
+
+  .lightbox-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+    width: 100%;
+    max-height: 85vh;
+    gap: 4rem;
+    align-items: center;
+    transform: scale(0.97);
+    transition: transform 0.4s ease;
+  }
+
+  .lightbox-modal.open .lightbox-container {
+    transform: scale(1);
+  }
+
+  .lightbox-image-wrapper {
+    flex: 1.2;
+    display: flex;
+    justify-content: center;
+    max-height: 80vh;
+  }
+
+  .lightbox-content {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  }
+
+  .order-panel {
+    flex: 0.8;
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    border-left: 1px solid rgba(200, 184, 154, 0.15);
+    padding-left: 4rem;
+  }
+
+  .order-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .order-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: -1rem;
+  }
+
+  .config-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .config-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .selector-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .selector-btn {
+    background: transparent;
+    border: 1px solid rgba(200, 184, 154, 0.2);
+    color: var(--text-light);
+    padding: 0.75rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .selector-btn span {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .selector-btn:hover {
+    border-color: var(--warm);
+    color: var(--cream);
+  }
+
+  .selector-btn.active {
+    border-color: var(--accent);
+    background: rgba(184, 149, 106, 0.08);
+    color: var(--cream);
+  }
+
+  .selector-btn.active span {
+    color: var(--accent);
+  }
+
+  .checkout-btn {
+    background: var(--accent);
+    color: var(--dark);
+    border: none;
+    padding: 1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .checkout-btn:hover {
+    background: var(--warm);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    background: none;
+    border: none;
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .lightbox-close:hover { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .lightbox-modal { overflow-y: auto; padding: 4rem 1.5rem 2rem; align-items: flex-start; }
+    .lightbox-container { flex-direction: column; max-height: none; gap: 2rem; }
+    .lightbox-image-wrapper { max-height: 50vh; }
+    .lightbox-content { max-height: 50vh; }
+    .order-panel { border-left: none; padding-left: 0; width: 100%; gap: 1.5rem; }
+    .lightbox-close { top: 1rem; right: 1.5rem; }
+  }
+
   @media (max-width: 768px) {
     nav { padding: 1.2rem 1.5rem; }
     .nav-links { display: none; }
@@ -547,11 +729,49 @@
   <span class="footer-copy">&copy; 2026 psnaps.com</span>
 </footer>
 
+<div class="lightbox-modal" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">Close ✕</button>
+  
+  <div class="lightbox-container">
+    <div class="lightbox-image-wrapper">
+      <img src="" alt="Full Resolution View" class="lightbox-content" id="lightboxImg">
+    </div>
+    
+    <div class="order-panel">
+      <div>
+        <h3 class="order-title" id="orderPhotoTitle">Untitled Frame</h3>
+        <p class="order-subtitle">Fine Art Print Edition</p>
+      </div>
+
+      <div class="config-section">
+        <p class="config-label">Select Dimensions</p>
+        <div class="selector-group" id="sizeGroup">
+          <button class="selector-btn active" data-size="8x12" data-price="£45">8 × 12" <span>£45</span></button>
+          <button class="selector-btn" data-size="12x18" data-price="£75">12 × 18" <span>£75</span></button>
+          <button class="selector-btn" data-size="16x24" data-price="£120">16 × 24" <span>£120</span></button>
+          <button class="selector-btn" data-size="24x36" data-price="£195">24 × 36" <span>£195</span></button>
+        </div>
+      </div>
+
+      <div class="config-section">
+        <p class="config-label">Select Presentation</p>
+        <div class="selector-group" id="frameGroup">
+          <button class="selector-btn active" data-style="Print Only" data-add="0">Print Only <span>+£0</span></button>
+          <button class="selector-btn" data-style="Matted Frame (Black)" data-add="40">Matted Black <span>+£40</span></button>
+          <button class="selector-btn" data-style="Matted Frame (Oak)" data-add="45">Matted Oak <span>+£45</span></button>
+          <button class="selector-btn" data-style="Gallery Exhibition Float" data-add="85">Gallery Float <span>+£85</span></button>
+        </div>
+      </div>
+
+      <a href="#" target="_blank" class="checkout-btn" id="inquiryBtn">Inquire About Print</a>
+    </div>
+  </div>
+</div>
+
 <script>
   // ==========================================
-  // ⚙️ AUTOMATED DATA ARCHITECTURE
+  // ⚙️ AUTOMATED DATA ARCHITECTURE INGESTION
   // ==========================================
-  
   function initializeGallery(galleryManifest) {
     // 1. Ingest Hero Background Frame Grid
     const heroContainer = document.getElementById('heroMosaic');
@@ -589,12 +809,20 @@
               ${item.story ? `<p class="slide-story">${item.story}</p>` : ''}
             </div>
           `;
+          
+          slide.addEventListener('click', (e) => {
+            // Prevent triggering lightbox if user clicked specific structural layout elements inside info block
+            if(!e.target.closest('.slide-info')) {
+              openLightbox(item.file, item.title || 'Featured Work');
+            }
+          });
+          
           track.appendChild(slide);
         });
-        // Run Slider Functionality safely if highlights exist
         setupCarousel(total, track);
       } else {
-        document.getElementById('carouselCounter').textContent = "00 / 00";
+        const counter = document.getElementById('carouselCounter');
+        if (counter) counter.textContent = "00 / 00";
       }
     }
 
@@ -619,6 +847,12 @@
             ${item.story ? `<p class="photo-narrative">"${item.story}"</p>` : ''}
           </div>
         `;
+
+        const frame = card.querySelector('.photo-frame');
+        frame.addEventListener('click', () => {
+          openLightbox(item.file, item.label || 'Untitled Frame');
+        });
+
         grid.appendChild(card);
       });
     };
@@ -677,9 +911,82 @@
     resetAuto();
     window.addEventListener('resize', () => goTo(current));
     
-    // Initial display text setup
     if (counter) counter.textContent = '01 / ' + String(total).padStart(2,'0');
   }
+
+  // ==========================================
+  // 🛒 PRINT ORDER PANEL RUNTIME INTERACTIVITY
+  // ==========================================
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const orderTitle = document.getElementById('orderPhotoTitle');
+  const inquiryBtn = document.getElementById('inquiryBtn');
+
+  let selectedSize = "8x12";
+  let selectedStyle = "Print Only";
+  let currentPhotoName = "";
+
+  document.querySelectorAll('#sizeGroup .selector-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#sizeGroup .selector-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSize = btn.getAttribute('data-size');
+      updateMailLink();
+    });
+  });
+
+  document.querySelectorAll('#frameGroup .selector-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#frameGroup .selector-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedStyle = btn.getAttribute('data-style');
+      updateMailLink();
+    });
+  });
+
+  function updateMailLink() {
+    if (!inquiryBtn) return;
+    const recipient = "your-email@example.com"; // ✉️ Keep your preferred professional email here
+    const subject = encodeURIComponent(`PSnaps Print Inquiry: ${currentPhotoName}`);
+    const body = encodeURIComponent(
+      `Hello,\n\nI am interested in acquiring a physical print from your collection.\n\n` +
+      `Photograph: ${currentPhotoName}\n` +
+      `Dimensions: ${selectedSize} inches\n` +
+      `Presentation Style: ${selectedStyle}\n\n` +
+      `Please confirm estimated shipping times and delivery details.\n\nThank you.`
+    );
+    inquiryBtn.href = `mailto:${recipient}?subject=${subject}?&body=${body}`;
+  }
+
+  function openLightbox(imageSrc, photoTitle) {
+    if (!lightbox || !lightboxImg) return;
+    currentPhotoName = photoTitle;
+    if (orderTitle) orderTitle.textContent = photoTitle;
+    
+    lightboxImg.src = imageSrc;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    updateMailLink();
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lightboxImg.src = ''; }, 400);
+  }
+
+  if (lightboxClose) lightboxClose.onclick = closeLightbox;
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
 
   // Fetch the automatic structural manifest generated by python
   fetch('./gallery-data.json')
@@ -696,17 +1003,4 @@
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Global smooth scrolling links anchor logic
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) t.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-</script>
-</body>
-</html>
+  }, { threshold: 0.1
