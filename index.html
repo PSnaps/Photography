@@ -100,6 +100,592 @@
 
   .mosaic-cell { background-size: cover; background-position: center; }
 
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--warm); }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 0.3rem;
+    transition: color 0.3s;
+  }
+
+  section { padding: 6rem 3rem; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(200,184,154,0.12);
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .section-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  .photo-grid-asymmetric { display: grid; gap: 4px; }
+  .grid-series { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); auto-rows: 300px; }
+
+  .photo-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--mid);
+  }
+
+  .photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+    filter: brightness(0.88) contrast(1.05);
+  }
+
+  .photo-card:hover img {
+    transform: scale(1.06);
+    filter: brightness(0.75) contrast(1.08);
+  }
+
+  .photo-card-label {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 2;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,242,236,0.7);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .photo-card:hover .photo-card-label { opacity: 1; transform: translateY(0); }
+
+  #highlights { background: var(--mid); padding: 6rem 0; }
+  #highlights .section-header { padding-left: 3rem; padding-right: 3rem; }
+
+  .carousel-wrapper { position: relative; overflow: hidden; }
+  .carousel-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    height: 580px;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  @media (min-width: 769px) {
+    .carousel-slide { flex: 0 0 calc(50% - 2px); margin-right: 4px; }
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: filter 0.4s;
+  }
+
+  .carousel-slide.active img { filter: brightness(0.95); }
+
+  .slide-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 3rem 2rem 2rem;
+    background: linear-gradient(transparent, rgba(13,13,11,0.85));
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+  }
+
+  .carousel-slide.active .slide-info { transform: translateY(0); }
+
+  .slide-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: var(--cream);
+  }
+
+  .carousel-controls { display: flex; align-items: center; gap: 2rem; padding: 2rem 3rem 0; }
+
+  .carousel-btn {
+    background: none;
+    border: 1px solid rgba(200,184,154,0.25);
+    color: var(--cream);
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .carousel-btn:hover { border-color: var(--accent); background: rgba(184,149,106,0.1); }
+
+  .carousel-progress { display: flex; gap: 6px; flex: 1; }
+
+  .progress-pip {
+    height: 1px;
+    background: rgba(200,184,154,0.2);
+    flex: 1; position: relative; overflow: hidden; cursor: pointer;
+  }
+
+  .progress-pip::after {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--accent);
+    width: 0%; transition: width 0.3s;
+  }
+
+  .progress-pip.active::after { width: 100%; }
+
+  .carousel-counter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200; font-size: 0.75rem;
+    letter-spacing: 0.15em; color: var(--text-muted);
+  }
+
+  .about-strip {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+    padding: 6rem 3rem;
+    border-top: 1px solid rgba(200,184,154,0.08);
+  }
+
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1; margin-bottom: 1.5rem;
+  }
+
+  .about-text h2 em { font-style: italic; color: var(--warm); }
+
+  .about-text p {
+    font-size: 0.95rem; line-height: 1.8;
+    color: var(--text-light); max-width: 420px;
+  }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  .stat-block { background: var(--mid); padding: 2rem; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 3.5rem;
+    line-height: 1; color: var(--cream); margin-bottom: 0.3rem;
+  }
+
+  .stat-num em { font-style: italic; color: var(--accent); }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300; font-size: 0.7rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  footer {
+    border-top: 1px solid rgba(200,184,154,0.08);
+    padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200; font-size: 1.2rem;
+    letter-spacing: 0.35em; color: var(--cream);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-nav { display: flex; gap: 2rem; list-style: none; }
+
+  .footer-nav a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300; font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-nav a:hover { color: var(--cream); }
+
+  .footer-copy { font-size: 0.75rem; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; }
+
+  .section-alt { background: var(--mid); }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 4rem 1.5rem; }
+    .hero h1 { font-size: 3.2rem; }
+    .grid-series { grid-template-columns: 1fr; auto-rows: 280px; gap: 16px; }
+    .about-strip { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">P<span>S</span>NAPS</a>
+  <ul class="nav-links">
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#nature">Nature</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-mosaic" id="heroMosaic"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Photography by psnaps</p>
+    <h1>The world<br>through a <em>different</em><br>lens</h1>
+    <p class="hero-desc">Cities, architecture, and nature — captured with stillness and intention.</p>
+    <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
+  </div>
+</section>
+
+<section id="highlights">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-label">Featured work</p>
+      <h2 class="section-title">Highlights</h2>
+    </div>
+    <span class="section-count" id="highlightCount">0 selected images</span>
+  </div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-btn" id="prevBtn">&#8592;</button>
+    <button class="carousel-btn" id="nextBtn">&#8594;</button>
+    <div class="carousel-progress" id="carouselProgress"></div>
+    <span class="carousel-counter" id="carouselCounter">01 / 01</span>
+  </div>
+</section>
+
+<section id="cities" class="reveal">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Series 01</p>
+      <h2 class="section-title">Cities</h2>
+    </div>
+    <span class="section-count">Urban life &amp; streets</span>
+  </div>
+  <div class="photo-grid-asymmetric grid-series" id="citiesGrid"></div>
+</section>
+
+<section id="architecture" class="section-alt reveal">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Series 02</p>
+      <h2 class="section-title">Architecture</h2>
+    </div>
+    <span class="section-count">Form &amp; structure</span>
+  </div>
+  <div class="photo-grid-asymmetric grid-series" id="archGrid"></div>
+</section>
+
+<section id="nature" class="reveal">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Series 03</p>
+      <h2 class="section-title">Nature</h2>
+    </div>
+    <span class="section-count">Landscape &amp; organic</span>
+  </div>
+  <div class="photo-grid-asymmetric grid-series" id="natureGrid"></div>
+</section>
+
+<div class="about-strip reveal">
+  <div class="about-text">
+    <h2>Every frame<br>tells a <em>story</em></h2>
+    <p>Photography is the art of freezing light into meaning. From the repetitive geometry of urban facades to the quiet chaos of natural landscapes, every image is a conversation between the photographer and the world.</p>
+  </div>
+  <div class="about-stats">
+    <div class="stat-block">
+      <div class="stat-num">12<em>+</em></div>
+      <div class="stat-label">Years shooting</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">40<em>k</em></div>
+      <div class="stat-label">Frames captured</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Core themes</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">30<em>+</em></div>
+      <div class="stat-label">Cities explored</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">P<span>S</span>NAPS</div>
+  <ul class="footer-nav">
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#nature">Nature</a></li>
+  </ul>
+  <span class="footer-copy">&copy; 2026 psnaps.com</span>
+</footer>
+
+<script>
+  // ==========================================
+  // 📸 CONFIGURATION ARRAY: DROP YOUR FILENAMES HERE
+  // ==========================================
+  const galleryManifest = {
+    hero: [
+      { file: 'hero-1.jpg' },
+      { file: 'hero-2.jpg' },
+      { file: 'hero-3.jpg' },
+      { file: 'hero-4.jpg' },
+      { file: 'hero-5.jpg' }
+    ],
+    highlights: [
+      { file: 'highlight-1.jpg', title: 'Midnight Skyline' },
+      { file: 'highlight-2.jpg', title: 'Glass Grid' },
+      { file: 'highlight-3.jpg', title: 'Forest Mist' },
+      { file: 'highlight-4.jpg', title: 'Urban Texture' },
+      { file: 'highlight-5.jpg', title: 'Concentric Forms' }
+    ],
+    cities: [
+      { file: 'cities-1.jpg', label: 'Downtown Grid' },
+      { file: 'cities-2.jpg', label: 'Evening Commute' },
+      { file: 'cities-3.jpg', label: 'Street Shadows' }
+    ],
+    architecture: [
+      { file: 'arch-1.jpg', label: 'Brutalist Form' },
+      { file: 'arch-2.jpg', label: 'Minimalist Void' }
+    ],
+    nature: [
+      { file: 'nature-1.jpg', label: 'Mountain Silhouette' },
+      { file: 'nature-2.jpg', label: 'Misty Woodland' }
+    ]
+  };
+
+  // ==========================================
+  // ⚙️ AUTOMATED LAYOUT GENERATION ENGINE
+  // ==========================================
+  
+  // 1. Build Hero Background Grid
+  const heroContainer = document.getElementById('heroMosaic');
+  galleryManifest.hero.forEach(item => {
+    const cell = document.createElement('div');
+    cell.className = 'mosaic-cell';
+    cell.style.backgroundImage = `url('photos/${item.file}')`;
+    heroContainer.appendChild(cell);
+  });
+
+  // 2. Build Carousel Slides
+  const track = document.getElementById('carouselTrack');
+  const total = galleryManifest.highlights.length;
+  document.getElementById('highlightCount').textContent = `${total} selected images`;
+  
+  galleryManifest.highlights.forEach((item, index) => {
+    const slide = document.createElement('div');
+    slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+    
+    slide.innerHTML = `
+      <img src="photos/${item.file}" alt="${item.title}">
+      <div class="slide-info">
+        <p class="slide-num">${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</p>
+        <h3 class="slide-title">${item.title}</h3>
+      </div>
+    `;
+    track.appendChild(slide);
+  });
+
+  // 3. Build Category Grid Galleries Natively
+  const buildGrid = (dataArray, containerId) => {
+    const grid = document.getElementById(containerId);
+    dataArray.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'photo-card';
+      card.innerHTML = `
+        <img src="photos/${item.file}" alt="${item.label}" loading="lazy">
+        <span class="photo-card-label">${item.label}</span>
+      `;
+      grid.appendChild(card);
+    });
+  };
+
+  buildGrid(galleryManifest.cities, 'citiesGrid');
+  buildGrid(galleryManifest.architecture, 'archGrid');
+  buildGrid(galleryManifest.nature, 'natureGrid');
+
+  // ==========================================
+  // 🎢 CAROUSEL MOVEMENT MECHANICS
+  // ==========================================
+  const slides = track.querySelectorAll('.carousel-slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressEl = document.getElementById('carouselProgress');
+  const counter = document.getElementById('carouselCounter');
+  let current = 0;
+  let autoTimer;
+
+  // Build Progress Bar Pips Dynamically
+  for (let i = 0; i < total; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'progress-pip' + (i === 0 ? ' active' : '');
+    pip.addEventListener('click', () => goTo(i));
+    progressEl.appendChild(pip);
+  }
+
+  function goTo(index) {
+    if(!slides.length) return;
+    slides[current].classList.remove('active');
+    progressEl.children[current].classList.remove('active');
+    current = (index + total) % total;
+    slides[current].classList.add('active');
+    progressEl.children[current].classList.add('active');
+    
+    const isMobile = window.innerWidth <= 768;
+    const shiftMultiplier = isMobile ? 100 : 50;
+    
+    track.style.transform = 'translateX(-' + (current * shiftMultiplier) + '%)';
+    counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+    resetAuto();
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  resetAuto();
+
+  window.addEventListener('resize', () => goTo(current));
+
+  // Intersection Observer Animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth local anchor scrolling
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>    padding: 5rem 3rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,11,0.2) 0%, rgba(13,13,11,0.7) 100%);
+    z-index: 1;
+  }
+
+  .hero-mosaic {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 0.8fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .mosaic-cell { background-size: cover; background-position: center; }
+
   /* Replace these background-colors with background-image: url('your-photo.jpg') */
   .mosaic-cell:nth-child(1) { background-color: #2a2520; }
   .mosaic-cell:nth-child(2) { background-color: #1a1e22; grid-row: span 2; }
