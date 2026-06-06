@@ -206,7 +206,8 @@
     position: relative;
     overflow: hidden;
     background: var(--mid);
-    height: 420px; 
+    height: auto;
+    aspect-ratio: 3 / 2; /* Forces professional, proportional frame boundaries */
     margin-bottom: 1.2rem;
     cursor: pointer;
   }
@@ -612,7 +613,7 @@
     .hero { padding: 4rem 1.5rem; }
     .hero h1 { font-size: 3.2rem; }
     .grid-series { grid-template-columns: 1fr; gap: 3rem; }
-    .photo-frame { height: 320px; }
+    .photo-frame { height: auto; aspect-ratio: 3 / 2; }
     .about-strip { grid-template-columns: 1fr; gap: 3rem; }
     footer { flex-direction: column; gap: 1.5rem; text-align: center; }
   }
@@ -811,7 +812,6 @@
           `;
           
           slide.addEventListener('click', (e) => {
-            // Prevent triggering lightbox if user clicked specific structural layout elements inside info block
             if(!e.target.closest('.slide-info')) {
               openLightbox(item.file, item.title || 'Featured Work');
             }
@@ -947,7 +947,7 @@
 
   function updateMailLink() {
     if (!inquiryBtn) return;
-    const recipient = "your-email@example.com"; // ✉️ Keep your preferred professional email here
+    const recipient = "your-email@example.com"; 
     const subject = encodeURIComponent(`PSnaps Print Inquiry: ${currentPhotoName}`);
     const body = encodeURIComponent(
       `Hello,\n\nI am interested in acquiring a physical print from your collection.\n\n` +
@@ -956,7 +956,8 @@
       `Presentation Style: ${selectedStyle}\n\n` +
       `Please confirm estimated shipping times and delivery details.\n\nThank you.`
     );
-    inquiryBtn.href = `mailto:${recipient}?subject=${subject}?&body=${body}`;
+    // Fixed configuration string mapping boundaries
+    inquiryBtn.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
   }
 
   function openLightbox(imageSrc, photoTitle) {
@@ -1003,4 +1004,17 @@
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Global smooth scrolling links anchor logic
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
