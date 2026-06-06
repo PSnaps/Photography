@@ -4,47 +4,57 @@
   "cities": [
     {
       "file": "photos/cities/IMG_3038.jpg",
-      "label": "Img 3038"
+      "label": "Img 3038",
+      "story": ""
     },
     {
       "file": "photos/cities/IMG_6918-HDR.jpg",
-      "label": "Img 6918 Hdr"
+      "label": "Img 6918 Hdr",
+      "story": ""
     },
     {
       "file": "photos/cities/cities-1.jpg",
-      "label": "Cities 1"
+      "label": "Cities 1",
+      "story": ""
     },
     {
       "file": "photos/cities/cities-2.jpg",
-      "label": "Cities 2"
+      "label": "Cities 2",
+      "story": ""
     }
   ],
   "architecture": [
     {
       "file": "photos/architecture/IMG_6065.jpg",
-      "label": "Img 6065"
+      "label": "Img 6065",
+      "story": ""
     },
     {
-      "file": "photos/architecture/arch-12.jpg",
-      "label": "Arch 12"
+      "file": "photos/architecture/arch-1.jpg",
+      "label": "Arch 1",
+      "story": ""
     },
     {
       "file": "photos/architecture/arch-2.jpg",
-      "label": "Arch 2"
+      "label": "Arch 2",
+      "story": "The throne of St.Peters was a mind boggling view of gold laden throne."
     }
   ],
   "nature": [
     {
       "file": "photos/nature/IMG_4612.jpg",
-      "label": "Img 4612"
+      "label": "Img 4612",
+      "story": ""
     },
     {
       "file": "photos/nature/IMG_4713.jpg",
-      "label": "Img 4713"
+      "label": "Img 4713",
+      "story": ""
     },
     {
       "file": "photos/nature/IMG_6527-HDR.jpg",
-      "label": "Img 6527 Hdr"
+      "label": "Img 6527 Hdr",
+      "story": ""
     }
   ]
 }

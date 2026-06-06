@@ -1,7 +1,6 @@
 import os
 import json
 
-# Define directory mappings
 folders = {
     'architecture': 'photos/architecture',
     'nature': 'photos/nature',
@@ -17,31 +16,59 @@ manifest = {
     'nature': []
 }
 
-valid_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.webp', '.jpg', '.png')
+valid_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
 
 for category, path in folders.items():
     if os.path.exists(path):
-        # Sort files so they display in order
         files = sorted(os.listdir(path))
         for f in files:
-            # Check for valid image types while ignoring system files like .DS_Store
             if f.lower().endswith(valid_extensions) and not f.startswith('.'):
                 full_path = f"{path}/{f}"
+                base_name = os.path.splitext(f)[0]
+                
+                # Check for a matching story file (e.g., IMG_1024.txt)
+                story_path = os.path.join(path, f"{base_name}.txt")
+                story_text = ""
+                
+                if os.path.exists(story_path):
+                    # Smart reading logic to handle encoding conflicts smoothly
+                    try:
+                        with open(story_path, 'r', encoding='utf-8') as sf:
+                            story_text = sf.read().strip()
+                    except UnicodeDecodeError:
+                        try:
+                            # Fallback to UTF-16 if TextEdit saved it with byte markers (0xff)
+                            with open(story_path, 'r', encoding='utf-16') as sf:
+                                story_text = sf.read().strip()
+                        except Exception:
+                            try:
+                                # Safe system fallback for standard legacy text
+                                with open(story_path, 'r', encoding='latin-1') as sf:
+                                    story_text = sf.read().strip()
+                            except Exception as e:
+                                print(f"⚠️ Could not parse story for {f}: {e}")
+                                story_text = ""
+                
+                # Clean up title fallbacks from file name
+                title_clean = base_name.replace('_', ' ').replace('-', ' ').title()
                 
                 if category == 'featured':
-                    # Split images evenly between hero collage and slider highlights
                     if 'hero' in f.lower():
                         manifest['hero'].append({'file': full_path})
                     else:
-                        # Capitalize filename clean for image title text fallback
-                        title_clean = os.path.splitext(f)[0].replace('_', ' ').replace('-', ' ').title()
-                        manifest['highlights'].append({'file': full_path, 'title': title_clean})
+                        manifest['highlights'].append({
+                            'file': full_path, 
+                            'title': title_clean,
+                            'story': story_text
+                        })
                 else:
-                    label_clean = os.path.splitext(f)[0].replace('_', ' ').replace('-', ' ').title()
-                    manifest[category].append({'file': full_path, 'label': label_clean})
+                    manifest[category].append({
+                        'file': full_path, 
+                        'label': title_clean,
+                        'story': story_text
+                    })
 
-# Save the structured file mapping right in your repository root
-with open('gallery-data.json', 'w') as out_file:
-    json.dump(manifest, out_file, indent=2)
+with open('gallery-data.json', 'w', encoding='utf-8') as out_file:
+    json.dump(manifest, out_file, indent=2, ensure_ascii=False)
 
-print("✅ Success! gallery-data.json has been completely rebuilt based on your folder contents.")
+print("✅ Success! gallery-data.json has been completely rebuilt.")
