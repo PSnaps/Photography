@@ -1,7 +1,25 @@
 {
   "hero": [],
   "highlights": [],
-  "cities": [],
-  "architecture": [],
+  "cities": [
+    {
+      "file": "photos/cities/cities-1.jpg",
+      "label": "Cities 1"
+    },
+    {
+      "file": "photos/cities/cities-2.jpg",
+      "label": "Cities 2"
+    }
+  ],
+  "architecture": [
+    {
+      "file": "photos/architecture/arch-12.jpg",
+      "label": "Arch 12"
+    },
+    {
+      "file": "photos/architecture/arch-2.jpg",
+      "label": "Arch 2"
+    }
+  ],
   "nature": []
 }
