@@ -1,58 +1,712 @@
-import os
-import json
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSnaps — Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 
-folders = {
-    'architecture': 'photos/architecture',
-    'nature': 'photos/nature',
-    'cities': 'photos/cities',
-    'featured': 'photos/featured'
-}
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-manifest = {
-    'hero': [],
-    'highlights': [],
-    'cities': [],
-    'architecture': [],
-    'nature': []
-}
+  :root {
+    --cream: #F5F2EC;
+    --dark: #0D0D0B;
+    --mid: #1C1C18;
+    --warm: #C8B89A;
+    --accent: #B8956A;
+    --text-muted: #888880;
+    --text-light: #BBBBA8;
+  }
 
-valid_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
+  html { scroll-behavior: smooth; }
 
-for category, path in folders.items():
-    if os.path.exists(path):
-        files = sorted(os.listdir(path))
-        for f in files:
-            if f.lower().endswith(valid_extensions) and not f.startswith('.'):
-                full_path = f"{path}/{f}"
-                base_name = os.path.splitext(f)[0]
-                
-                # Check for a matching story file (e.g., IMG_1024.txt)
-                story_path = os.path.join(path, f"{base_name}.txt")
-                story_text = ""
-                if os.path.exists(story_path):
-                    with open(story_path, 'r', encoding='utf-8') as sf:
-                        story_text = sf.read().strip()
-                
-                # Clean up title fallbacks from file name
-                title_clean = base_name.replace('_', ' ').replace('-', ' ').title()
-                
-                if category == 'featured':
-                    if 'hero' in f.lower():
-                        manifest['hero'].append({'file': full_path})
-                    else:
-                        manifest['highlights'].append({
-                            'file': full_path, 
-                            'title': title_clean,
-                            'story': story_text
-                        })
-                else:
-                    manifest[category].append({
-                        'file': full_path, 
-                        'label': title_clean,
-                        'story': story_text
-                    })
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
 
-with open('gallery-data.json', 'w', encoding='utf-8') as out_file:
-    json.dump(manifest, out_file, indent=2, ensure_ascii=False)
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(13,13,11,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+  }
 
-print("✅ Success! gallery-data.json has been cleanly updated with image paths and stories.")
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 1.6rem;
+    letter-spacing: 0.35em;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--cream); }
+
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 5rem 3rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,11,0.2) 0%, rgba(13,13,11,0.7) 100%);
+    z-index: 1;
+  }
+
+  .hero-mosaic {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 0.8fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .mosaic-cell { background-size: cover; background-position: center; }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--warm); }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 0.3rem;
+    transition: color 0.3s;
+  }
+
+  section { padding: 6rem 3rem; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(200,184,154,0.12);
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .section-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  .photo-grid-asymmetric { 
+    display: grid; 
+    gap: 3.5rem 2.5rem; 
+  }
+  
+  .grid-series { 
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); 
+  }
+
+  .photo-card {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+  }
+
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--mid);
+    height: 420px; 
+    margin-bottom: 1.2rem;
+  }
+
+  .photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+    filter: brightness(0.9) contrast(1.02);
+  }
+
+  .photo-card:hover .photo-frame img {
+    transform: scale(1.04);
+    filter: brightness(0.82) contrast(1.05);
+  }
+
+  .photo-story-wrapper {
+    padding: 0 0.2rem;
+  }
+
+  .photo-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .photo-narrative {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--text-light);
+    font-weight: 300;
+  }
+
+  #highlights { background: var(--mid); padding: 6rem 0; }
+  #highlights .section-header { padding-left: 3rem; padding-right: 3rem; }
+
+  .carousel-wrapper { position: relative; overflow: hidden; }
+  .carousel-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    height: 580px;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  @media (min-width: 769px) {
+    .carousel-slide { flex: 0 0 calc(50% - 2px); margin-right: 4px; }
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: filter 0.4s;
+  }
+
+  .carousel-slide.active img { filter: brightness(0.95); }
+
+  .slide-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 3rem 2rem 2rem;
+    background: linear-gradient(transparent, rgba(13,13,11,0.95));
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+  }
+
+  .carousel-slide.active .slide-info { transform: translateY(0); }
+
+  .slide-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .slide-story {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-light);
+    font-weight: 300;
+    max-width: 500px;
+  }
+
+  .carousel-controls { display: flex; align-items: center; gap: 2rem; padding: 2rem 3rem 0; }
+
+  .carousel-btn {
+    background: none;
+    border: 1px solid rgba(200,184,154,0.25);
+    color: var(--cream);
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .carousel-btn:hover { border-color: var(--accent); background: rgba(184,149,106,0.1); }
+
+  .carousel-progress { display: flex; gap: 6px; flex: 1; }
+
+  .progress-pip {
+    height: 1px;
+    background: rgba(200,184,154,0.2);
+    flex: 1; position: relative; overflow: hidden; cursor: pointer;
+  }
+
+  .progress-pip::after {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--accent);
+    width: 0%; transition: width 0.3s;
+  }
+
+  .progress-pip.active::after { width: 100%; }
+
+  .carousel-counter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200; font-size: 0.75rem;
+    letter-spacing: 0.15em; color: var(--text-muted);
+  }
+
+  .about-strip {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+    padding: 6rem 3rem;
+    border-top: 1px solid rgba(200,184,154,0.08);
+  }
+
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1; margin-bottom: 1.5rem;
+  }
+
+  .about-text h2 em { font-style: italic; color: var(--warm); }
+
+  .about-text p {
+    font-size: 0.95rem; line-height: 1.8;
+    color: var(--text-light); max-width: 420px;
+  }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  .stat-block { background: var(--mid); padding: 2rem; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 3.5rem;
+    line-height: 1; color: var(--cream); margin-bottom: 0.3rem;
+  }
+
+  .stat-num em { font-style: italic; color: var(--accent); }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300; font-size: 0.7rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  footer {
+    border-top: 1px solid rgba(200,184,154,0.08);
+    padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 200; font-size: 1.2rem;
+    letter-spacing: 0.35em; color: var(--cream);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-nav { display: flex; gap: 2rem; list-style: none; }
+
+  .footer-nav a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300; font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-nav a:hover { color: var(--cream); }
+
+  .footer-copy { font-size: 0.75rem; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; }
+
+  .section-alt { background: var(--mid); }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 4rem 1.5rem; }
+    .hero h1 { font-size: 3.2rem; }
+    .grid-series { grid-template-columns: 1fr; gap: 3rem; }
+    .photo-frame { height: 320px; }
+    .about-strip { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">P<span>S</span>NAPS</a>
+  <ul class="nav-links">
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#nature">Nature</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-mosaic" id="heroMosaic"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Photography by psnaps</p>
+    <h1>The world<br>through a <em>different</em><br>lens</h1>
+    <p class="hero-desc">Cities, architecture, and nature — captured with stillness and intention.</p>
+    <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
+  </div>
+</section>
+
+<section id="highlights">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-label">Featured work</p>
+      <h2 class="section-title">Highlights</h2>
+    </div>
+    <span class="section-count" id="highlightCount">0 images loaded</span>
+  </div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-btn" id="prevBtn">&#8592;</button>
+    <button class="carousel-btn" id="nextBtn">&#8594;</button>
+    <div class="carousel-progress" id="carouselProgress"></div>
+    <span class="carousel-counter" id="carouselCounter">00 / 00</span>
+  </div>
+</section>
+
+<section id="cities" class="reveal">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Series 01</p>
+      <h2 class="section-title">Cities</h2>
+    </div>
+    <span class="section-count">Urban life &amp; streets</span>
+  </div>
+  <div class="photo-grid-asymmetric grid-series" id="citiesGrid"></div>
+</section>
+
+<section id="architecture" class="section-alt reveal">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Series 02</p>
+      <h2 class="section-title">Architecture</h2>
+    </div>
+    <span class="section-count">Form &amp; structure</span>
+  </div>
+  <div class="photo-grid-asymmetric grid-series" id="archGrid"></div>
+</section>
+
+<section id="nature" class="reveal">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Series 03</p>
+      <h2 class="section-title">Nature</h2>
+    </div>
+    <span class="section-count">Landscape &amp; organic</span>
+  </div>
+  <div class="photo-grid-asymmetric grid-series" id="natureGrid"></div>
+</section>
+
+<div class="about-strip reveal">
+  <div class="about-text">
+    <h2>Every frame<br>tells a <em>story</em></h2>
+    <p>Photography is the art of freezing light into meaning. From the repetitive geometry of urban facades to the quiet chaos of natural landscapes, every image is a conversation between the photographer and the world.</p>
+  </div>
+  <div class="about-stats">
+    <div class="stat-block">
+      <div class="stat-num">12<em>+</em></div>
+      <div class="stat-label">Years shooting</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">40<em>k</em></div>
+      <div class="stat-label">Frames captured</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Core themes</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">30<em>+</em></div>
+      <div class="stat-label">Cities explored</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">P<span>S</span>NAPS</div>
+  <ul class="footer-nav">
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#nature">Nature</a></li>
+  </ul>
+  <span class="footer-copy">&copy; 2026 psnaps.com</span>
+</footer>
+
+<script>
+  // ==========================================
+  // ⚙️ AUTOMATED DATA ARCHITECTURE
+  // ==========================================
+  
+  function initializeGallery(galleryManifest) {
+    // 1. Ingest Hero Background Frame Grid
+    const heroContainer = document.getElementById('heroMosaic');
+    if (heroContainer) {
+      heroContainer.innerHTML = '';
+      if (galleryManifest.hero && galleryManifest.hero.length > 0) {
+        galleryManifest.hero.forEach(item => {
+          const cell = document.createElement('div');
+          cell.className = 'mosaic-cell';
+          cell.style.backgroundImage = `url('${item.file}')`;
+          heroContainer.appendChild(cell);
+        });
+      }
+    }
+
+    // 2. Ingest Slide Carousel Layouts
+    const track = document.getElementById('carouselTrack');
+    if (track) {
+      track.innerHTML = '';
+      const highlightsData = galleryManifest.highlights || [];
+      const total = highlightsData.length;
+      
+      const countEl = document.getElementById('highlightCount');
+      if (countEl) countEl.textContent = `${total} selected images`;
+      
+      if (total > 0) {
+        highlightsData.forEach((item, index) => {
+          const slide = document.createElement('div');
+          slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+          slide.innerHTML = `
+            <img src="${item.file}" alt="${item.title || ''}">
+            <div class="slide-info">
+              <p class="slide-num">${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</p>
+              <h3 class="slide-title">${item.title || 'Featured Work'}</h3>
+              ${item.story ? `<p class="slide-story">${item.story}</p>` : ''}
+            </div>
+          `;
+          track.appendChild(slide);
+        });
+        // Run Slider Functionality safely if highlights exist
+        setupCarousel(total, track);
+      } else {
+        document.getElementById('carouselCounter').textContent = "00 / 00";
+      }
+    }
+
+    // 3. Ingest Structural Subfolder Grids Natively with Story Descriptions
+    const buildGrid = (dataArray, containerId) => {
+      const grid = document.getElementById(containerId);
+      if (!grid) return;
+      grid.innerHTML = '';
+      if (!dataArray || dataArray.length === 0) {
+        grid.innerHTML = `<p style="color: var(--text-muted); font-style: italic; padding: 1rem 0.2rem;">Series collection currently staging...</p>`;
+        return;
+      }
+      dataArray.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'photo-card';
+        card.innerHTML = `
+          <div class="photo-frame">
+            <img src="${item.file}" alt="${item.label || 'Frame'}" loading="lazy">
+          </div>
+          <div class="photo-story-wrapper">
+            <h4 class="photo-title">${item.label || 'Untitled'}</h4>
+            ${item.story ? `<p class="photo-narrative">"${item.story}"</p>` : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    };
+
+    buildGrid(galleryManifest.cities, 'citiesGrid');
+    buildGrid(galleryManifest.architecture, 'archGrid');
+    buildGrid(galleryManifest.nature, 'natureGrid');
+  }
+
+  // ==========================================
+  // 🎢 CAROUSEL INTERACTIVE SLIDER MECHANICS
+  // ==========================================
+  function setupCarousel(total, track) {
+    if (total <= 0) return;
+    const slides = track.querySelectorAll('.carousel-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressEl = document.getElementById('carouselProgress');
+    const counter = document.getElementById('carouselCounter');
+    let current = 0;
+    let autoTimer;
+
+    if (progressEl) {
+      progressEl.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const pip = document.createElement('div');
+        pip.className = 'progress-pip' + (i === 0 ? ' active' : '');
+        pip.addEventListener('click', () => goTo(i));
+        progressEl.appendChild(pip);
+      }
+    }
+
+    function goTo(index) {
+      if(!slides.length) return;
+      slides[current].classList.remove('active');
+      if(progressEl && progressEl.children[current]) progressEl.children[current].classList.remove('active');
+      current = (index + total) % total;
+      slides[current].classList.add('active');
+      if(progressEl && progressEl.children[current]) progressEl.children[current].classList.add('active');
+      
+      const isMobile = window.innerWidth <= 768;
+      const shiftMultiplier = isMobile ? 100 : 50;
+      
+      track.style.transform = 'translateX(-' + (current * shiftMultiplier) + '%)';
+      if (counter) counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+      resetAuto();
+    }
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1), 5000);
+    }
+
+    if (prevBtn) prevBtn.onclick = () => goTo(current - 1);
+    if (nextBtn) nextBtn.onclick = () => goTo(current + 1);
+    resetAuto();
+    window.addEventListener('resize', () => goTo(current));
+    
+    // Initial display text setup
+    if (counter) counter.textContent = '01 / ' + String(total).padStart(2,'0');
+  }
+
+  // Fetch the automatic structural manifest generated by python
+  fetch('./gallery-data.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Data file missing');
+      return response.json();
+    })
+    .then(data => initializeGallery(data))
+    .catch(err => {
+      console.error("Run generate.py on your Mac to create gallery-data.json blueprint file", err);
+    });
+
+  // Scroll Reveal Animations Engine
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Global smooth scrolling links anchor logic
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
