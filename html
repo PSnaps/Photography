@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSNAPS // EXHIBITS</title>
+    <style>
+        /* --- MODERN CSS RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0a0a0a;
+            --text-main: #ffffff;
+            --text-muted: #707070;
+            --accent: #a0a0a0;
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- HEADER STRUCTURE --- */
+        header {
+            width: 100%;
+            max-width: 1400px;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .brand-block h1 {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            font-weight: 400;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+        }
+
+        .brand-block p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+        }
+
+        /* --- PURE CSS MASONRY GALLERY --- */
+        main {
+            width: 100%;
+            max-width: 1400px;
+            flex: 1;
+        }
+
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 20px;
+            width: 100%;
+        }
+
+        .gallery-item {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #111;
+            overflow: hidden;
+            break-inside: avoid; /* Prevents images from splitting across columns */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(20%);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+            pointer-events: none; /* Secondary protection against dragging images */
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.02);
+            filter: grayscale(0%);
+        }
+
+        /* --- TRANSPARENT OVERLAY (PROPERTIES FOR PROTECTING IMAGE) --- */
+        .image-shield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0); /* Invisible layer intercepts right-clicks */
+        }
+
+        /* --- FOOTER STRUCTURE --- */
+        footer {
+            width: 100%;
+            max-width: 1400px;
+            margin-top: 80px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 1024px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 15px;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            nav {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+            nav a {
+                margin-left: 0;
+            }
+            .masonry-grid {
+                column-count: 1;
+                column-gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-block">
+            <h1>psnaps.com</h1>
+            <p>File // Exhibits.Studio</p>
+        </div>
+        <nav>
+            <a href="#" class="active">All</a>
+            <a href="#">Geometry</a>
+            <a href="#">Natural Light</a>
+            <a href="https://instagram.com/your_handle_here" target="_blank">Instagram ↗</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="masonry-grid">
+            
+            <div class="gallery-item">
+                <div class="image-shield"></div>
+                <img src="images/geometry1.jpg" alt="Geometric Architecture Study">
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-shield"></div>
+                <img src="images/light1.jpg" alt="Natural Light Contrast Study">
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-shield"></div>
+                <img src="images/street1.jpg" alt="Global Latitudes Framing">
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-shield"></div>
+                <img src="images/geometry2.jpg" alt="Structural Lines Grid">
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-shield"></div>
+                <img src="images/light2.jpg" alt="High Contrast Silhouette">
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-shield"></div>
+                <img src="images/street2.jpg" alt="Urban Shadow Geometry">
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PSNAPS. ALL RIGHTS RESERVED.</p>
+        <p>LOC // 52.4068° N, 1.5197° W</p>
+    </footer>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.classList.contains('image-shield')) {
+                e.preventDefault(); // Prevents right-click 'Save Image As' popup entirely
+            }
+        });
+    </script>
+
+</body>
+</html>
