@@ -193,7 +193,6 @@
   .photo-card {
     position: relative;
     overflow: hidden;
-    cursor: pointer;
     background: var(--mid);
   }
 
@@ -435,7 +434,7 @@
       <p class="section-label">Featured work</p>
       <h2 class="section-title">Highlights</h2>
     </div>
-    <span class="section-count" id="highlightCount">0 selected images</span>
+    <span class="section-count" id="highlightCount">0 images loaded</span>
   </div>
   <div class="carousel-wrapper">
     <div class="carousel-track" id="carouselTrack"></div>
@@ -519,142 +518,136 @@
 
 <script>
   // ==========================================
-  // 📸 CONFIGURATION ARRAY: DROP YOUR FILENAMES HERE
-  // ==========================================
-  const galleryManifest = {
-    hero: [
-      { file: 'hero-1.jpg' },
-      { file: 'hero-2.jpg' },
-      { file: 'hero-3.jpg' },
-      { file: 'hero-4.jpg' },
-      { file: 'hero-5.jpg' }
-    ],
-    highlights: [
-      { file: 'highlight-1.jpg', title: 'Midnight Skyline' },
-      { file: 'highlight-2.jpg', title: 'Glass Grid' },
-      { file: 'highlight-3.jpg', title: 'Forest Mist' },
-      { file: 'highlight-4.jpg', title: 'Urban Texture' },
-      { file: 'highlight-5.jpg', title: 'Concentric Forms' }
-    ],
-    cities: [
-      { file: 'cities-1.jpg', label: 'Downtown Grid' },
-      { file: 'cities-2.jpg', label: 'Evening Commute' },
-      { file: 'cities-3.jpg', label: 'Street Shadows' }
-    ],
-    architecture: [
-      { file: 'arch-1.jpg', label: 'Brutalist Form' },
-      { file: 'arch-2.jpg', label: 'Minimalist Void' }
-    ],
-    nature: [
-      { file: 'nature-1.jpg', label: 'Mountain Silhouette' },
-      { file: 'nature-2.jpg', label: 'Misty Woodland' }
-    ]
-  };
-
-  // ==========================================
-  // ⚙️ AUTOMATED LAYOUT GENERATION ENGINE
+  // ⚙️ AUTOMATED DATA ARCHITECTURE
   // ==========================================
   
-  // 1. Build Hero Background Grid
-  const heroContainer = document.getElementById('heroMosaic');
-  galleryManifest.hero.forEach(item => {
-    const cell = document.createElement('div');
-    cell.className = 'mosaic-cell';
-    cell.style.backgroundImage = `url('photos/${item.file}')`;
-    heroContainer.appendChild(cell);
-  });
+  function initializeGallery(galleryManifest) {
+    // 1. Ingest Hero Background Frame Grid
+    const heroContainer = document.getElementById('heroMosaic');
+    heroContainer.innerHTML = '';
+    if (galleryManifest.hero && galleryManifest.hero.length > 0) {
+      galleryManifest.hero.forEach(item => {
+        const cell = document.createElement('div');
+        cell.className = 'mosaic-cell';
+        cell.style.backgroundImage = `url('${item.file}')`;
+        heroContainer.appendChild(cell);
+      });
+    }
 
-  // 2. Build Carousel Slides
-  const track = document.getElementById('carouselTrack');
-  const total = galleryManifest.highlights.length;
-  document.getElementById('highlightCount').textContent = `${total} selected images`;
-  
-  galleryManifest.highlights.forEach((item, index) => {
-    const slide = document.createElement('div');
-    slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+    // 2. Ingest Slide Carousel Layouts
+    const track = document.getElementById('carouselTrack');
+    track.innerHTML = '';
+    const highlightsData = galleryManifest.highlights || [];
+    const total = highlightsData.length;
+    document.getElementById('highlightCount').textContent = `${total} selected images`;
     
-    slide.innerHTML = `
-      <img src="photos/${item.file}" alt="${item.title}">
-      <div class="slide-info">
-        <p class="slide-num">${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</p>
-        <h3 class="slide-title">${item.title}</h3>
-      </div>
-    `;
-    track.appendChild(slide);
-  });
-
-  // 3. Build Category Grid Galleries Natively
-  const buildGrid = (dataArray, containerId) => {
-    const grid = document.getElementById(containerId);
-    dataArray.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'photo-card';
-      card.innerHTML = `
-        <img src="photos/${item.file}" alt="${item.label}" loading="lazy">
-        <span class="photo-card-label">${item.label}</span>
+    highlightsData.forEach((item, index) => {
+      const slide = document.createElement('div');
+      slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+      slide.innerHTML = `
+        <img src="${item.file}" alt="${item.title || ''}">
+        <div class="slide-info">
+          <p class="slide-num">${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</p>
+          <h3 class="slide-title">${item.title || 'Featured Work'}</h3>
+        </div>
       `;
-      grid.appendChild(card);
+      track.appendChild(slide);
     });
-  };
 
-  buildGrid(galleryManifest.cities, 'citiesGrid');
-  buildGrid(galleryManifest.architecture, 'archGrid');
-  buildGrid(galleryManifest.nature, 'natureGrid');
+    // 3. Ingest Structural Subfolder Grids Natively
+    const buildGrid = (dataArray, containerId, defaultLabel) => {
+      const grid = document.getElementById(containerId);
+      if (!grid || !dataArray) return;
+      grid.innerHTML = '';
+      dataArray.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'photo-card';
+        card.innerHTML = `
+          <img src="${item.file}" alt="${item.label || defaultLabel}" loading="lazy">
+          <span class="photo-card-label">${item.label || defaultLabel}</span>
+        `;
+        grid.appendChild(card);
+      });
+    };
 
-  // ==========================================
-  // 🎢 CAROUSEL MOVEMENT MECHANICS
-  // ==========================================
-  const slides = track.querySelectorAll('.carousel-slide');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const progressEl = document.getElementById('carouselProgress');
-  const counter = document.getElementById('carouselCounter');
-  let current = 0;
-  let autoTimer;
+    buildGrid(galleryManifest.cities, 'citiesGrid', 'Urban');
+    buildGrid(galleryManifest.architecture, 'archGrid', 'Structure');
+    buildGrid(galleryManifest.nature, 'natureGrid', 'Landscape');
 
-  // Build Progress Bar Pips Dynamically
-  for (let i = 0; i < total; i++) {
-    const pip = document.createElement('div');
-    pip.className = 'progress-pip' + (i === 0 ? ' active' : '');
-    pip.addEventListener('click', () => goTo(i));
-    progressEl.appendChild(pip);
+    // Run Slider Functionality
+    setupCarousel(total, track);
   }
 
-  function goTo(index) {
-    if(!slides.length) return;
-    slides[current].classList.remove('active');
-    progressEl.children[current].classList.remove('active');
-    current = (index + total) % total;
-    slides[current].classList.add('active');
-    progressEl.children[current].classList.add('active');
-    
-    const isMobile = window.innerWidth <= 768;
-    const shiftMultiplier = isMobile ? 100 : 50;
-    
-    track.style.transform = 'translateX(-' + (current * shiftMultiplier) + '%)';
-    counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  // ==========================================
+  // 🎢 CAROUSEL INTERACTIVE SLIDER MECHANICS
+  // ==========================================
+  function setupCarousel(total, track) {
+    const slides = track.querySelectorAll('.carousel-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressEl = document.getElementById('carouselProgress');
+    const counter = document.getElementById('carouselCounter');
+    let current = 0;
+    let autoTimer;
+
+    progressEl.innerHTML = '';
+    if (total > 0) {
+      for (let i = 0; i < total; i++) {
+        const pip = document.createElement('div');
+        pip.className = 'progress-pip' + (i === 0 ? ' active' : '');
+        pip.addEventListener('click', () => goTo(i));
+        progressEl.appendChild(pip);
+      }
+    }
+
+    function goTo(index) {
+      if(!slides.length) return;
+      slides[current].classList.remove('active');
+      if(progressEl.children[current]) progressEl.children[current].classList.remove('active');
+      current = (index + total) % total;
+      slides[current].classList.add('active');
+      if(progressEl.children[current]) progressEl.children[current].classList.add('active');
+      
+      const isMobile = window.innerWidth <= 768;
+      const shiftMultiplier = isMobile ? 100 : 50;
+      
+      track.style.transform = 'translateX(-' + (current * shiftMultiplier) + '%)';
+      counter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+      resetAuto();
+    }
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      if(total > 0) {
+        autoTimer = setInterval(() => goTo(current + 1), 5000);
+      }
+    }
+
+    prevBtn.onclick = () => goTo(current - 1);
+    nextBtn.onclick = () => goTo(current + 1);
     resetAuto();
+    window.addEventListener('resize', () => goTo(current));
   }
 
-  function resetAuto() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(() => goTo(current + 1), 5000);
-  }
+  // Fetch the automatic structural manifest generated by python
+  fetch('gallery-data.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Data file missing');
+      return response.json();
+    })
+    .then(data => initializeGallery(data))
+    .catch(err => {
+      console.error("Run generate.py on your Mac to create gallery-data.json blueprint file", err);
+    });
 
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
-  resetAuto();
-
-  window.addEventListener('resize', () => goTo(current));
-
-  // Intersection Observer Animations
+  // Scroll Reveal Animations Engine
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  // Smooth local anchor scrolling
+  // Global smooth scrolling links anchor logic
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
