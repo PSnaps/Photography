@@ -3,6 +3,14 @@
   "highlights": [],
   "cities": [
     {
+      "file": "photos/cities/IMG_3038.jpg",
+      "label": "Img 3038"
+    },
+    {
+      "file": "photos/cities/IMG_6918-HDR.jpg",
+      "label": "Img 6918 Hdr"
+    },
+    {
       "file": "photos/cities/cities-1.jpg",
       "label": "Cities 1"
     },
@@ -13,6 +21,10 @@
   ],
   "architecture": [
     {
+      "file": "photos/architecture/IMG_6065.jpg",
+      "label": "Img 6065"
+    },
+    {
       "file": "photos/architecture/arch-12.jpg",
       "label": "Arch 12"
     },
@@ -21,5 +33,18 @@
       "label": "Arch 2"
     }
   ],
-  "nature": []
+  "nature": [
+    {
+      "file": "photos/nature/IMG_4612.jpg",
+      "label": "Img 4612"
+    },
+    {
+      "file": "photos/nature/IMG_4713.jpg",
+      "label": "Img 4713"
+    },
+    {
+      "file": "photos/nature/IMG_6527-HDR.jpg",
+      "label": "Img 6527 Hdr"
+    }
+  ]
 }
