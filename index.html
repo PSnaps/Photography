@@ -423,17 +423,17 @@
     <p>Every capture can be produced as limited-run architectural gallery prints. Custom dimensions and frame alignments are configured carefully by request.</p>
   </div>
   <div class="connect-methods">
-    <a href="mailto:info@psnaps.com?subject=General%20Inquiry" class="connect-row">
+    <a href="mailto:flipklik06@gmail.com?subject=General%20Inquiry" class="connect-row">
       <div class="connect-meta">
         <p class="type">Direct Correspondence</p>
-        <p class="handle">info@psnaps.com</p>
+        <p class="handle">flipklik06@gmail.com</p>
       </div>
       <div class="connect-arrow">&rarr;</div>
     </a>
-    <a href="https://instagram.com/psnaps" target="_blank" class="connect-row">
+    <a href="https://instagram.com/pradyumna.1594" target="_blank" class="connect-row">
       <div class="connect-meta">
         <p class="type">Visual Journal</p>
-        <p class="handle">@psnaps</p>
+        <p class="handle">@pradyu_1594</p>
       </div>
       <div class="connect-arrow">&rarr;</div>
     </a>
@@ -485,12 +485,11 @@
   }, false);
   window.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 
-  /* ── READ DYNAMIC DATA CONFIG SOURCE ── */
+  /* ── READ DATA CONFIG SOURCE ── */
   function loadPortfolioData() {
     fetch('gallery-data.json')
       .then(res => res.json())
       .then(data => {
-        // Safe mapping architecture in case your keys are nested inside an envelope root
         portfolioData = data.galleryData || data.portfolio || data;
         hydrateAllSections();
       })
@@ -500,13 +499,11 @@
   }
 
   function hydrateAllSections() {
-    // Locate categories inside JSON structure safely checking naming variations
     const highlightsPool = portfolioData.highlights || portfolioData.featured || [];
     const citiesPool = portfolioData.cities || portfolioData.city || [];
     const archPool = portfolioData.architecture || portfolioData.arch || [];
     const naturePool = portfolioData.nature || [];
 
-    // Store mapped variations back to global dictionary references for runtime controls
     portfolioData.highlights = highlightsPool;
     portfolioData.cities = citiesPool;
     portfolioData.architecture = archPool;
@@ -610,7 +607,7 @@
     displayLightboxInstance();
   }
 
-  /* ── PRINTS CONSOLE SPECIFICATION LINK ── */
+  /* ── PRINTS CONSOLE LINK CONFIGURATION ── */
   function openInquiryDialog() {
     const asset = currentGalleryPool[currentGalleryIndex];
     const path = asset.src || asset.image || asset.url || "unknown.jpg";
@@ -633,7 +630,7 @@
     if(msg) body += `My Specifications:\n"${msg}"\n\n`;
     body += `Sent via portfolio console.`;
 
-    window.location.href = `mailto:info@psnaps.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:flipklik06@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
     closeInquiryDialog();
   }
 
