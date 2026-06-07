@@ -2,58 +2,74 @@
   "galleryData": {
     "highlights": [
       {
+        "src": "photos/highlights/Big Sur.jpg",
+        "description": "Big Sur"
+      },
+      {
         "src": "photos/highlights/IMG_3642-HDR-2.jpg",
         "description": "Img 3642 Hdr 2"
       },
       {
-        "src": "photos/highlights/IMG_4153-2.jpg",
-        "description": "Img 4153 2"
+        "src": "photos/highlights/San Fransisco.jpg",
+        "description": "San Fransisco"
+      },
+      {
+        "src": "photos/highlights/The Guests.jpg",
+        "description": "The Guests"
+      },
+      {
+        "src": "photos/highlights/The Palette.jpg",
+        "description": "The Palette"
       }
     ],
     "cities": [
       {
-        "src": "photos/cities/IMG_3038.jpg",
-        "description": "Img 3038"
+        "src": "photos/cities/Amsterdam.jpg",
+        "description": "Amsterdam"
       },
       {
-        "src": "photos/cities/IMG_6918-HDR.jpg",
-        "description": "Img 6918 Hdr"
+        "src": "photos/cities/Capitol Building.jpg",
+        "description": "Capitol Building"
       },
       {
-        "src": "photos/cities/cities-1.jpg",
-        "description": "Cities 1"
-      },
-      {
-        "src": "photos/cities/cities-2.jpg",
-        "description": "Cities 2"
+        "src": "photos/cities/Zanseschans.jpg",
+        "description": "Zanseschans"
       }
     ],
     "architecture": [
       {
-        "src": "photos/architecture/IMG_6065.jpg",
-        "description": "Img 6065"
+        "src": "photos/architecture/Brooklyn.jpg",
+        "description": "Brooklyn"
       },
       {
-        "src": "photos/architecture/arch-1.jpg",
-        "description": "Arch 1"
+        "src": "photos/architecture/Deewan-e-Dilli.jpg",
+        "description": "Deewan E Dilli"
       },
       {
-        "src": "photos/architecture/arch-2.jpg",
-        "description": "ÿþT\u0000h\u0000e\u0000 \u0000t\u0000h\u0000r\u0000o\u0000n\u0000e\u0000 \u0000o\u0000f\u0000 \u0000S\u0000t\u0000.\u0000P\u0000e\u0000t\u0000e\u0000r\u0000s\u0000 \u0000w\u0000a\u0000s\u0000 \u0000a\u0000 \u0000m\u0000i\u0000n\u0000d\u0000 \u0000b\u0000o\u0000g\u0000g\u0000l\u0000i\u0000n\u0000g\u0000 \u0000v\u0000i\u0000e\u0000w\u0000 \u0000o\u0000f\u0000 \u0000g\u0000o\u0000l\u0000d\u0000 \u0000l\u0000a\u0000d\u0000e\u0000n\u0000 \u0000t\u0000h\u0000r\u0000o\u0000n\u0000e\u0000.\u0000"
+        "src": "photos/architecture/Florence.jpg",
+        "description": "Florence"
+      },
+      {
+        "src": "photos/architecture/The Grand Throne.jpg",
+        "description": "The Grand Throne"
       }
     ],
     "nature": [
       {
-        "src": "photos/nature/IMG_4612.jpg",
-        "description": "Img 4612"
+        "src": "photos/nature/Home Away.jpg",
+        "description": "Home Away"
       },
       {
-        "src": "photos/nature/IMG_4713.jpg",
-        "description": "Img 4713"
+        "src": "photos/nature/Serenity.jpg",
+        "description": "Serenity"
       },
       {
-        "src": "photos/nature/IMG_6527-HDR.jpg",
-        "description": "Img 6527 Hdr"
+        "src": "photos/nature/The ball of fire.jpg",
+        "description": "The Ball Of Fire"
+      },
+      {
+        "src": "photos/nature/The other side.jpg",
+        "description": "The Other Side"
       }
     ]
   }
