@@ -126,6 +126,60 @@
   .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
   .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
+ /* PASTE THIS DIRECTLY UNDER LINE 127 */
+footer {
+  background: #090908;
+  padding: 3.5rem 3rem;
+  display: flex;
+  align-items: flex-end; /* Aligns brand base with the copyright text baseline */
+  justify-content: space-between;
+  border-top: 1px solid rgba(200, 184, 154, 0.04);
+}
+
+.footer-logo {
+  font-family: 'Playball', cursive;
+  font-size: 2.2rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.footer-logo .f-logo-ps {
+  color: var(--gold);
+}
+
+.footer-logo .f-logo-naps {
+  color: var(--cream);
+  margin-left: -0.04em;
+}
+
+.footer-copy {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  line-height: 1;
+  padding-bottom: 0.35rem; /* Shifts text level with the logo tail */
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 3rem 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .footer-copy {
+    padding-bottom: 0;
+  }
+}
+
+/* KEEP YOUR REVEAL ANIMATIONS RIGHT BELOW THE NEW MEDIA QUERY */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
   /* Slide-out cart overlay panel and design tokens */
   .cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px; background: var(--mid); border-left: 1px solid rgba(200,184,154,0.15); z-index: 700; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 3rem 2.5rem; }
   .cart-panel.open { transform: translateX(0); }
@@ -185,9 +239,9 @@
 
 <div id="site-preloader">
   <div class="preloader-inner">
-    <div class="preloader-logo"><span class="p-letter">P</span><span class="snaps-letters">naps</span></div>
+    <div class="preloader-logo"><span class="p-letter">PS</span><span class="naps-letters">naps</span></div>
     <div class="preloader-line-wrap"><div class="preloader-line"></div></div>
-    <p class="preloader-manifesto">Visual Journeys &bull; Fine Art Photography</p>
+    <p class="preloader-manifesto">Visual Journeys &bull;</p>
   </div>
 </div>
 
@@ -228,7 +282,6 @@
 
 <section id="highlights">
   <div class="section-header reveal">
-    <p class="section-label">Featured work</p>
     <h2 class="section-title">Highlights</h2>
   </div>
   <div class="hl-wrapper"><div class="hl-track" id="hlTrack"></div></div>
@@ -278,14 +331,14 @@
 
 <section id="connect" class="reveal">
   <div class="connect-profile">
-    <h2>Available for<br>fine art <em>prints</em> &amp;<br>commissions</h2>
-    <p>Every capture can be produced as limited-run architectural gallery prints.</p>
+    <h2>Available for prints.&amp;</h2>
+    <p>Every frame can be tailored for complete integration into the ambience of your choice. Please reachout for shipping related queries.</p>
   </div>
   <div class="connect-methods">
     <a href="mailto:flipklik06@gmail.com" class="connect-row">
       <div class="connect-meta"><p class="type">Direct Correspondence</p><p class="handle">flipklik06@gmail.com</p></div><div class="connect-arrow">&rarr;</div>
     </a>
-    <a href="https://instagram.com/pradyumna.1594" target="_blank" class="connect-row">
+    <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
       <div class="connect-meta"><p class="type">Visual Journal</p><p class="handle">@pradyumna.1594</p></div><div class="connect-arrow">&rarr;</div>
     </a>
   </div>
@@ -330,9 +383,12 @@
 </div>
 
 <footer>
+  <div class="footer-logo">
+    <span class="f-logo-ps">PS</span><span class="f-logo-naps">naps</span>
+  </div>
   <p class="footer-copy">&copy; 2026 PSnaps. All rights reserved.</p>
 </footer>
-
+ 
 <script>
   let portfolioData = {};
   let currentGalleryPool = [];
