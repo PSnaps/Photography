@@ -18,6 +18,7 @@
     --gold: #C9A84C;
     --text-muted: #888880;
     --text-light: #BBBBA8;
+    --gap-standard: 1.5rem;
   }
   html { scroll-behavior: smooth; }
   body {
@@ -28,7 +29,7 @@
     overflow-x: hidden;
   }
 
-  /* ── PROTECTION OVERLAYS (NON-DOWNLOADABLE / NON-DRAGGABLE) ── */
+  /* ── PROTECTION OVERLAYS ── */
   img {
     -webkit-user-drag: none;
     user-select: none;
@@ -71,6 +72,7 @@
   .logo-ps { color: var(--gold); }
   .logo-naps { color: var(--cream); }
 
+  .nav-right { display: flex; align-items: center; gap: 3rem; }
   .nav-links { display: flex; gap: 2.2rem; list-style: none; }
   .nav-links a {
     font-family: 'Barlow Condensed', sans-serif;
@@ -83,6 +85,31 @@
     transition: color 0.25s;
   }
   .nav-links a:hover { color: var(--gold); }
+
+  .cart-trigger {
+    background: none;
+    border: none;
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .cart-count-badge {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+  }
 
   /* ── HERO ── */
   .hero {
@@ -151,15 +178,15 @@
   }
   .hero-cta:hover { color: var(--gold); }
 
-  /* ── REELS ── */
-  .cat-section { padding: 5rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
+  /* ── REELS AND GRID RE-ENGINEERING (GAP UPDATE) ── */
+  .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
   .cat-section.alt { background: var(--mid); }
 
   .cat-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 3rem 2rem;
+    padding: 0 3rem 2.5rem;
     cursor: pointer;
     user-select: none;
   }
@@ -175,16 +202,34 @@
   .cat-section.open .cat-toggle svg { transform: rotate(45deg); }
 
   .cat-carousel-wrap { position: relative; overflow: hidden; }
-  .cat-rail { display: flex; gap: 4px; padding: 0 3rem; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch; transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1); max-height: 320px; }
+  .cat-rail { 
+    display: flex; 
+    gap: var(--gap-standard); 
+    padding: 0 3rem 1.5rem; 
+    overflow-x: auto; 
+    scroll-behavior: smooth; 
+    scrollbar-width: none; 
+    -webkit-overflow-scrolling: touch; 
+    transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1); 
+    max-height: 340px; 
+  }
   .cat-rail::-webkit-scrollbar { display: none; }
-  .cat-section.open .cat-rail { max-height: 2400px; flex-wrap: wrap; overflow-x: hidden; }
-
-  .cat-card { flex: 0 0 280px; height: 300px; overflow: hidden; position: relative; background: var(--mid); cursor: pointer; }
-  .cat-section.open .cat-card { flex: 0 0 calc(25% - 3px); height: 280px; }
-  .cat-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.05); transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s; }
-  .cat-card:hover img { transform: scale(1.06); filter: brightness(0.7) contrast(1.08); }
   
-  .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1rem; }
+  /* Grid expansion state gaps */
+  .cat-section.open .cat-rail { 
+    max-height: 2800px; 
+    flex-wrap: wrap; 
+    overflow-x: hidden; 
+    row-gap: 2.5rem; 
+    column-gap: var(--gap-standard);
+  }
+
+  .cat-card { flex: 0 0 290px; height: 310px; overflow: hidden; position: relative; background: var(--mid); cursor: pointer; }
+  .cat-section.open .cat-card { flex: 0 0 calc(25% - 1.15rem); height: 300px; }
+  .cat-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.05); transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s; }
+  .cat-card:hover img { transform: scale(1.05); filter: brightness(0.7) contrast(1.08); }
+  
+  .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.2rem; }
   .cat-card:hover .cat-card-overlay { opacity: 1; }
   .cat-card-desc-preview { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--cream); text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%; }
 
@@ -202,7 +247,7 @@
   .cat-section.alt .cat-fade-right { background: linear-gradient(to left, var(--mid), transparent); }
   .cat-section.open .cat-fade-right, .cat-section.open .cat-fade-left { opacity: 0; }
 
-  .cat-expand-hint { padding: 1rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
+  .cat-expand-hint { padding: 0.5rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
   .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
 
   /* ── FEATURED HIGHLIGHTS ── */
@@ -211,9 +256,9 @@
   .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
   .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; }
   
-  .hl-wrapper { position: relative; overflow: hidden; }
-  .hl-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); }
-  .hl-slide { flex: 0 0 50%; height: 560px; margin-right: 4px; overflow: hidden; position: relative; background: var(--dark); cursor: pointer; }
+  .hl-wrapper { position: relative; overflow: hidden; margin-top: var(--gap-standard); }
+  .hl-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); padding: 0 3rem; gap: var(--gap-standard); }
+  .hl-slide { flex: 0 0 calc(50% - 0.75rem); height: 560px; overflow: hidden; position: relative; background: var(--dark); cursor: pointer; }
   .hl-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82); transition: filter 0.5s; }
   .hl-slide.active img { filter: brightness(0.95); }
   .hl-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem 2rem 2rem; background: linear-gradient(transparent, rgba(13,13,11,0.85)); transform: translateY(100%); transition: transform 0.5s ease; z-index: 15; }
@@ -250,19 +295,60 @@
   .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; }
   .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
-  /* ── ORDER INQUIRY MODAL ── */
+  /* ── ORDER INQUIRY & CART SELECTION MODAL ── */
   .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
   .inquiry-overlay.open { display: flex; }
   .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; position: relative; }
   .inquiry-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
   .inquiry-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
   
-  .inquiry-textarea { width: 100%; height: 120px; background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 1rem; font-family: 'Barlow', sans-serif; font-size: 0.9rem; resize: none; outline: none; margin-bottom: 1.5rem; }
-  .inquiry-textarea:focus { border-color: var(--gold); }
+  .config-group { margin-bottom: 1.5rem; }
+  .config-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.5rem; }
+  .size-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .size-btn { background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 0.6rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
+  .size-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
   
-  .inquiry-actions { display: flex; gap: 1rem; }
-  .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; cursor: pointer; }
+  .inquiry-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+  .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; cursor: pointer; flex: 1; text-align: center; }
   .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; }
+
+  /* ── SLIDE OUT CART SYSTEM ── */
+  .cart-panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 100%; max-width: 440px;
+    background: var(--mid);
+    border-left: 1px solid rgba(200,184,154,0.15);
+    z-index: 700;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 2.5rem;
+  }
+  .cart-panel.open { transform: translateX(0); }
+  .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
+  .cart-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
+  .cart-panel-close { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
+  .cart-panel-close:hover { color: var(--cream); }
+  
+  .cart-items-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; padding-right: 0.5rem; }
+  .cart-item { display: flex; gap: 1rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(200,184,154,0.08); }
+  .cart-item-thumb { width: 65px; height: 65px; object-fit: cover; background: var(--dark); }
+  .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+  .cart-item-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; }
+  .cart-item-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.05em; color: var(--text-muted); text-transform: uppercase; }
+  .cart-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.05em; }
+  .cart-item-remove { background: none; border: none; color: rgba(220,90,90,0.7); font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-align: left; width: fit-content; margin-top: 0.3rem; }
+  .cart-item-remove:hover { color: rgb(220,90,90); }
+  
+  .cart-footer { margin-top: 2rem; border-top: 1px solid rgba(200,184,154,0.15); padding-top: 2rem; }
+  .cart-summary-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .cart-summary-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
+  .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.05em; }
+  .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; transition: background 0.3s; }
+  .checkout-btn:hover { background: #e3be5b; }
+  .empty-cart-msg { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--text-muted); text-align: center; margin-top: 4rem; }
 
   /* ── CONNECT ── */
   #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); background: linear-gradient(to bottom, var(--dark) 0%, #131310 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
@@ -290,13 +376,18 @@
     .nav-links { display: none; }
     .hero { padding: 4rem 1.5rem; }
     .hero h1 { font-size: 3rem; }
-    .cat-section.open .cat-card { flex: 0 0 calc(50% - 2px); }
+    .cat-rail { padding: 0 1.2rem 1rem; gap: 1rem; }
+    .cat-section.open .cat-rail { row-gap: 2rem; column-gap: 1rem; }
+    .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; }
+    .cat-card { flex: 0 0 220px; height: 240px; }
+    .hl-track { padding: 0 1.2rem; gap: 1rem; }
+    .hl-slide { flex: 0 0 calc(100%); height: 380px; }
     #connect { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
     .cat-header, .cat-expand-hint, #highlights .section-header { padding-left: 1.2rem; padding-right: 1.2rem; }
-    .cat-rail { padding: 0 1.2rem; }
     .hl-controls { padding: 1.5rem 1.2rem 0; }
     .lb-nav { display: none !important; }
     .lb-close { top: 1rem; right: 1.5rem; }
+    .cart-panel { padding: 2rem 1.5rem; }
     footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 3rem 1.5rem; }
   }
 </style>
@@ -305,17 +396,22 @@
 
 <nav>
   <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
-  <ul class="nav-links">
-    <li><a href="#highlights">Highlights</a></li>
-    <li><a href="#cities">Cities</a></li>
-    <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#nature">Nature</a></li>
-    <li><a href="#connect">Contact</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#highlights">Highlights</a></li>
+      <li><a href="#cities">Cities</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#nature">Nature</a></li>
+      <li><a href="#connect">Contact</a></li>
+    </ul>
+    <button class="cart-trigger" onclick="toggleCartPanel(true)">
+      Cart <span class="cart-count-badge" id="cartBadgeCount">0</span>
+    </button>
+  </div>
 </nav>
 
 <section class="hero">
-  <img class="hero-img" src="photos/hero.jpg" alt="Portfolio Backdrop Canvas" onerror="this.style.display='none'">
+  <img class="hero-img" src="photos/hero.jpg" alt="Portfolio Canvas Layout" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Photography by PSnaps</p>
@@ -433,7 +529,7 @@
     <a href="https://instagram.com/pradyumna.1594" target="_blank" class="connect-row">
       <div class="connect-meta">
         <p class="type">Visual Journal</p>
-        <p class="handle">@pradyu_1594</p>
+        <p class="handle">@pradyumna.1594</p>
       </div>
       <div class="connect-arrow">&rarr;</div>
     </a>
@@ -444,25 +540,52 @@
   <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
   <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
   <div class="lb-inner">
-    <img id="lightboxImg" src="" alt="Active View Canvas">
+    <img id="lightboxImg" src="" alt="Active Canvas">
   </div>
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   
   <div class="lb-action-bar">
-    <p class="lb-caption" id="lightboxCaption">Loading descriptor...</p>
-    <button class="lb-print-btn" onclick="openInquiryDialog()">Order Fine Art Print</button>
+    <p class="lb-caption" id="lightboxCaption">Loading description...</p>
+    <button class="lb-print-btn" onclick="openPrintConfigurator()">Configure Fine Art Print</button>
   </div>
 </div>
 
 <div class="inquiry-overlay" id="inquiryOverlay">
   <div class="inquiry-box">
-    <h3 class="inquiry-title">Order Print Specification</h3>
-    <p class="inquiry-subtitle" id="inquiryAssetRef">Asset: None</p>
-    <textarea class="inquiry-textarea" id="userQueryInput" placeholder="Write query details... Specify preferred dimensions (e.g. A2, 50x70cm) or frame options."></textarea>
-    <div class="inquiry-actions">
-      <button class="inquiry-submit" onclick="submitInquiryEmail()">Compile &amp; Send</button>
-      <button class="inquiry-cancel" onclick="closeInquiryDialog()">Cancel</button>
+    <h3 class="inquiry-title">Configure Gallery Print</h3>
+    <p class="inquiry-subtitle">Premium Archival Paper, Unframed</p>
+    
+    <div class="config-group">
+      <span class="config-label">Select Dimensions</span>
+      <div class="size-selector">
+        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
+        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
+        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
+      </div>
     </div>
+
+    <div class="inquiry-actions">
+      <button class="inquiry-submit" onclick="addSelectedToCart()">Add To Workspace Cart</button>
+      <button class="inquiry-cancel" onclick="closePrintConfigurator()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="cart-panel" id="globalCartPanel">
+  <div class="cart-header-row">
+    <h3 class="cart-panel-title">Your Cart</h3>
+    <button class="cart-panel-close" onclick="toggleCartPanel(false)">Close &times;</button>
+  </div>
+  
+  <div class="cart-items-container" id="cartItemsContainer">
+    </div>
+  
+  <div class="cart-footer">
+    <div class="cart-summary-line">
+      <span class="cart-summary-label">Total (GBP)</span>
+      <span class="cart-summary-value" id="cartSubtotal">£0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="executeSecureCheckout()">Proceed to Secure Payment</button>
   </div>
 </div>
 
@@ -476,16 +599,20 @@
   let currentGalleryPool = [];
   let currentGalleryIndex = 0;
   let currentHlIndex = 0;
+  
+  // Cart Subsystem State Memory
+  let globalCart = [];
+  let selectedSizeConfig = { size: 'A4', price: 45 };
 
-  /* ── INTERACTION SAFETY GUARDS ── */
+  /* ── INTERACTION PROTECTION FLAGS ── */
   window.addEventListener('contextmenu', e => {
-    if (e.target.tagName === 'IMG' || e.target.closest('.cat-card') || e.target.closest('.hl-slide') || e.target.closest('.lb-inner') || e.target.closest('.hero')) {
+    if (e.target.tagName === 'IMG' || e.target.closest('.cat-card') || e.target.closest('.hl-slide') || e.target.closest('.lb-inner')) {
       e.preventDefault();
     }
   }, false);
   window.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 
-  /* ── READ DATA CONFIG SOURCE ── */
+  /* ── DATA SOURCE DEEP INGESTION ── */
   function loadPortfolioData() {
     fetch('gallery-data.json')
       .then(res => res.json())
@@ -493,15 +620,23 @@
         portfolioData = data.galleryData || data.portfolio || data;
         hydrateAllSections();
       })
-      .catch(err => {
-        console.error("Error reading your gallery-data.json layout file:", err);
-      });
+      .catch(err => console.error("Error reading your structure:", err));
+  }
+
+  // Pure clean text formatting framework that prevents raw string bleed onto ui layers
+  function sanitizeDescription(item, index, prefix) {
+    if (!item) return "Captured Frame";
+    const possibleDesc = item.description || item.desc || item.title;
+    if (possibleDesc && !possibleDesc.toLowerCase().includes('.txt') && !possibleDesc.toLowerCase().includes('.jpg')) {
+      return possibleDesc;
+    }
+    return `${prefix} Edition — Frame ${String(index + 1).padStart(2, '0')}`;
   }
 
   function hydrateAllSections() {
-    const highlightsPool = portfolioData.highlights || portfolioData.featured || [];
-    const citiesPool = portfolioData.cities || portfolioData.city || [];
-    const archPool = portfolioData.architecture || portfolioData.arch || [];
+    const highlightsPool = portfolioData.highlights || [];
+    const citiesPool = portfolioData.cities || [];
+    const archPool = portfolioData.architecture || [];
     const naturePool = portfolioData.nature || [];
 
     portfolioData.highlights = highlightsPool;
@@ -509,18 +644,18 @@
     portfolioData.architecture = archPool;
     portfolioData.nature = naturePool;
 
-    // 1. Render Highlights Track
+    // Highlights Pipeline
     const track = document.getElementById('hlTrack');
     if (highlightsPool.length > 0) {
       track.innerHTML = highlightsPool.map((hl, idx) => {
-        const path = hl.src || hl.image || hl.url || "";
-        const desc = hl.description || hl.desc || hl.title || "Featured Frame";
+        const path = hl.src || hl.image || "";
+        const cleanDesc = sanitizeDescription(hl, idx, "Featured");
         return `
           <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('highlights', ${idx})">
             <img src="${path}" alt="">
             <div class="hl-info">
               <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(highlightsPool.length).padStart(2, '0')}</p>
-              <h3 class="hl-title">${desc}</h3>
+              <h3 class="hl-title">${cleanDesc}</h3>
             </div>
           </div>
         `;
@@ -529,24 +664,23 @@
       refreshCarouselView();
     }
 
-    // 2. Render Category Rails Loop
-    const categories = ['cities', 'architecture', 'nature'];
-    categories.forEach(cat => {
+    // Category Grid Pipeline
+    ['cities', 'architecture', 'nature'].forEach(cat => {
       const rail = document.getElementById(`rail-${cat}`);
       const countLabel = document.getElementById(`count-${cat}`);
       const pool = portfolioData[cat] || [];
-      
       if (!rail) return;
+      
       countLabel.textContent = `${pool.length} Photographs`;
       
       rail.innerHTML = pool.map((item, idx) => {
-        const path = item.src || item.image || item.url || "";
-        const desc = item.description || item.desc || item.title || "Gallery Frame";
+        const path = item.src || item.image || "";
+        const cleanDesc = sanitizeDescription(item, idx, cat.charAt(0).toUpperCase() + cat.slice(1));
         return `
           <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
-            <img src="${path}" alt="Portfolio Workspace Asset">
+            <img src="${path}" alt="Portfolio Element">
             <div class="cat-card-overlay">
-              <p class="cat-card-desc-preview">${desc}</p>
+              <p class="cat-card-desc-preview">${cleanDesc}</p>
             </div>
           </div>
         `;
@@ -555,7 +689,7 @@
     });
   }
 
-  /* ── CONTAINER INTERACTIONS ── */
+  /* ── INTERACTION CONTAINERS ── */
   function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }
   
   function scrollRail(btn, direction) {
@@ -575,27 +709,22 @@
   function openLightboxCategory(categoryKey, index) {
     const pool = portfolioData[categoryKey] || [];
     if(pool.length === 0) return;
-    
     currentGalleryPool = pool;
     currentGalleryIndex = index;
-    displayLightboxInstance();
+    displayLightboxInstance(categoryKey);
   }
 
-  function displayLightboxInstance() {
+  function displayLightboxInstance(optKey) {
     const box = document.getElementById('globalLightbox');
     const img = document.getElementById('lightboxImg');
     const caption = document.getElementById('lightboxCaption');
     
     const activeAsset = currentGalleryPool[currentGalleryIndex];
-    const path = activeAsset.src || activeAsset.image || activeAsset.url || "";
-    const desc = activeAsset.description || activeAsset.desc || activeAsset.title || "Gallery Frame";
-    
-    img.src = path;
-    caption.textContent = desc;
+    img.src = activeAsset.src || activeAsset.image || "";
+    caption.textContent = sanitizeDescription(activeAsset, currentGalleryIndex, "Gallery Collection");
 
     box.classList.add('open');
     document.body.style.overflow = 'hidden';
-    
     document.querySelectorAll('.lb-nav').forEach(n => n.style.display = currentGalleryPool.length <= 1 ? 'none' : 'flex');
   }
 
@@ -607,34 +736,97 @@
     displayLightboxInstance();
   }
 
-  /* ── PRINTS CONSOLE LINK CONFIGURATION ── */
-  function openInquiryDialog() {
-    const asset = currentGalleryPool[currentGalleryIndex];
-    const path = asset.src || asset.image || asset.url || "unknown.jpg";
-    const filename = path.substring(path.lastIndexOf('/') + 1);
-    document.getElementById('inquiryAssetRef').textContent = `Asset: ${filename}`;
-    document.getElementById('userQueryInput').value = ''; 
+  /* ── CART ENGINE & OVERLAY LAYER INTERACTIONS ── */
+  function openPrintConfigurator() {
     document.getElementById('inquiryOverlay').classList.add('open');
   }
+  function closePrintConfigurator() { document.getElementById('inquiryOverlay').classList.remove('open'); }
 
-  function closeInquiryDialog() { document.getElementById('inquiryOverlay').classList.remove('open'); }
-
-  function submitInquiryEmail() {
-    const asset = currentGalleryPool[currentGalleryIndex];
-    const path = asset.src || asset.image || asset.url || "unknown.jpg";
-    const filename = path.substring(path.lastIndexOf('/') + 1);
-    const msg = document.getElementById('userQueryInput').value.trim();
-    
-    const subject = encodeURIComponent(`Fine Art Print Order Request — ${filename}`);
-    let body = `Hello,\n\nI am interested in configuring a fine art custom print for reference: ${filename}.\n\n`;
-    if(msg) body += `My Specifications:\n"${msg}"\n\n`;
-    body += `Sent via portfolio console.`;
-
-    window.location.href = `mailto:flipklik06@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
-    closeInquiryDialog();
+  function selectPrintSize(element, sizeName, basePrice) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    element.classList.add('active');
+    selectedSizeConfig = { size: sizeName, price: basePrice };
   }
 
-  /* ── HIGH LEVEL CAROUSEL TRACK RUNTIME ── */
+  function addSelectedToCart() {
+    const activeAsset = currentGalleryPool[currentGalleryIndex];
+    const itemPayload = {
+      id: 'art-' + Date.now(),
+      src: activeAsset.src || activeAsset.image || "",
+      description: sanitizeDescription(activeAsset, currentGalleryIndex, "Fine Art Print"),
+      size: selectedSizeConfig.size,
+      price: selectedSizeConfig.price
+    };
+    
+    globalCart.push(itemPayload);
+    updateCartUI();
+    closePrintConfigurator();
+    closeLightbox();
+    toggleCartPanel(true);
+  }
+
+  function toggleCartPanel(shouldOpen) {
+    document.getElementById('globalCartPanel').classList.toggle('open', shouldOpen);
+  }
+
+  function removeCartItem(itemId) {
+    globalCart = globalCart.filter(item => item.id !== itemId);
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    // Count Badge Update
+    document.getElementById('cartBadgeCount').textContent = globalCart.length;
+    
+    const container = document.getElementById('cartItemsContainer');
+    let runningTotal = 0;
+    
+    if (globalCart.length === 0) {
+      container.innerHTML = `<p class="empty-cart-msg">Your workspace cart is currently empty.</p>`;
+      document.getElementById('cartSubtotal').textContent = "£0.00";
+      return;
+    }
+    
+    container.innerHTML = globalCart.map(item => {
+      runningTotal += item.price;
+      return `
+        <div class="cart-item">
+          <img src="${item.src}" class="cart-item-thumb" alt="">
+          <div class="cart-item-details">
+            <h4 class="cart-item-title">${item.description}</h4>
+            <span class="cart-item-meta">Specification: Gallery ${item.size}</span>
+            <span class="cart-item-price">£${item.price}.00</span>
+            <button class="cart-item-remove" onclick="removeCartItem('${item.id}')">Remove</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    document.getElementById('cartSubtotal').textContent = `£${runningTotal}.00`;
+  }
+
+  /* ── HIGH VOLTAGE CHECKOUT PAYMENTS ROUTER GATEWAY ── */
+  function executeSecureCheckout() {
+    if(globalCart.length === 0) {
+      alert("Your workspace configuration cart is empty.");
+      return;
+    }
+    
+    // Compile manifest properties cleanly
+    const itemsDescription = globalCart.map(i => `${i.description} (${i.size})`).join(', ');
+    const calculatedTotal = globalCart.reduce((acc, curr) => acc + curr.price, 0);
+    
+    // Primary fallback fallback pathing setup for generic payment links or dynamic billing hooks
+    // You can swap out the mailto architecture below for an explicit Stripe Payment Link route url if desired:
+    // window.location.href = `https://buy.stripe.com/mock_endpoint_link?amount=${calculatedTotal}`;
+    
+    const gatewaySubject = encodeURIComponent(`Secure Checkout Request — Portfolio Portfolio Order`);
+    const gatewayBody = encodeURIComponent(`Hello,\n\nI want to initialize payment settlement for the following configurations:\n\nItems: ${itemsDescription}\nTotal Order Pool Value: £${calculatedTotal}.00 GBP\n\nPlease reply with our payment processing interface link.`);
+    
+    window.location.href = `mailto:flipklik06@gmail.com?subject=${gatewaySubject}&body=${gatewayBody}`;
+  }
+
+  /* ── CAROUSEL SUBSYSTEM RUNTIMES ── */
   function initCarouselPips() {
     const container = document.getElementById('hlProgress');
     const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
@@ -651,9 +843,13 @@
     const track = document.getElementById('hlTrack');
     const slides = document.querySelectorAll('.hl-slide');
     if(slides.length === 0) return;
-    const width = slides[0].getBoundingClientRect().width + 4;
-    track.style.transform = `translateX(-${currentHlIndex * width}px)`;
     
+    // Compensate transformation math equations metrics directly for container item widths
+    const slideStyle = window.getComputedStyle(slides[0]);
+    const gapVal = parseFloat(window.getComputedStyle(track).gap) || 0;
+    const itemStrideWidth = slides[0].getBoundingClientRect().width + gapVal;
+    
+    track.style.transform = `translateX(-${currentHlIndex * itemStrideWidth}px)`;
     slides.forEach((s, idx) => s.classList.toggle('active', idx === currentHlIndex));
     document.getElementById('hlCounter').textContent = `${String(currentHlIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
     document.querySelectorAll('.hl-pip').forEach((p, idx) => p.classList.toggle('active', idx === currentHlIndex));
@@ -672,10 +868,10 @@
     refreshCarouselView();
   });
 
-  /* Hotkeys Bindings */
+  /* Window and Global Listener Mappings */
   document.addEventListener('keydown', e => {
     if (document.getElementById('inquiryOverlay').classList.contains('open')) {
-      if (e.key === 'Escape') closeInquiryDialog();
+      if (e.key === 'Escape') closePrintConfigurator();
       return;
     }
     if (!document.getElementById('globalLightbox').classList.contains('open')) return;
@@ -684,10 +880,9 @@
     if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
-  /* Intersection Observer Engine */
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 });
 
   window.addEventListener('DOMContentLoaded', () => {
     loadPortfolioData();
