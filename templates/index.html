@@ -18,7 +18,7 @@
   body { background: var(--dark); color: var(--cream); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
   body.preloading { overflow: hidden !important; }
 
-  /* Preloader Overlay curtain layout styles */
+  /* Preloader Overlay */
   #site-preloader { position: fixed; inset: 0; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease; will-change: transform, opacity; }
   #site-preloader.loaded { transform: translateY(-100%); opacity: 0; }
   .preloader-inner { text-align: center; display: flex; flex-direction: column; align-items: center; }
@@ -31,7 +31,7 @@
   @keyframes preloaderLineIn { to { transform: scaleX(1); } }
   @keyframes preloaderFadeIn { to { opacity: 1; transform: translateY(0); } }
 
-  /* Main Navigation Header elements */
+  /* Navigation */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; background: linear-gradient(to bottom, rgba(13,13,11,0.95) 0%, transparent 100%); backdrop-filter: blur(4px); }
   .logo { font-family: 'Playball', cursive; font-size: 2.1rem; text-decoration: none; display: inline-flex; align-items: center; }
   .logo-ps { color: var(--gold); } .logo-naps { color: var(--cream); margin-left: -0.05em; }
@@ -42,7 +42,7 @@
   .cart-trigger { background: none; border: none; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
   .cart-count-badge { background: var(--gold); color: var(--dark); font-weight: 600; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
 
-  /* Responsive Two Column Split hero layout grid structure configurations */
+  /* Hero Section */
   .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 0 3rem; overflow: hidden; position: relative; }
   .hero-layout { display: grid; grid-template-columns: 1.2fr 1fr; width: 100%; align-items: center; gap: 4rem; }
   .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
@@ -57,7 +57,7 @@
   .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 0.3rem; transition: color 0.3s; }
   .hero-cta:hover { color: var(--gold); }
 
-  /* Gallery Category Sections & Rails Layout Grid rules architecture */
+  /* Gallery rails */
   .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
   .cat-section.alt { background: var(--mid); }
   .cat-header { display: flex; align-items: center; justify-content: space-between; padding: 0 3rem 2.5rem; cursor: pointer; user-select: none; }
@@ -89,7 +89,7 @@
   .cat-expand-hint { padding: 0.5rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
   .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
 
-  /* Featured Work Highlights carousel layout section CSS components */
+  /* Highlights Section */
   #highlights { background: var(--mid); padding: 6rem 0; }
   #highlights .section-header { padding: 0 3rem 2.5rem; border-bottom: 1px solid rgba(200,184,154,0.1); margin-bottom: 0; }
   .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
@@ -112,7 +112,7 @@
   .hl-pip.active::after { width: 100%; }
   .hl-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); }
 
-  /* Lightbox view and configurations styling details */
+  /* Lightbox */
   .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
   .lightbox.open { display: flex; }
   .lb-inner { position: relative; max-width: 92vw; max-height: 76vh; display: flex; align-items: center; justify-content: center; }
@@ -126,60 +126,7 @@
   .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
   .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
-footer {
-  background: #090908;
-  padding: 3.5rem 3rem;
-  display: flex;
-  align-items: flex-end; /* Aligns brand base with the copyright text baseline */
-  justify-content: space-between;
-  border-top: 1px solid rgba(200, 184, 154, 0.04);
-}
-
-.footer-logo {
-  font-family: 'Playball', cursive;
-  font-size: 2.2rem;
-  line-height: 1;
-  user-select: none;
-}
-
-.footer-logo .f-logo-ps {
-  color: var(--gold);
-}
-
-.footer-logo .f-logo-naps {
-  color: var(--cream);
-  margin-left: -0.04em;
-}
-
-.footer-copy {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 300;
-  letter-spacing: 0.16em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  line-height: 1;
-  padding-bottom: 0.35rem; /* Shifts text level with the logo tail */
-}
-
-@media (max-width: 768px) {
-  footer {
-    padding: 3rem 1.5rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    text-align: center;
-  }
-  .footer-copy {
-    padding-bottom: 0;
-  }
-}
-
-/* KEEP YOUR REVEAL ANIMATIONS RIGHT BELOW THE NEW MEDIA QUERY */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* Slide-out cart overlay panel and design tokens */
+  /* Cart Panel */
   .cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px; background: var(--mid); border-left: 1px solid rgba(200,184,154,0.15); z-index: 700; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 3rem 2.5rem; }
   .cart-panel.open { transform: translateX(0); }
   .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
@@ -199,7 +146,7 @@ footer {
   .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); }
   .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
 
-  /* Gallery Print selector interface overlay modal styling metrics */
+  /* Inquiry Overlay */
   .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
   .inquiry-overlay.open { display: flex; }
   .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; }
@@ -214,24 +161,61 @@ footer {
   .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; flex: 1; }
   .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; cursor: pointer; }
 
+  /* Connect Section - Optimized */
   #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
   .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
   .connect-profile h2 em { font-style: italic; color: var(--warm); }
   .connect-profile p { font-size: 0.95rem; line-height: 1.8; color: var(--text-light); max-width: 440px; margin-bottom: 3rem; }
   .connect-methods { display: flex; flex-direction: column; gap: 1.5rem; }
   .connect-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid rgba(200,184,154,0.1); text-decoration: none; color: var(--cream); }
+  .connect-row-left { display: flex; align-items: center; gap: 1.5rem; }
+  .connect-icon { width: 1.6rem; height: 1.6rem; color: var(--text-muted); transition: color 0.3s, transform 0.3s; }
+  .connect-row:hover .connect-icon { color: var(--gold); }
   .connect-meta .type { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
   .connect-meta .handle { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; }
-  .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s; }
+  .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
   .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
+  
+  /* Footer Branding - Optimized */
+  footer {
+    background: #090908;
+    padding: 3.5rem 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200, 184, 154, 0.04);
+  }
+  .footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }
+  .footer-logo .f-logo-ps { color: var(--gold); }
+  .footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1;
+    padding-bottom: 0.35rem;
+  }
 
-  footer { padding: 4rem 3rem; background: #090908; display: flex; align-items: center; justify-content: space-between; }
-  .footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
+  /* Reveals */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* Media Queries */
   @media (max-width: 992px) { .hero { padding: 6rem 2rem 0 2rem; } .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } .hero-image-pane { height: 55vh; } #connect { grid-template-columns: 1fr; } }
-  @media (max-width: 768px) { .nav-links { display: none; } .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } .cat-card { flex: 0 0 220px; height: 240px; } .hl-slide { flex: 0 0 100%; height: 380px; } .lb-nav { display: none !important; } .cart-panel { padding: 2rem 1.5rem; } }
+  @media (max-width: 768px) { 
+    .nav-links { display: none; } 
+    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } 
+    .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } 
+    .cat-card { flex: 0 0 220px; height: 240px; } 
+    .hl-slide { flex: 0 0 100%; height: 380px; } 
+    .lb-nav { display: none !important; } 
+    .cart-panel { padding: 2rem 1.5rem; } 
+    footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
+    .footer-copy { padding-bottom: 0; }
+  }
 </style>
 </head>
 <body class="preloading">
@@ -274,7 +258,7 @@ footer {
       <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
     </div>
     <div class="hero-image-pane">
-      <img class="hero-cover-img" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1600" alt="Featured Cover Art Canvas">
+      <img class="hero-cover-img" src="{{ cover_image }}" alt="Featured Cover Art Canvas">
     </div>
   </div>
 </section>
@@ -331,14 +315,22 @@ footer {
 <section id="connect" class="reveal">
   <div class="connect-profile">
     <h2>Available for prints.</h2>
-    <p>Every frame your choise can be tailored for amplifying the mood of your comfort spaces. Please reachout for shipping related queries.</p>
+    <p>Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.</p>
   </div>
   <div class="connect-methods">
     <a href="mailto:flipklik06@gmail.com" class="connect-row">
-      <div class="connect-meta"><p class="type">Direct Correspondence</p><p class="handle">flipklik06@gmail.com</p></div><div class="connect-arrow">&rarr;</div>
+      <div class="connect-row-left">
+        <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <div class="connect-meta"><p class="type">Direct Correspondence</p><p class="handle">flipklik06@gmail.com</p></div>
+      </div>
+      <div class="connect-arrow">&rarr;</div>
     </a>
     <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
-      <div class="connect-meta"><p class="type">Visual Journal</p><p class="handle">@pradyumna.1594</p></div><div class="connect-arrow">&rarr;</div>
+      <div class="connect-row-left">
+        <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        <div class="connect-meta"><p class="type">Visual Journal</p><p class="handle">@pradyumna.1594</p></div>
+      </div>
+      <div class="connect-arrow">&rarr;</div>
     </a>
   </div>
 </section>
