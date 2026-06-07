@@ -50,7 +50,7 @@
   }
   .lb-close, .lb-nav, .lb-action-bar, .cat-card-overlay { z-index: 20; }
 
-  /* ── NAVIGATION (UPDATED TYPOGRAPHY FOR BRAND LOGO) ── */
+  /* ── NAVIGATION ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -119,13 +119,13 @@
     text-align: center;
   }
 
-  /* ── HERO ── */
+  /* ── HERO & DISPLAY TYPOGRAPHY ── */
   .hero {
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     display: flex;
-    align-items: flex-end;
-    padding: 5rem 3rem;
+    align-items: center;
+    padding: 8rem 3rem 5rem;
     overflow: hidden;
   }
   .hero-img {
@@ -134,15 +134,20 @@
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.55);
+    filter: brightness(0.45);
   }
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(13,13,11,0.1) 0%, rgba(13,13,11,0.15) 50%, rgba(13,13,11,0.75) 100%);
+    background: linear-gradient(to bottom, rgba(13,13,11,0.2) 0%, rgba(13,13,11,0.4) 60%, rgba(13,13,11,0.85) 100%);
     z-index: 1;
   }
-  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero-content { 
+    position: relative; 
+    z-index: 2; 
+    max-width: 900px; 
+    width: 100%;
+  }
   .hero-content * { pointer-events: auto; }
   .hero-eyebrow {
     font-family: 'Barlow Condensed', sans-serif;
@@ -151,23 +156,47 @@
     letter-spacing: 0.45em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
   }
-  .hero h1 {
+  
+  .hero-display-title {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    font-size: clamp(3.5rem, 8vw, 7rem);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.4rem;
-  }
-  .hero h1 em { font-style: italic; color: var(--warm); }
-  .hero-desc {
-    font-size: 0.93rem;
-    color: var(--text-light);
-    line-height: 1.75;
-    max-width: 380px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-display-title .line-primary {
+    font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+    color: var(--cream);
+    display: block;
+  }
+  .hero-display-title .line-connective {
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--warm);
+    margin-top: 1.4rem;
+    margin-bottom: 0.6rem;
+    display: block;
+    letter-spacing: 0.02em;
+  }
+  .hero-display-title .line-author {
+    font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+    color: var(--cream);
+    display: block;
+  }
+
+  .hero-desc {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    color: var(--text-light);
+    line-height: 1.65;
+    max-width: 440px;
+    margin-bottom: 3rem;
   }
   .hero-cta {
     display: inline-flex;
@@ -186,7 +215,7 @@
   }
   .hero-cta:hover { color: var(--gold); }
 
-  /* ── REELS AND GRID RE-ENGINEERING ── */
+  /* ── REELS AND GRID SYSTEM ── */
   .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
   .cat-section.alt { background: var(--mid); }
 
@@ -302,7 +331,7 @@
   .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; }
   .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
-  /* ── OVERLAY CONFIGURATOR MODAL ── */
+  /* ── PRINT CONFIGURATOR MODAL ── */
   .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
   .inquiry-overlay.open { display: flex; }
   .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; position: relative; }
@@ -371,7 +400,7 @@
   .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
   .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
 
-  /* ── FOOTER (UPDATED TYPOGRAPHY FOR SUB-BRAND) ── */
+  /* ── FOOTER ── */
   footer { padding: 4rem 3rem; background: #090908; border-top: 1px solid rgba(200,184,154,0.03); display: flex; align-items: center; justify-content: space-between; }
   footer .logo { font-size: 1.8rem; }
   .footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
@@ -382,8 +411,9 @@
   @media (max-width: 768px) {
     nav { padding: 1.1rem 1.2rem; }
     .nav-links { display: none; }
-    .hero { padding: 4rem 1.5rem; }
-    .hero h1 { font-size: 3rem; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.6rem; }
+    .hero-display-title .line-connective { font-size: 1.4rem; margin-top: 1rem; }
     .cat-rail { padding: 0 1.2rem 1rem; gap: 1rem; }
     .cat-section.open .cat-rail { row-gap: 2rem; column-gap: 1rem; }
     .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; }
@@ -403,7 +433,7 @@
 <body>
 
 <nav>
-  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
+  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">Snaps</span></a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#highlights">Highlights</a></li>
@@ -422,7 +452,15 @@
   <img class="hero-img" src="photos/hero.jpg" alt="Portfolio Canvas Layout" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1>The Fabric<br>of<br><em>Space & Time</em><br>from the lens of <br> <em>Pradyumna Saripalli</em></h1>
+    <p class="hero-eyebrow">Photography by PSnaps</p>
+    
+    <h1 class="hero-display-title">
+      <span class="line-primary">The Fabric</span>
+      <span class="line-primary">of Space &amp; Time</span>
+      <span class="line-connective">from the lens of</span>
+      <span class="line-author">Pradyumna Saripalli</span>
+    </h1>
+    
     <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
     <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
   </div>
@@ -521,8 +559,8 @@
 
 <section id="connect" class="reveal">
   <div class="connect-profile">
-    <h2>Available for<br>prints.</h2>
-    <p>Each frame can be tailored to meet the needs of spaces and ambience. PLease reach out for customisation and shipping.</p>
+    <h2>Available for<br>fine art <em>prints</em> &amp;<br>commissions</h2>
+    <p>Every capture can be produced as limited-run architectural gallery prints. Custom dimensions and frame alignments are configured carefully by request.</p>
   </div>
   <div class="connect-methods">
     <a href="mailto:flipklik06@gmail.com?subject=General%20Inquiry" class="connect-row">
@@ -532,10 +570,10 @@
       </div>
       <div class="connect-arrow">&rarr;</div>
     </a>
-    <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
+    <a href="https://instagram.com/pradyumna.1594" target="_blank" class="connect-row">
       <div class="connect-meta">
         <p class="type">Visual Journal</p>
-        <p class="handle">@pradyu_1594</p>
+        <p class="handle">@pradyumna.1594</p>
       </div>
       <div class="connect-arrow">&rarr;</div>
     </a>
@@ -564,9 +602,9 @@
     <div class="config-group">
       <span class="config-label">Select Dimensions</span>
       <div class="size-selector">
-        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £20</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £40</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £80</button>
+        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
+        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
+        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
       </div>
     </div>
 
@@ -595,7 +633,7 @@
 </div>
 
 <footer>
-  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
+  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">Snaps</span></a>
   <p class="footer-copy">&copy; 2026 PSnaps. All rights reserved.</p>
 </footer>
 
