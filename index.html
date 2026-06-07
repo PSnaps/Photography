@@ -29,26 +29,74 @@
     overflow-x: hidden;
   }
 
-  /* ── PROTECTION OVERLAYS ── */
-  img {
-    -webkit-user-drag: none;
-    user-select: none;
-    pointer-events: none;
-  }
-  .photo-card, .cat-card, .hl-slide { -webkit-user-select: none; user-select: none; }
+  /* Ensure scrollbars don't pop out behind the preloader curtain */
+  body.preloading { overflow: hidden !important; }
 
-  .hero::after,
-  .hl-slide::after,
-  .cat-card::after,
-  .lb-inner::after {
-    content: '';
-    position: absolute;
+  /* ── CINEMATIC OPENING OVERLAY ── */
+  #site-preloader {
+    position: fixed;
     inset: 0;
-    z-index: 10;
-    background: transparent;
-    pointer-events: auto;
+    background: var(--dark);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease;
+    will-change: transform, opacity;
   }
-  .lb-close, .lb-nav, .lb-action-bar, .cat-card-overlay { z-index: 20; }
+  #site-preloader.loaded {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  .preloader-inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .preloader-logo {
+    font-family: 'Playball', cursive;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    color: var(--cream);
+    opacity: 0;
+    transform: scale(0.96) translateY(15px);
+    animation: preloaderTextIn 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
+  }
+  .preloader-logo .p-letter { color: var(--gold); }
+  
+  .preloader-line-wrap {
+    width: 140px;
+    height: 1px;
+    background: rgba(200, 184, 154, 0.15);
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .preloader-line {
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 100%;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    animation: preloaderLineIn 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards 0.6s;
+  }
+  .preloader-manifesto {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: preloaderFadeIn 1s ease forwards 1.2s;
+  }
+
+  @keyframes preloaderTextIn { to { opacity: 1; transform: scale(1) translateY(0); } }
+  @keyframes preloaderLineIn { to { transform: scaleX(1); } }
+  @keyframes preloaderFadeIn { to { opacity: 1; transform: translateY(0); } }
 
   /* ── NAVIGATION ── */
   nav {
@@ -59,851 +107,139 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.4rem 3rem;
-    background: linear-gradient(to bottom, rgba(13,13,11,0.92) 0%, transparent 100%);
-    backdrop-filter: blur(3px);
+    background: linear-gradient(to bottom, rgba(13,13,11,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(4px);
   }
   .logo {
     font-family: 'Playball', cursive;
-    font-weight: 400;
     font-size: 2.1rem;
-    letter-spacing: -0.01em;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
   }
-  .logo-ps { 
-    color: var(--gold); 
-    text-shadow: 0 0 1px rgba(201,168,76,0.3);
-  }
-  .logo-naps { 
-    color: var(--cream); 
-    margin-left: -0.05em;
-  }
+  .logo-ps { color: var(--gold); }
+  .logo-naps { color: var(--cream); margin-left: -0.05em; }
 
-  .nav-right { display: flex; align-items: center; gap: 3rem; }
-  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-  .nav-links a {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 300;
-    font-size: 0.78rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    text-decoration: none;
-    transition: color 0.25s;
-  }
-  .nav-links a:hover { color: var(--gold); }
-
-  .cart-trigger {
-    background: none;
-    border: none;
-    color: var(--cream);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    position: relative;
-  }
-  .cart-count-badge {
-    background: var(--gold);
-    color: var(--dark);
-    font-weight: 600;
-    font-size: 0.65rem;
-    padding: 2px 6px;
-    border-radius: 10px;
-    min-width: 18px;
-    text-align: center;
-  }
-
-  /* ── HERO & DISPLAY TYPOGRAPHY ── */
+  /* ── HERO SPLIT LAYOUT ── */
   .hero {
     min-height: 100vh;
-    position: relative;
     display: flex;
     align-items: center;
-    padding: 8rem 3rem 5rem;
+    padding: 6rem 0 0 3rem;
     overflow: hidden;
+    position: relative;
   }
-  .hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    width: 100%;
+    align-items: center;
+    gap: 4rem;
+  }
+  .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
+  
+  .hero-image-pane {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 6rem);
+    overflow: hidden;
+    background: var(--mid);
+  }
+  .hero-cover-img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.45);
+    filter: brightness(0.88) contrast(1.02);
+    display: block;
   }
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(13,13,11,0.2) 0%, rgba(13,13,11,0.4) 60%, rgba(13,13,11,0.85) 100%);
-    z-index: 1;
-  }
-  .hero-content { 
-    position: relative; 
-    z-index: 2; 
-    max-width: 900px; 
-    width: 100%;
-  }
-  .hero-content * { pointer-events: auto; }
+
   .hero-eyebrow {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 300;
     font-size: 0.72rem;
     letter-spacing: 0.45em;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 2rem;
   }
-  
   .hero-display-title {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
     line-height: 1.15;
-    letter-spacing: -0.01em;
     margin-bottom: 2.5rem;
     display: flex;
     flex-direction: column;
   }
-  .hero-display-title .line-primary {
-    font-size: clamp(2.8rem, 6.5vw, 5.2rem);
-    color: var(--cream);
-    display: block;
-  }
-  .hero-display-title .line-connective {
-    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
-    font-style: italic;
-    font-weight: 300;
-    color: var(--warm);
-    margin-top: 1.4rem;
-    margin-bottom: 0.6rem;
-    display: block;
-    letter-spacing: 0.02em;
-  }
-  .hero-display-title .line-author {
-    font-size: clamp(2.8rem, 6.5vw, 5.2rem);
-    color: var(--cream);
-    display: block;
-  }
-
-  .hero-desc {
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.03em;
-    color: var(--text-light);
-    line-height: 1.65;
-    max-width: 440px;
-    margin-bottom: 3rem;
-  }
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 400;
-    font-size: 0.78rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--cream);
-    text-decoration: none;
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 0.3rem;
-    transition: color 0.3s;
-  }
+  .hero-display-title .line-primary { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
+  .hero-display-title .line-connective { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-style: italic; color: var(--warm); margin-top: 1.4rem; margin-bottom: 0.6rem; display: block; }
+  .hero-display-title .line-author { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
+  
+  .hero-desc { font-size: 0.95rem; letter-spacing: 0.03em; color: var(--text-light); line-height: 1.65; max-width: 440px; margin-bottom: 3rem; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 0.3rem; transition: color 0.3s; }
   .hero-cta:hover { color: var(--gold); }
 
-  /* ── REELS AND GRID SYSTEM ── */
-  .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
-  .cat-section.alt { background: var(--mid); }
-
-  .cat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 3rem 2.5rem;
-    cursor: pointer;
-    user-select: none;
+  @media (max-width: 992px) {
+    .hero { padding: 6rem 2rem 0 2rem; }
+    .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-image-pane { height: 55vh; }
   }
-  .cat-header-left { display: flex; flex-direction: column; gap: 0.3rem; }
-  .cat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); }
-  .cat-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1; color: var(--cream); transition: color 0.3s; }
-  .cat-header:hover .cat-title { color: var(--warm); }
-  .cat-header-right { display: flex; align-items: center; gap: 1.5rem; }
-  .cat-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 200; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--text-muted); }
-  .cat-toggle { width: 44px; height: 44px; border: 1px solid rgba(200,184,154,0.2); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s, transform 0.4s; flex-shrink: 0; }
-  .cat-header:hover .cat-toggle { border-color: var(--gold); }
-  .cat-toggle svg { transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
-  .cat-section.open .cat-toggle svg { transform: rotate(45deg); }
-
-  .cat-carousel-wrap { position: relative; overflow: hidden; }
-  .cat-rail { 
-    display: flex; 
-    gap: var(--gap-standard); 
-    padding: 0 3rem 1.5rem; 
-    overflow-x: auto; 
-    scroll-behavior: smooth; 
-    scrollbar-width: none; 
-    -webkit-overflow-scrolling: touch; 
-    transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1); 
-    max-height: 340px; 
-  }
-  .cat-rail::-webkit-scrollbar { display: none; }
-  
-  .cat-section.open .cat-rail { 
-    max-height: 2800px; 
-    flex-wrap: wrap; 
-    overflow-x: hidden; 
-    row-gap: 2.5rem; 
-    column-gap: var(--gap-standard);
-  }
-
-  .cat-card { flex: 0 0 290px; height: 310px; overflow: hidden; position: relative; background: var(--mid); cursor: pointer; }
-  .cat-section.open .cat-card { flex: 0 0 calc(25% - 1.15rem); height: 300px; }
-  .cat-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.05); transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s; }
-  .cat-card:hover img { transform: scale(1.05); filter: brightness(0.7) contrast(1.08); }
-  
-  .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.2rem; }
-  .cat-card:hover .cat-card-overlay { opacity: 1; }
-  .cat-card-desc-preview { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--cream); text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%; }
-
-  .cat-scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 15; width: 42px; height: 42px; background: rgba(13,13,11,0.85); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s, border-color 0.3s, opacity 0.3s; opacity: 0; }
-  .cat-carousel-wrap:hover .cat-scroll-btn { opacity: 1; }
-  .cat-scroll-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-  .cat-scroll-btn.left { left: 0.5rem; }
-  .cat-scroll-btn.right { right: 0.5rem; }
-  .cat-section.open .cat-scroll-btn { display: none; }
-
-  .cat-fade-left, .cat-fade-right { position: absolute; top: 0; bottom: 0; width: 60px; z-index: 5; pointer-events: none; transition: opacity 0.4s; }
-  .cat-fade-left { left: 3rem; background: linear-gradient(to right, var(--dark), transparent); opacity: 0; }
-  .cat-section.alt .cat-fade-left { background: linear-gradient(to right, var(--mid), transparent); }
-  .cat-fade-right { right: 0; background: linear-gradient(to left, var(--dark), transparent); }
-  .cat-section.alt .cat-fade-right { background: linear-gradient(to left, var(--mid), transparent); }
-  .cat-section.open .cat-fade-right, .cat-section.open .cat-fade-left { opacity: 0; }
-
-  .cat-expand-hint { padding: 0.5rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
-  .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
-
-  /* ── FEATURED HIGHLIGHTS ── */
-  #highlights { background: var(--mid); padding: 6rem 0; }
-  #highlights .section-header { padding: 0 3rem 2.5rem; border-bottom: 1px solid rgba(200,184,154,0.1); margin-bottom: 0; }
-  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; }
-  
-  .hl-wrapper { position: relative; overflow: hidden; margin-top: var(--gap-standard); }
-  .hl-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); padding: 0 3rem; gap: var(--gap-standard); }
-  .hl-slide { flex: 0 0 calc(50% - 0.75rem); height: 560px; overflow: hidden; position: relative; background: var(--dark); cursor: pointer; }
-  .hl-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82); transition: filter 0.5s; }
-  .hl-slide.active img { filter: brightness(0.95); }
-  .hl-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem 2rem 2rem; background: linear-gradient(transparent, rgba(13,13,11,0.85)); transform: translateY(100%); transition: transform 0.5s ease; z-index: 15; }
-  .hl-slide.active .hl-info { transform: translateY(0); }
-  .hl-num { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 0.4rem; }
-  .hl-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 1.5rem; color: var(--cream); }
-  
-  .hl-controls { display: flex; align-items: center; gap: 1.5rem; padding: 1.8rem 3rem 0; }
-  .hl-btn { background: none; border: 1px solid rgba(200,184,154,0.22); color: var(--cream); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.3s, background 0.3s; }
-  .hl-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-  .hl-progress { display: flex; gap: 5px; flex: 1; }
-  .hl-pip { height: 1px; background: rgba(200,184,154,0.18); flex: 1; position: relative; overflow: hidden; cursor: pointer; }
-  .hl-pip::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; background: var(--gold); width: 0%; transition: width 0.3s; }
-  .hl-pip.active::after { width: 100%; }
-  .hl-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); }
-
-  /* ── LIGHTBOX ── */
-  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
-  .lightbox.open { display: flex; }
-  .lb-inner { position: relative; max-width: 92vw; max-height: 76vh; display: flex; align-items: center; justify-content: center; }
-  .lb-inner img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; }
-  
-  .lb-close { position: absolute; top: 2rem; right: 3rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; transition: color 0.3s; }
-  .lb-close:hover { color: var(--cream); }
-  
-  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.7); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.3s, border-color 0.3s; }
-  .lb-nav:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-  .lb-nav.prev { left: -3.5rem; }
-  .lb-nav.next { right: -3.5rem; }
-
-  .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-  .lb-caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-light); line-height: 1.4; min-height: 1.6rem; }
-  
-  .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; }
-  .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
-
-  /* ── PRINT CONFIGURATOR MODAL ── */
-  .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
-  .inquiry-overlay.open { display: flex; }
-  .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; position: relative; }
-  .inquiry-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
-  .inquiry-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
-  
-  .config-group { margin-bottom: 1.5rem; }
-  .config-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.5rem; }
-  .size-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-  .size-btn { background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 0.6rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
-  .size-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
-  
-  .inquiry-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-  .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; cursor: pointer; flex: 1; text-align: center; }
-  .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; }
-
-  /* ── SLIDE OUT CART SYSTEM ── */
-  .cart-panel {
-    position: fixed;
-    top: 0; right: 0; bottom: 0;
-    width: 100%; max-width: 440px;
-    background: var(--mid);
-    border-left: 1px solid rgba(200,184,154,0.15);
-    z-index: 700;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    padding: 3rem 2.5rem;
-  }
-  .cart-panel.open { transform: translateX(0); }
-  .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
-  .cart-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
-  .cart-panel-close { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
-  .cart-panel-close:hover { color: var(--cream); }
-  
-  .cart-items-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; padding-right: 0.5rem; }
-  .cart-item { display: flex; gap: 1rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(200,184,154,0.08); }
-  .cart-item-thumb { width: 65px; height: 65px; object-fit: cover; background: var(--dark); }
-  .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
-  .cart-item-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; }
-  .cart-item-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.05em; color: var(--text-muted); text-transform: uppercase; }
-  .cart-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.05em; }
-  .cart-item-remove { background: none; border: none; color: rgba(220,90,90,0.7); font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-align: left; width: fit-content; margin-top: 0.3rem; }
-  .cart-item-remove:hover { color: rgb(220,90,90); }
-  
-  .cart-footer { margin-top: 2rem; border-top: 1px solid rgba(200,184,154,0.15); padding-top: 2rem; }
-  .cart-summary-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-  .cart-summary-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
-  .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.05em; }
-  .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; transition: background 0.3s; }
-  .checkout-btn:hover { background: #e3be5b; }
-  .empty-cart-msg { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--text-muted); text-align: center; margin-top: 4rem; }
-
-  /* ── CONNECT ── */
-  #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); background: linear-gradient(to bottom, var(--dark) 0%, #131310 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-  .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
-  .connect-profile h2 em { font-style: italic; color: var(--warm); }
-  .connect-profile p { font-size: 0.95rem; line-height: 1.8; color: var(--text-light); max-width: 440px; margin-bottom: 3rem; }
-  
-  .connect-methods { display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; }
-  .connect-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid rgba(200,184,154,0.1); text-decoration: none; color: var(--cream); transition: border-color 0.3s; }
-  .connect-row:hover { border-color: var(--gold); }
-  .connect-meta .type { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
-  .connect-meta .handle { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; }
-  .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
-  .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
-
-  /* ── FOOTER ── */
-  footer { padding: 4rem 3rem; background: #090908; border-top: 1px solid rgba(200,184,154,0.03); display: flex; align-items: center; justify-content: space-between; }
-  footer .logo { font-size: 1.8rem; }
-  .footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
-
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
   @media (max-width: 768px) {
-    nav { padding: 1.1rem 1.2rem; }
-    .nav-links { display: none; }
-    .hero { padding: 6rem 1.5rem 4rem; }
-    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.6rem; }
-    .hero-display-title .line-connective { font-size: 1.4rem; margin-top: 1rem; }
-    .cat-rail { padding: 0 1.2rem 1rem; gap: 1rem; }
-    .cat-section.open .cat-rail { row-gap: 2rem; column-gap: 1rem; }
-    .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; }
-    .cat-card { flex: 0 0 220px; height: 240px; }
-    .hl-track { padding: 0 1.2rem; gap: 1rem; }
-    .hl-slide { flex: 0 0 calc(100%); height: 380px; }
-    #connect { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
-    .cat-header, .cat-expand-hint, #highlights .section-header { padding-left: 1.2rem; padding-right: 1.2rem; }
-    .hl-controls { padding: 1.5rem 1.2rem 0; }
-    .lb-nav { display: none !important; }
-    .lb-close { top: 1rem; right: 1.5rem; }
-    .cart-panel { padding: 2rem 1.5rem; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 3rem 1.5rem; }
+    .hero { padding: 6rem 1.2rem 0 1.2rem; }
+    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; }
+    .hero-image-pane { height: 45vh; }
   }
 </style>
 </head>
-<body>
+<body class="preloading">
+
+<div id="site-preloader">
+  <div class="preloader-inner">
+    <div class="preloader-logo">
+      <span class="p-letter">P</span><span class="snaps-letters">Snaps</span>
+    </div>
+    <div class="preloader-line-wrap">
+      <div class="preloader-line"></div>
+    </div>
+    <p class="preloader-manifesto">Visual Journeys &bull; Fine Art Photography</p>
+  </div>
+</div>
 
 <nav>
-  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#highlights">Highlights</a></li>
-      <li><a href="#cities">Cities</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#nature">Nature</a></li>
-      <li><a href="#connect">Contact</a></li>
-    </ul>
-    <button class="cart-trigger" onclick="toggleCartPanel(true)">
-      Cart <span class="cart-count-badge" id="cartBadgeCount">0</span>
-    </button>
-  </div>
+  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">Snaps</span></a>
 </nav>
 
 <section class="hero">
-  <img class="hero-img" src="photos/hero.jpg" alt="Portfolio Canvas Layout" onerror="this.style.display='none'">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Photography by PSnaps</p>
-    
-    <h1 class="hero-display-title">
-      <span class="line-primary">The Fabric</span>
-      <span class="line-primary">of Space &amp; Time</span>
-      <span class="line-connective">from the lens of</span>
-      <span class="line-author">Pradyumna Saripalli</span>
-    </h1>
-    
-    <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
+  <div class="hero-layout">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Photography Portfolio</p>
+      <h1 class="hero-display-title">
+        <span class="line-primary">The Fabric</span>
+        <span class="line-primary">of Space &amp; Time</span>
+        <span class="line-connective">from the lens of</span>
+        <span class="line-author">Pradyumna Saripalli</span>
+      </h1>
+      <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
+      <a href="#" class="hero-cta">Explore Gallery &rarr;</a>
+    </div>
+
+    <div class="hero-image-pane">
+      <img class="hero-cover-img" src="{{ cover_image }}" alt="Featured Cover Art Canvas" onerror="this.style.display='none';">
+    </div>
   </div>
 </section>
-
-<section id="highlights">
-  <div class="section-header reveal">
-    <p class="section-label">Featured work</p>
-    <h2 class="section-title">Highlights</h2>
-  </div>
-  <div class="hl-wrapper">
-    <div class="hl-track" id="hlTrack"></div>
-  </div>
-  <div class="hl-controls">
-    <button class="hl-btn" id="hlPrev">&#8592;</button>
-    <button class="hl-btn" id="hlNext">&#8594;</button>
-    <div class="hl-progress" id="hlProgress"></div>
-    <span class="hl-counter" id="hlCounter">00 / 00</span>
-  </div>
-</section>
-
-<div id="cities" class="cat-section reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left">
-      <span class="cat-label">Series 01</span>
-      <h2 class="cat-title">Cities</h2>
-    </div>
-    <div class="cat-header-right">
-      <span class="cat-count" id="count-cities">0 Assets</span>
-      <div class="cat-toggle">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
-    <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-fade-left"></div><div class="cat-fade-right"></div>
-    <div class="cat-rail" id="rail-cities" onscroll="updateFade(this)"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<div id="architecture" class="cat-section alt reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left">
-      <span class="cat-label">Series 02</span>
-      <h2 class="cat-title">Architecture</h2>
-    </div>
-    <div class="cat-header-right">
-      <span class="cat-count" id="count-architecture">0 Assets</span>
-      <div class="cat-toggle">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
-    <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-fade-left"></div><div class="cat-fade-right"></div>
-    <div class="cat-rail" id="rail-architecture" onscroll="updateFade(this)"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<div id="nature" class="cat-section reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left">
-      <span class="cat-label">Series 03</span>
-      <h2 class="cat-title">Nature</h2>
-    </div>
-    <div class="cat-header-right">
-      <span class="cat-count" id="count-nature">0 Assets</span>
-      <div class="cat-toggle">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
-    <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-fade-left"></div><div class="cat-fade-right"></div>
-    <div class="cat-rail" id="rail-nature" onscroll="updateFade(this)"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<section id="connect" class="reveal">
-  <div class="connect-profile">
-    <h2>Available for prints.</h2>
-    <p>Every frame can be tailored to match and graciously accent your ambience./p>
-  </div>
-  <div class="connect-methods">
-    <a href="mailto:flipklik06@gmail.com?subject=General%20Inquiry" class="connect-row">
-      <div class="connect-meta">
-        <p class="type">Direct Correspondence</p>
-        <p class="handle">flipklik06@gmail.com</p>
-      </div>
-      <div class="connect-arrow">&rarr;</div>
-    </a>
-    <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
-      <div class="connect-meta">
-        <p class="type">Visual Journal</p>
-        <p class="handle">@pradyu_1594</p>
-      </div>
-      <div class="connect-arrow">&rarr;</div>
-    </a>
-  </div>
-</section>
-
-<div class="lightbox" id="globalLightbox">
-  <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
-  <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
-  <div class="lb-inner">
-    <img id="lightboxImg" src="" alt="Active Canvas">
-  </div>
-  <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
-  
-  <div class="lb-action-bar">
-    <p class="lb-caption" id="lightboxCaption">Loading description...</p>
-    <button class="lb-print-btn" onclick="openPrintConfigurator()">Configure Fine Art Print</button>
-  </div>
-</div>
-
-<div class="inquiry-overlay" id="inquiryOverlay">
-  <div class="inquiry-box">
-    <h3 class="inquiry-title">Configure Gallery Print</h3>
-    <p class="inquiry-subtitle">Premium Archival Paper, Unframed</p>
-    
-    <div class="config-group">
-      <span class="config-label">Select Dimensions</span>
-      <div class="size-selector">
-        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
-      </div>
-    </div>
-
-    <div class="inquiry-actions">
-      <button class="inquiry-submit" onclick="addSelectedToCart()">Add To Workspace Cart</button>
-      <button class="inquiry-cancel" onclick="closePrintConfigurator()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<div class="cart-panel" id="globalCartPanel">
-  <div class="cart-header-row">
-    <h3 class="cart-panel-title">Your Cart</h3>
-    <button class="cart-panel-close" onclick="toggleCartPanel(false)">Close &times;</button>
-  </div>
-  
-  <div class="cart-items-container" id="cartItemsContainer"></div>
-  
-  <div class="cart-footer">
-    <div class="cart-summary-line">
-      <span class="cart-summary-label">Total (GBP)</span>
-      <span class="cart-summary-value" id="cartSubtotal">£0.00</span>
-    </div>
-    <button class="checkout-btn" onclick="executeSecureCheckout()">Proceed to Secure Payment</button>
-  </div>
-</div>
-
-<footer>
-  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
-  <p class="footer-copy">&copy; 2026 PSnaps. All rights reserved.</p>
-</footer>
 
 <script>
-  let portfolioData = {};
-  let currentGalleryPool = [];
-  let currentGalleryIndex = 0;
-  let currentHlIndex = 0;
-  let globalCart = [];
-  let selectedSizeConfig = { size: 'A4', price: 45 };
-
-  window.addEventListener('contextmenu', e => {
-    if (e.target.tagName === 'IMG' || e.target.closest('.cat-card') || e.target.closest('.hl-slide') || e.target.closest('.lb-inner')) {
-      e.preventDefault();
+  // Track page lifecycle completion to transition preloader overlay cleanly
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('site-preloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.classList.add('loaded');
+        document.body.classList.remove('preloading');
+        setTimeout(() => { preloader.remove(); }, 1200);
+      }, 2200); // Editorial hold time window
     }
-  }, false);
-  window.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
-
-  function loadPortfolioData() {
-    fetch('gallery-data.json')
-      .then(res => res.json())
-      .then(data => {
-        portfolioData = data.galleryData || data.portfolio || data;
-        hydrateAllSections();
-      })
-      .catch(err => console.error("Error reading your structure:", err));
-  }
-
-  function sanitizeDescription(item, index, prefix) {
-    if (!item) return "Captured Frame";
-    const possibleDesc = item.description || item.desc || item.title;
-    if (possibleDesc && !possibleDesc.toLowerCase().includes('.txt') && !possibleDesc.toLowerCase().includes('.jpg')) {
-      return possibleDesc;
-    }
-    return `${prefix} Edition — Frame ${String(index + 1).padStart(2, '0')}`;
-  }
-
-  function hydrateAllSections() {
-    const highlightsPool = portfolioData.highlights || [];
-    const citiesPool = portfolioData.cities || [];
-    const archPool = portfolioData.architecture || [];
-    const naturePool = portfolioData.nature || [];
-
-    portfolioData.highlights = highlightsPool;
-    portfolioData.cities = citiesPool;
-    portfolioData.architecture = archPool;
-    portfolioData.nature = naturePool;
-
-    const track = document.getElementById('hlTrack');
-    if (highlightsPool.length > 0) {
-      track.innerHTML = highlightsPool.map((hl, idx) => {
-        const path = hl.src || hl.image || "";
-        const cleanDesc = sanitizeDescription(hl, idx, "Featured");
-        return `
-          <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('highlights', ${idx})">
-            <img src="${path}" alt="">
-            <div class="hl-info">
-              <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(highlightsPool.length).padStart(2, '0')}</p>
-              <h3 class="hl-title">${cleanDesc}</h3>
-            </div>
-          </div>
-        `;
-      }).join('');
-      initCarouselPips();
-      refreshCarouselView();
-    }
-
-    ['cities', 'architecture', 'nature'].forEach(cat => {
-      const rail = document.getElementById(`rail-${cat}`);
-      const countLabel = document.getElementById(`count-${cat}`);
-      const pool = portfolioData[cat] || [];
-      if (!rail) return;
-      
-      countLabel.textContent = `${pool.length} Photographs`;
-      
-      rail.innerHTML = pool.map((item, idx) => {
-        const path = item.src || item.image || "";
-        const cleanDesc = sanitizeDescription(item, idx, cat.charAt(0).toUpperCase() + cat.slice(1));
-        return `
-          <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
-            <img src="${path}" alt="Portfolio Element">
-            <div class="cat-card-overlay">
-              <p class="cat-card-desc-preview">${cleanDesc}</p>
-            </div>
-          </div>
-        `;
-      }).join('');
-      updateFade(rail);
-    });
-  }
-
-  function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }
-  
-  function scrollRail(btn, direction) {
-    const rail = btn.parentElement.querySelector('.cat-rail');
-    rail.scrollBy({ left: (rail.clientWidth * 0.75) * direction, behavior: 'smooth' });
-  }
-
-  function updateFade(rail) {
-    const wrap = rail.parentElement;
-    const fl = wrap.querySelector('.cat-fade-left');
-    const fr = wrap.querySelector('.cat-fade-right');
-    if(fl) fl.style.opacity = rail.scrollLeft > 10 ? "1" : "0";
-    if(fr) fr.style.opacity = rail.scrollLeft < (rail.scrollWidth - rail.clientWidth - 10) ? "1" : "0";
-  }
-
-  function openLightboxCategory(categoryKey, index) {
-    const pool = portfolioData[categoryKey] || [];
-    if(pool.length === 0) return;
-    currentGalleryPool = pool;
-    currentGalleryIndex = index;
-    displayLightboxInstance(categoryKey);
-  }
-
-  function displayLightboxInstance() {
-    const box = document.getElementById('globalLightbox');
-    const img = document.getElementById('lightboxImg');
-    const caption = document.getElementById('lightboxCaption');
-    
-    const activeAsset = currentGalleryPool[currentGalleryIndex];
-    img.src = activeAsset.src || activeAsset.image || "";
-    caption.textContent = sanitizeDescription(activeAsset, currentGalleryIndex, "Gallery Collection");
-
-    box.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    document.querySelectorAll('.lb-nav').forEach(n => n.style.display = currentGalleryPool.length <= 1 ? 'none' : 'flex');
-  }
-
-  function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); document.body.style.overflow = 'auto'; }
-  
-  function navigateLightbox(dir) {
-    if (currentGalleryPool.length <= 1) return;
-    currentGalleryIndex = (currentGalleryIndex + dir + currentGalleryPool.length) % currentGalleryPool.length;
-    displayLightboxInstance();
-  }
-
-  function openPrintConfigurator() { document.getElementById('inquiryOverlay').classList.add('open'); }
-  function closePrintConfigurator() { document.getElementById('inquiryOverlay').classList.remove('open'); }
-
-  function selectPrintSize(element, sizeName, basePrice) {
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    element.classList.add('active');
-    selectedSizeConfig = { size: sizeName, price: basePrice };
-  }
-
-  function addSelectedToCart() {
-    const activeAsset = currentGalleryPool[currentGalleryIndex];
-    const itemPayload = {
-      id: 'art-' + Date.now(),
-      src: activeAsset.src || activeAsset.image || "",
-      description: sanitizeDescription(activeAsset, currentGalleryIndex, "Fine Art Print"),
-      size: selectedSizeConfig.size,
-      price: selectedSizeConfig.price
-    };
-    
-    globalCart.push(itemPayload);
-    updateCartUI();
-    closePrintConfigurator();
-    closeLightbox();
-    toggleCartPanel(true);
-  }
-
-  function toggleCartPanel(shouldOpen) { document.getElementById('globalCartPanel').classList.toggle('open', shouldOpen); }
-
-  function removeCartItem(itemId) {
-    globalCart = globalCart.filter(item => item.id !== itemId);
-    updateCartUI();
-  }
-
-  function updateCartUI() {
-    document.getElementById('cartBadgeCount').textContent = globalCart.length;
-    const container = document.getElementById('cartItemsContainer');
-    let runningTotal = 0;
-    
-    if (globalCart.length === 0) {
-      container.innerHTML = `<p class="empty-cart-msg">Your workspace cart is currently empty.</p>`;
-      document.getElementById('cartSubtotal').textContent = "£0.00";
-      return;
-    }
-    
-    container.innerHTML = globalCart.map(item => {
-      runningTotal += item.price;
-      return `
-        <div class="cart-item">
-          <img src="${item.src}" class="cart-item-thumb" alt="">
-          <div class="cart-item-details">
-            <h4 class="cart-item-title">${item.description}</h4>
-            <span class="cart-item-meta">Specification: Gallery ${item.size}</span>
-            <span class="cart-item-price">£${item.price}.00</span>
-            <button class="cart-item-remove" onclick="removeCartItem('${item.id}')">Remove</button>
-          </div>
-        </div>
-      `;
-    }).join('');
-    
-    document.getElementById('cartSubtotal').textContent = `£${runningTotal}.00`;
-  }
-
-  function executeSecureCheckout() {
-    if(globalCart.length === 0) {
-      alert("Your workspace configuration cart is empty.");
-      return;
-    }
-    const itemsDescription = globalCart.map(i => `${i.description} (${i.size})`).join(', ');
-    const calculatedTotal = globalCart.reduce((acc, curr) => acc + curr.price, 0);
-    
-    const gatewaySubject = encodeURIComponent(`Secure Checkout Request — PSnaps Portfolio Order`);
-    const gatewayBody = encodeURIComponent(`Hello,\n\nI want to initialize payment settlement for the following configurations:\n\nItems: ${itemsDescription}\nTotal Order Pool Value: £${calculatedTotal}.00 GBP\n\nPlease reply with our payment processing interface link.`);
-    
-    window.location.href = `mailto:flipklik06@gmail.com?subject=${gatewaySubject}&body=${gatewayBody}`;
-  }
-
-  function initCarouselPips() {
-    const container = document.getElementById('hlProgress');
-    const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
-    container.innerHTML = '';
-    for(let i=0; i<count; i++) {
-      const pip = document.createElement('div');
-      pip.className = `hl-pip ${i === currentHlIndex ? 'active' : ''}`;
-      pip.addEventListener('click', () => { currentHlIndex = i; refreshCarouselView(); });
-      container.appendChild(pip);
-    }
-  }
-
-  function refreshCarouselView() {
-    const track = document.getElementById('hlTrack');
-    const slides = document.querySelectorAll('.hl-slide');
-    if(slides.length === 0) return;
-    
-    const gapVal = parseFloat(window.getComputedStyle(track).gap) || 0;
-    const itemStrideWidth = slides[0].getBoundingClientRect().width + gapVal;
-    
-    track.style.transform = `translateX(-${currentHlIndex * itemStrideWidth}px)`;
-    slides.forEach((s, idx) => s.classList.toggle('active', idx === currentHlIndex));
-    document.getElementById('hlCounter').textContent = `${String(currentHlIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-    document.querySelectorAll('.hl-pip').forEach((p, idx) => p.classList.toggle('active', idx === currentHlIndex));
-  }
-
-  document.getElementById('hlNext').addEventListener('click', () => {
-    const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
-    if(count === 0) return;
-    currentHlIndex = (currentHlIndex + 1) % count;
-    refreshCarouselView();
   });
-  document.getElementById('hlPrev').addEventListener('click', () => {
-    const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
-    if(count === 0) return;
-    currentHlIndex = (currentHlIndex - 1 + count) % count;
-    refreshCarouselView();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (document.getElementById('inquiryOverlay').classList.contains('open')) {
-      if (e.key === 'Escape') closePrintConfigurator();
-      return;
-    }
-    if (!document.getElementById('globalLightbox').classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') navigateLightbox(-1);
-    if (e.key === 'ArrowRight') navigateLightbox(1);
-  });
-
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
-  }, { threshold: 0.05 });
-
-  window.addEventListener('DOMContentLoaded', () => {
-    loadPortfolioData();
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  });
-  window.addEventListener('resize', () => refreshCarouselView());
 </script>
 </body>
 </html>
