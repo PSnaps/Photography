@@ -1,110 +1,84 @@
 import os
+import glob
 import json
+from jinja2 import Environment, FileSystemLoader
 
-def generate_portfolio_manifest():
-    photos_dir = "photos"
-    manifest_file = "gallery-data.json"
+def scan_gallery_folder(folder_name):
+    """
+    Scans a folder for images and safely normalizes their web paths.
+    """
+    extensions = ('*.jpg', '*.jpeg', '*.png', '*.webp', '*.JPG', '*.JPEG', '*.PNG', '*.WEBP')
+    items = []
     
-    # Target portfolio structure
-    manifest = {
-        "highlights": [],
-        "cities": [],
-        "architecture": [],
-        "nature": []
-    }
-    
-    if not os.path.exists(photos_dir):
-        print(f"Error: '{photos_dir}' directory not found in the current root.")
-        return
-
-    # Map subfolders cleanly to target JSON structures
-    category_mapping = {
-        "highlights": "highlights",
-        "cities": "cities",
-        "arch": "architecture",
-        "architecture": "architecture",
-        "nature": "nature"
-    }
-
-    print("Analyzing asset trees dynamically...")
-
-    # Traverse directory tree
-    for root, dirs, files in os.walk(photos_dir):
-        relative_path = os.path.relpath(root, photos_dir)
-        if relative_path == ".":
-            continue
+    if os.path.exists(folder_name):
+        found_files = []
+        for ext in extensions:
+            found_files.extend(glob.glob(os.path.join(folder_name, ext)))
             
-        # Determine current category partition from folder name
-        subfolder = relative_path.split(os.sep)[0]
-        target_category = category_mapping.get(subfolder.lower())
+        # Sort files alphabetically to keep order predictable
+        found_files.sort()
         
-        if not target_category:
-            continue
-
-        for file in sorted(files):
-            # Strict verification of image asset types (ignoring system hidden files)
-            if not file.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
-                continue
-                
-            base_name = os.path.splitext(file)[0]
-            # Construct web-safe absolute path strings inside standard layout wrapper
-            img_path = f"{photos_dir}/{relative_path}/{file}".replace('\\', '/')
-            txt_path = os.path.join(root, f"{base_name}.txt")
+        for filepath in found_files:
+            # 1. Standardize backslashes to forward slashes for the browser
+            web_path = filepath.replace("\\", "/")
             
-            # Default fallback description based cleanly on file naming structure
-            description = base_name.replace('-', ' ').replace('_', ' ').title()
+            # Fix: If your server requires paths starting with a leading slash, uncomment the line below:
+            # if not web_path.startswith("/"): web_path = "/" + web_path
             
-            # Bulletproof reading block for sidecar text files
-            if os.path.exists(txt_path):
-                # Try multiple common text encodings defensively to prevent decode crashes
-                encodings_to_try = ['utf-8', 'latin-1', 'cp1252', 'utf-16']
-                text_read_successfully = False
-                
-                for encoding in encodings_to_try:
-                    try:
-                        with open(txt_path, 'r', encoding=encoding) as f:
-                            content = f.read().strip()
-                            
-                            # Defensive guard: If the file signature smells like a binary image file, reject it
-                            if content.startswith(('\xff\xd8', '\x89PNG', 'GIF87a', 'GIF89a', 'RIFF')):
-                                print(f"Warning: Raw binary data detected inside structural path '{txt_path}'. Bypassing file parse safely.")
-                                break
-                                
-                            if content:
-                                description = content
-                            text_read_successfully = True
-                            break
-                    except (UnicodeDecodeError, PermissionError):
-                        continue
-                
-                if not text_read_successfully:
-                    print(f"Warning: Failed to extract descriptor safely from '{txt_path}'. Reverting to clean filename title framework.")
-
-            # Append the structured data payload
-            manifest[target_category].append({
-                "src": img_path,
-                "description": description
+            # 2. Build clean text descriptions from file names
+            filename_raw = os.path.splitext(os.path.basename(web_path))[0]
+            clean_caption = filename_raw.replace("-", " ").replace("_", " ").title()
+            
+            items.append({
+                "src": web_path,
+                "description": clean_caption
             })
-
-    # Wrap inside an outer 'galleryData' namespace block to provide fallback mapping options inside index.html
-    output_payload = {
-        "galleryData": manifest
-    }
-
-    try:
-        with open(manifest_file, 'w', encoding='utf-8') as f:
-            json.dump(output_payload, f, indent=2, ensure_ascii=False)
-            
-        print("\n=== SYSTEM INVENTORY COMPLETED ===")
-        print(f"File configured: '{manifest_file}'")
-        print(f" - Highlights Subspace:   {len(manifest['highlights'])} records")
-        print(f" - Cities Subspace:       {len(manifest['cities'])} records")
-        print(f" - Architecture Subspace: {len(manifest['architecture'])} records")
-        print(f" - Nature Subspace:       {len(manifest['nature'])} records")
-        print("===================================\n")
+    else:
+        os.makedirs(folder_name)
+        print(f"--> Created empty missing directory: '{folder_name}/'")
         
-    except Exception as e:
-        print(f"Fatal: Could not serialize configurations securely to disk: {e}")
+    return items
+
+def build_portfolio():
+    print("--> Starting fixed portfolio build engine...")
+    
+    # Setup Jinja template environment
+    env = Environment(loader=FileSystemLoader('.'))
+    try:
+        template = env.get_template('templates/index.html')
+    except Exception:
+        template = env.get_template('index.html')
+
+    # 1. Grab Cover Image
+    cover_assets = scan_gallery_folder("cover")
+    if cover_assets:
+        # Force exact resolution structure
+        cover_image_path = cover_assets[0]["src"]
+        print(f"--> Matched Cover Path: {cover_image_path}")
+    else:
+        # Luxury layout fallback path
+        cover_image_path = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1600"
+        print("--> Notice: 'cover/' is blank. Defaulting to Unsplash asset placeholder.")
+
+    # 2. Index Categories
+    categories = ["highlights", "cities", "architecture", "nature"]
+    gallery_database = {}
+    
+    for cat in categories:
+        gallery_database[cat] = scan_gallery_folder(cat)
+        print(f"--> Category '{cat}' processed: {len(gallery_database[cat])} images synced.")
+
+    # 3. Write out the dynamic data map file
+    with open('gallery-data.json', 'w', encoding='utf-8') as json_file:
+        json.dump(gallery_database, json_file, indent=2)
+    print("--> Synced 'gallery-data.json' successfully.")
+
+    # 4. Render and verify template output
+    output_html = template.render(cover_image=cover_image_path)
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(output_html)
+    
+    print("--> Build complete! Check 'index.html' locally.")
 
 if __name__ == "__main__":
-    generate_portfolio_manifest()
+    build_portfolio()
