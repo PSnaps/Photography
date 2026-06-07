@@ -1,76 +1,74 @@
 {
-  "galleryData": {
-    "highlights": [
-      {
-        "src": "photos/highlights/Big Sur.jpg",
-        "description": "Big Sur"
-      },
-      {
-        "src": "photos/highlights/IMG_3642-HDR-2.jpg",
-        "description": "Img 3642 Hdr 2"
-      },
-      {
-        "src": "photos/highlights/San Fransisco.jpg",
-        "description": "San Fransisco"
-      },
-      {
-        "src": "photos/highlights/The Guests.jpg",
-        "description": "The Guests"
-      },
-      {
-        "src": "photos/highlights/The Palette.jpg",
-        "description": "The Palette"
-      }
-    ],
-    "cities": [
-      {
-        "src": "photos/cities/Amsterdam.jpg",
-        "description": "Amsterdam"
-      },
-      {
-        "src": "photos/cities/Capitol Building.jpg",
-        "description": "Capitol Building"
-      },
-      {
-        "src": "photos/cities/Zanseschans.jpg",
-        "description": "Zanseschans"
-      }
-    ],
-    "architecture": [
-      {
-        "src": "photos/architecture/Brooklyn.jpg",
-        "description": "Brooklyn"
-      },
-      {
-        "src": "photos/architecture/Deewan-e-Dilli.jpg",
-        "description": "Deewan E Dilli"
-      },
-      {
-        "src": "photos/architecture/Florence.jpg",
-        "description": "Florence"
-      },
-      {
-        "src": "photos/architecture/The Grand Throne.jpg",
-        "description": "The Grand Throne"
-      }
-    ],
-    "nature": [
-      {
-        "src": "photos/nature/Home Away.jpg",
-        "description": "Home Away"
-      },
-      {
-        "src": "photos/nature/Serenity.jpg",
-        "description": "Serenity"
-      },
-      {
-        "src": "photos/nature/The ball of fire.jpg",
-        "description": "The Ball Of Fire"
-      },
-      {
-        "src": "photos/nature/The other side.jpg",
-        "description": "The Other Side"
-      }
-    ]
-  }
+  "highlights": [
+    {
+      "src": "photos/highlights/Big Sur.jpg",
+      "description": "Big Sur"
+    },
+    {
+      "src": "photos/highlights/IMG_3642-HDR-2.jpg",
+      "description": "Img 3642 Hdr 2"
+    },
+    {
+      "src": "photos/highlights/San Fransisco.jpg",
+      "description": "San Fransisco"
+    },
+    {
+      "src": "photos/highlights/The Guests.jpg",
+      "description": "The Guests"
+    },
+    {
+      "src": "photos/highlights/The Palette.jpg",
+      "description": "The Palette"
+    }
+  ],
+  "cities": [
+    {
+      "src": "photos/cities/Amsterdam.jpg",
+      "description": "Amsterdam"
+    },
+    {
+      "src": "photos/cities/Capitol Building.jpg",
+      "description": "Capitol Building"
+    },
+    {
+      "src": "photos/cities/Zanseschans.jpg",
+      "description": "Zanseschans"
+    }
+  ],
+  "architecture": [
+    {
+      "src": "photos/architecture/Brooklyn.jpg",
+      "description": "Brooklyn"
+    },
+    {
+      "src": "photos/architecture/Deewan-e-Dilli.jpg",
+      "description": "Deewan E Dilli"
+    },
+    {
+      "src": "photos/architecture/Florence.jpg",
+      "description": "Florence"
+    },
+    {
+      "src": "photos/architecture/The Grand Throne.jpg",
+      "description": "The Grand Throne"
+    }
+  ],
+  "nature": [
+    {
+      "src": "photos/nature/Home Away.jpg",
+      "description": "Home Away"
+    },
+    {
+      "src": "photos/nature/Serenity.jpg",
+      "description": "Serenity"
+    },
+    {
+      "src": "photos/nature/The ball of fire.jpg",
+      "description": "The Ball Of Fire"
+    },
+    {
+      "src": "photos/nature/The other side.jpg",
+      "description": "The Other Side"
+    }
+  ]
 }
