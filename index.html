@@ -151,7 +151,7 @@
   }
   .hero-cta:hover { color: var(--gold); }
 
-  /* ── DYNAMIC REELS ── */
+  /* ── REELS ── */
   .cat-section { padding: 5rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
   .cat-section.alt { background: var(--mid); }
 
@@ -250,7 +250,7 @@
   .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s; }
   .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
-  /* ── ORDER INTERACTIVE STAGE ── */
+  /* ── ORDER INQUIRY MODAL ── */
   .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
   .inquiry-overlay.open { display: flex; }
   .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; position: relative; }
@@ -264,7 +264,7 @@
   .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; cursor: pointer; }
   .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; }
 
-  /* ── CONTACT ── */
+  /* ── CONNECT ── */
   #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); background: linear-gradient(to bottom, var(--dark) 0%, #131310 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
   .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
   .connect-profile h2 em { font-style: italic; color: var(--warm); }
@@ -315,12 +315,12 @@
 </nav>
 
 <section class="hero">
-  <img class="hero-img" src="photos/hero.jpg" alt="Portfolio Canvas" onerror="this.style.display='none'">
+  <img class="hero-img" src="photos/hero.jpg" alt="Portfolio Backdrop Canvas" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Photography by PSnaps</p>
     <h1>The world<br>through a <em>different</em><br>lens</h1>
-    <p class="hero-desc">Cities, architecture, nature, and hidden structural details — captured with stillness and structural intention.</p>
+    <p class="hero-desc">Cities, architecture, nature, and hidden structural details — captured with stillness and architectural intention.</p>
     <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
   </div>
 </section>
@@ -444,7 +444,7 @@
   <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
   <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
   <div class="lb-inner">
-    <img id="lightboxImg" src="" alt="Gallery Active View">
+    <img id="lightboxImg" src="" alt="Active View Canvas">
   </div>
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   
@@ -458,7 +458,7 @@
   <div class="inquiry-box">
     <h3 class="inquiry-title">Order Print Specification</h3>
     <p class="inquiry-subtitle" id="inquiryAssetRef">Asset: None</p>
-    <textarea class="inquiry-textarea" id="userQueryInput" placeholder="Write your query details here... Specify preferred dimensions (e.g. A2, 50x70cm) or custom paper profiles."></textarea>
+    <textarea class="inquiry-textarea" id="userQueryInput" placeholder="Write query details... Specify preferred dimensions (e.g. A2, 50x70cm) or frame options."></textarea>
     <div class="inquiry-actions">
       <button class="inquiry-submit" onclick="submitInquiryEmail()">Compile &amp; Send</button>
       <button class="inquiry-cancel" onclick="closeInquiryDialog()">Cancel</button>
@@ -477,7 +477,7 @@
   let currentGalleryIndex = 0;
   let currentHlIndex = 0;
 
-  /* ── INTERACTION LOCKS ── */
+  /* ── INTERACTION SAFETY GUARDS ── */
   window.addEventListener('contextmenu', e => {
     if (e.target.tagName === 'IMG' || e.target.closest('.cat-card') || e.target.closest('.hl-slide') || e.target.closest('.lb-inner') || e.target.closest('.hero')) {
       e.preventDefault();
@@ -485,35 +485,54 @@
   }, false);
   window.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 
-  /* ── FETCH JSON CONFIG ── */
+  /* ── READ DYNAMIC DATA CONFIG SOURCE ── */
   function loadPortfolioData() {
-    fetch('manifest.json')
+    fetch('gallery-data.json')
       .then(res => res.json())
       .then(data => {
-        portfolioData = data;
+        // Safe mapping architecture in case your keys are nested inside an envelope root
+        portfolioData = data.galleryData || data.portfolio || data;
         hydrateAllSections();
       })
-      .catch(err => console.error("Error accessing manifest configuration file:", err));
+      .catch(err => {
+        console.error("Error reading your gallery-data.json layout file:", err);
+      });
   }
 
   function hydrateAllSections() {
-    // 1. Build Highlights Track
+    // Locate categories inside JSON structure safely checking naming variations
+    const highlightsPool = portfolioData.highlights || portfolioData.featured || [];
+    const citiesPool = portfolioData.cities || portfolioData.city || [];
+    const archPool = portfolioData.architecture || portfolioData.arch || [];
+    const naturePool = portfolioData.nature || [];
+
+    // Store mapped variations back to global dictionary references for runtime controls
+    portfolioData.highlights = highlightsPool;
+    portfolioData.cities = citiesPool;
+    portfolioData.architecture = archPool;
+    portfolioData.nature = naturePool;
+
+    // 1. Render Highlights Track
     const track = document.getElementById('hlTrack');
-    if (portfolioData.highlights && portfolioData.highlights.length > 0) {
-      track.innerHTML = portfolioData.highlights.map((hl, idx) => `
-        <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxDirectPool('highlights', ${idx})">
-          <img src="${hl.src}" alt="">
-          <div class="hl-info">
-            <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(portfolioData.highlights.length).padStart(2, '0')}</p>
-            <h3 class="hl-title">${hl.description}</h3>
+    if (highlightsPool.length > 0) {
+      track.innerHTML = highlightsPool.map((hl, idx) => {
+        const path = hl.src || hl.image || hl.url || "";
+        const desc = hl.description || hl.desc || hl.title || "Featured Frame";
+        return `
+          <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('highlights', ${idx})">
+            <img src="${path}" alt="">
+            <div class="hl-info">
+              <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(highlightsPool.length).padStart(2, '0')}</p>
+              <h3 class="hl-title">${desc}</h3>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
       initCarouselPips();
       refreshCarouselView();
     }
 
-    // 2. Build Category Rails
+    // 2. Render Category Rails Loop
     const categories = ['cities', 'architecture', 'nature'];
     categories.forEach(cat => {
       const rail = document.getElementById(`rail-${cat}`);
@@ -523,19 +542,23 @@
       if (!rail) return;
       countLabel.textContent = `${pool.length} Photographs`;
       
-      rail.innerHTML = pool.map((item, idx) => `
-        <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
-          <img src="${item.src}" alt="Portfolio Shot">
-          <div class="cat-card-overlay">
-            <p class="cat-card-desc-preview">${item.description}</p>
+      rail.innerHTML = pool.map((item, idx) => {
+        const path = item.src || item.image || item.url || "";
+        const desc = item.description || item.desc || item.title || "Gallery Frame";
+        return `
+          <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
+            <img src="${path}" alt="Portfolio Workspace Asset">
+            <div class="cat-card-overlay">
+              <p class="cat-card-desc-preview">${desc}</p>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
       updateFade(rail);
     });
   }
 
-  /* ── UI CONTROLS ── */
+  /* ── CONTAINER INTERACTIONS ── */
   function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }
   
   function scrollRail(btn, direction) {
@@ -551,15 +574,14 @@
     if(fr) fr.style.opacity = rail.scrollLeft < (rail.scrollWidth - rail.clientWidth - 10) ? "1" : "0";
   }
 
-  /* ── MODAL LIGHTBOX ENGINE ── */
+  /* ── SYSTEM MODAL LIGHTBOX ENGINE ── */
   function openLightboxCategory(categoryKey, index) {
-    currentGalleryPool = portfolioData[categoryKey].map(item => item);
+    const pool = portfolioData[categoryKey] || [];
+    if(pool.length === 0) return;
+    
+    currentGalleryPool = pool;
     currentGalleryIndex = index;
     displayLightboxInstance();
-  }
-
-  function openLightboxDirectPool(categoryKey, index) {
-    openLightboxCategory(categoryKey, index);
   }
 
   function displayLightboxInstance() {
@@ -568,14 +590,16 @@
     const caption = document.getElementById('lightboxCaption');
     
     const activeAsset = currentGalleryPool[currentGalleryIndex];
-    img.src = activeAsset.src;
-    caption.textContent = activeAsset.description || "Portfolio Asset";
+    const path = activeAsset.src || activeAsset.image || activeAsset.url || "";
+    const desc = activeAsset.description || activeAsset.desc || activeAsset.title || "Gallery Frame";
+    
+    img.src = path;
+    caption.textContent = desc;
 
     box.classList.add('open');
     document.body.style.overflow = 'hidden';
     
-    const navs = document.querySelectorAll('.lb-nav');
-    navs.forEach(n => n.style.display = currentGalleryPool.length <= 1 ? 'none' : 'flex');
+    document.querySelectorAll('.lb-nav').forEach(n => n.style.display = currentGalleryPool.length <= 1 ? 'none' : 'flex');
   }
 
   function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); document.body.style.overflow = 'auto'; }
@@ -586,10 +610,11 @@
     displayLightboxInstance();
   }
 
-  /* ── INQUIRY SUBMIT ENGINE ── */
+  /* ── PRINTS CONSOLE SPECIFICATION LINK ── */
   function openInquiryDialog() {
     const asset = currentGalleryPool[currentGalleryIndex];
-    const filename = asset.src.substring(asset.src.lastIndexOf('/') + 1);
+    const path = asset.src || asset.image || asset.url || "unknown.jpg";
+    const filename = path.substring(path.lastIndexOf('/') + 1);
     document.getElementById('inquiryAssetRef').textContent = `Asset: ${filename}`;
     document.getElementById('userQueryInput').value = ''; 
     document.getElementById('inquiryOverlay').classList.add('open');
@@ -599,11 +624,12 @@
 
   function submitInquiryEmail() {
     const asset = currentGalleryPool[currentGalleryIndex];
-    const filename = asset.src.substring(asset.src.lastIndexOf('/') + 1);
+    const path = asset.src || asset.image || asset.url || "unknown.jpg";
+    const filename = path.substring(path.lastIndexOf('/') + 1);
     const msg = document.getElementById('userQueryInput').value.trim();
     
     const subject = encodeURIComponent(`Fine Art Print Order Request — ${filename}`);
-    let body = `Hello,\n\nI am interested in ordering a fine art print of: ${filename}.\n\n`;
+    let body = `Hello,\n\nI am interested in configuring a fine art custom print for reference: ${filename}.\n\n`;
     if(msg) body += `My Specifications:\n"${msg}"\n\n`;
     body += `Sent via portfolio console.`;
 
@@ -611,12 +637,12 @@
     closeInquiryDialog();
   }
 
-  /* ── HIGHLIGHTS SLIDER ENGINE ── */
+  /* ── HIGH LEVEL CAROUSEL TRACK RUNTIME ── */
   function initCarouselPips() {
     const container = document.getElementById('hlProgress');
-    const slidesCount = document.querySelectorAll('.hl-slide').length;
+    const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
     container.innerHTML = '';
-    for(let i=0; i<slidesCount; i++) {
+    for(let i=0; i<count; i++) {
       const pip = document.createElement('div');
       pip.className = `hl-pip ${i === currentHlIndex ? 'active' : ''}`;
       pip.addEventListener('click', () => { currentHlIndex = i; refreshCarouselView(); });
@@ -637,12 +663,14 @@
   }
 
   document.getElementById('hlNext').addEventListener('click', () => {
-    const count = document.querySelectorAll('.hl-slide').length;
+    const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
+    if(count === 0) return;
     currentHlIndex = (currentHlIndex + 1) % count;
     refreshCarouselView();
   });
   document.getElementById('hlPrev').addEventListener('click', () => {
-    const count = document.querySelectorAll('.hl-slide').length;
+    const count = portfolioData.highlights ? portfolioData.highlights.length : 0;
+    if(count === 0) return;
     currentHlIndex = (currentHlIndex - 1 + count) % count;
     refreshCarouselView();
   });
@@ -659,7 +687,7 @@
     if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
-  /* Reveal Intersection Observer Engine */
+  /* Intersection Observer Engine */
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } });
   }, { threshold: 0.1 });
