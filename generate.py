@@ -1,74 +1,110 @@
 import os
 import json
 
-folders = {
-    'architecture': 'photos/architecture',
-    'nature': 'photos/nature',
-    'cities': 'photos/cities',
-    'featured': 'photos/featured'
-}
+def generate_portfolio_manifest():
+    photos_dir = "photos"
+    manifest_file = "gallery-data.json"
+    
+    # Target portfolio structure
+    manifest = {
+        "highlights": [],
+        "cities": [],
+        "architecture": [],
+        "nature": []
+    }
+    
+    if not os.path.exists(photos_dir):
+        print(f"Error: '{photos_dir}' directory not found in the current root.")
+        return
 
-manifest = {
-    'hero': [],
-    'highlights': [],
-    'cities': [],
-    'architecture': [],
-    'nature': []
-}
+    # Map subfolders cleanly to target JSON structures
+    category_mapping = {
+        "highlights": "highlights",
+        "cities": "cities",
+        "arch": "architecture",
+        "architecture": "architecture",
+        "nature": "nature"
+    }
 
-valid_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
+    print("Analyzing asset trees dynamically...")
 
-for category, path in folders.items():
-    if os.path.exists(path):
-        files = sorted(os.listdir(path))
-        for f in files:
-            if f.lower().endswith(valid_extensions) and not f.startswith('.'):
-                full_path = f"{path}/{f}"
-                base_name = os.path.splitext(f)[0]
+    # Traverse directory tree
+    for root, dirs, files in os.walk(photos_dir):
+        relative_path = os.path.relpath(root, photos_dir)
+        if relative_path == ".":
+            continue
+            
+        # Determine current category partition from folder name
+        subfolder = relative_path.split(os.sep)[0]
+        target_category = category_mapping.get(subfolder.lower())
+        
+        if not target_category:
+            continue
+
+        for file in sorted(files):
+            # Strict verification of image asset types (ignoring system hidden files)
+            if not file.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
+                continue
                 
-                # Check for a matching story file (e.g., IMG_1024.txt)
-                story_path = os.path.join(path, f"{base_name}.txt")
-                story_text = ""
+            base_name = os.path.splitext(file)[0]
+            # Construct web-safe absolute path strings inside standard layout wrapper
+            img_path = f"{photos_dir}/{relative_path}/{file}".replace('\\', '/')
+            txt_path = os.path.join(root, f"{base_name}.txt")
+            
+            # Default fallback description based cleanly on file naming structure
+            description = base_name.replace('-', ' ').replace('_', ' ').title()
+            
+            # Bulletproof reading block for sidecar text files
+            if os.path.exists(txt_path):
+                # Try multiple common text encodings defensively to prevent decode crashes
+                encodings_to_try = ['utf-8', 'latin-1', 'cp1252', 'utf-16']
+                text_read_successfully = False
                 
-                if os.path.exists(story_path):
-                    # Smart reading logic to handle encoding conflicts smoothly
+                for encoding in encodings_to_try:
                     try:
-                        with open(story_path, 'r', encoding='utf-8') as sf:
-                            story_text = sf.read().strip()
-                    except UnicodeDecodeError:
-                        try:
-                            # Fallback to UTF-16 if TextEdit saved it with byte markers (0xff)
-                            with open(story_path, 'r', encoding='utf-16') as sf:
-                                story_text = sf.read().strip()
-                        except Exception:
-                            try:
-                                # Safe system fallback for standard legacy text
-                                with open(story_path, 'r', encoding='latin-1') as sf:
-                                    story_text = sf.read().strip()
-                            except Exception as e:
-                                print(f"⚠️ Could not parse story for {f}: {e}")
-                                story_text = ""
+                        with open(txt_path, 'r', encoding=encoding) as f:
+                            content = f.read().strip()
+                            
+                            # Defensive guard: If the file signature smells like a binary image file, reject it
+                            if content.startswith(('\xff\xd8', '\x89PNG', 'GIF87a', 'GIF89a', 'RIFF')):
+                                print(f"Warning: Raw binary data detected inside structural path '{txt_path}'. Bypassing file parse safely.")
+                                break
+                                
+                            if content:
+                                description = content
+                            text_read_successfully = True
+                            break
+                    except (UnicodeDecodeError, PermissionError):
+                        continue
                 
-                # Clean up title fallbacks from file name
-                title_clean = base_name.replace('_', ' ').replace('-', ' ').title()
-                
-                if category == 'featured':
-                    if 'hero' in f.lower():
-                        manifest['hero'].append({'file': full_path})
-                    else:
-                        manifest['highlights'].append({
-                            'file': full_path, 
-                            'title': title_clean,
-                            'story': story_text
-                        })
-                else:
-                    manifest[category].append({
-                        'file': full_path, 
-                        'label': title_clean,
-                        'story': story_text
-                    })
+                if not text_read_successfully:
+                    print(f"Warning: Failed to extract descriptor safely from '{txt_path}'. Reverting to clean filename title framework.")
 
-with open('gallery-data.json', 'w', encoding='utf-8') as out_file:
-    json.dump(manifest, out_file, indent=2, ensure_ascii=False)
+            # Append the structured data payload
+            manifest[target_category].append({
+                "src": img_path,
+                "description": description
+            })
 
-print("✅ Success! gallery-data.json has been completely rebuilt.")
+    # Wrap inside an outer 'galleryData' namespace block to provide fallback mapping options inside index.html
+    output_payload = {
+        "galleryData": manifest
+    }
+
+    try:
+        with open(manifest_file, 'w', encoding='utf-8') as f:
+            json.dump(output_payload, f, indent=2, ensure_ascii=False)
+            
+        print("\n=== SYSTEM INVENTORY COMPLETED ===")
+        print(f"File configured: '{manifest_file}'")
+        print(f" - Highlights Subspace:   {len(manifest['highlights'])} records")
+        print(f" - Cities Subspace:       {len(manifest['cities'])} records")
+        print(f" - Architecture Subspace: {len(manifest['architecture'])} records")
+        print(f" - Nature Subspace:       {len(manifest['nature'])} records")
+        print("===================================\n")
+        
+    except Exception as e:
+        print(f"Fatal: Could not serialize configurations securely to disk: {e}")
+
+if __name__ == "__main__":
+    generate_portfolio_manifest()
