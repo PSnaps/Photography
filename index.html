@@ -1,290 +1,3 @@
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* Connect Section */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-profile h2 em { font-style: italic; color: var(--warm); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-profile p { font-size: 0.95rem; line-height: 1.8; color: var(--text-light); max-width: 440px; margin-bottom: 3rem; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-methods { display: flex; flex-direction: column; gap: 1.5rem; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid rgba(200,184,154,0.1); text-decoration: none; color: var(--cream); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-row-left { display: flex; align-items: center; gap: 1.5rem; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-icon { width: 1.6rem; height: 1.6rem; color: var(--text-muted); transition: color 0.3s, transform 0.3s; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-row:hover .connect-icon { color: var(--gold); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-meta .type { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-meta .handle { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }</p>
-<p class="p2"><span class="Apple-converted-space">  </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* Footer Branding */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer { background: #090908; padding: 3.5rem 3rem; display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(200,184,154,0.04); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-logo .f-logo-ps { color: var(--gold); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; line-height: 1; padding-bottom: 0.35rem; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* Reveals */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.reveal.visible { opacity: 1; transform: translateY(0); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>/* Media Queries */</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width: 992px) { .hero { padding: 6rem 2rem 0 2rem; } .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } .hero-image-pane { height: 55vh; } #connect { grid-template-columns: 1fr; } }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width: 768px) {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.nav-links { display: none; }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.cat-card { flex: 0 0 220px; height: 240px; }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.hl-slide { flex: 0 0 100%; height: 380px; }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.lb-nav { display: none !important; }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.footer-copy { padding-bottom: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="preloading"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="site-preloader"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="preloader-inner"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="preloader-logo"&gt;&lt;span class="p-letter"&gt;PS&lt;/span&gt;&lt;span class="naps-letters"&gt;naps&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="preloader-line-wrap"&gt;&lt;div class="preloader-line"&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="preloader-manifesto"&gt;&amp;bull; Visual Journeys &amp;bull;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;nav&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;a href="#" class="logo"&gt;&lt;span class="logo-ps"&gt;PS&lt;/span&gt;&lt;span class="logo-naps"&gt;naps&lt;/span&gt;&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-right"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;ul class="nav-links"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="#highlights"&gt;Highlights&lt;/a&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="#cities"&gt;Cities&lt;/a&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="#architecture"&gt;Architecture&lt;/a&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="#nature"&gt;Nature&lt;/a&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;&lt;a href="#connect"&gt;Contact&lt;/a&gt;&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/nav&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;section class="hero"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hero-layout"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hero-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="hero-eyebrow"&gt;Photography Portfolio&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1 class="hero-display-title"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="line-primary"&gt;The Fabric&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="line-primary"&gt;of &lt;em&gt;Space &amp;amp; Time&lt;/em&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="line-connective"&gt;from the lens of&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="line-author"&gt;&lt;em&gt;Pradyumna Saripalli&lt;/em&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="hero-desc"&gt;Capturing life, light and culture, one frame at a time.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="#highlights" class="hero-cta"&gt;View highlights &amp;rarr;&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hero-image-pane"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;section id="highlights"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="section-header reveal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 class="section-title"&gt;Highlights&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hl-wrapper"&gt;&lt;div class="hl-track" id="hlTrack"&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="hl-controls"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="hl-btn" id="hlPrev"&gt;&amp;#8592;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="hl-btn" id="hlNext"&gt;&amp;#8594;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hl-progress" id="hlProgress"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="hl-counter" id="hlCounter"&gt;00 / 00&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="cities" class="cat-section reveal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cat-header" onclick="toggleCat(this)"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-header-left"&gt;&lt;span class="cat-label"&gt;Series 01&lt;/span&gt;&lt;h2 class="cat-title"&gt;Cities&lt;/h2&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-header-right"&gt;&lt;span class="cat-count" id="count-cities"&gt;0 Photographs&lt;/span&gt;&lt;div class="cat-toggle"&gt;&lt;svg width="14" height="14" viewBox="0 0 14 14" fill="none"&gt;&lt;line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/&gt;&lt;line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cat-carousel-wrap"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="cat-scroll-btn left" onclick="scrollRail(this,-1)"&gt;&amp;#8592;&lt;/button&gt;&lt;button class="cat-scroll-btn right" onclick="scrollRail(this,1)"&gt;&amp;#8594;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-rail" id="rail-cities"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="cat-expand-hint"&gt;Click section heading to expand grid &amp;rarr;&lt;/p&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="architecture" class="cat-section alt reveal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cat-header" onclick="toggleCat(this)"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-header-left"&gt;&lt;span class="cat-label"&gt;Series 02&lt;/span&gt;&lt;h2 class="cat-title"&gt;Architecture&lt;/h2&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-header-right"&gt;&lt;span class="cat-count" id="count-architecture"&gt;0 Photographs&lt;/span&gt;&lt;div class="cat-toggle"&gt;&lt;svg width="14" height="14" viewBox="0 0 14 14" fill="none"&gt;&lt;line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/&gt;&lt;line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cat-carousel-wrap"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="cat-scroll-btn left" onclick="scrollRail(this,-1)"&gt;&amp;#8592;&lt;/button&gt;&lt;button class="cat-scroll-btn right" onclick="scrollRail(this,1)"&gt;&amp;#8594;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-rail" id="rail-architecture"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="cat-expand-hint"&gt;Click section heading to expand grid &amp;rarr;&lt;/p&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="nature" class="cat-section reveal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cat-header" onclick="toggleCat(this)"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-header-left"&gt;&lt;span class="cat-label"&gt;Series 03&lt;/span&gt;&lt;h2 class="cat-title"&gt;Nature&lt;/h2&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-header-right"&gt;&lt;span class="cat-count" id="count-nature"&gt;0 Photographs&lt;/span&gt;&lt;div class="cat-toggle"&gt;&lt;svg width="14" height="14" viewBox="0 0 14 14" fill="none"&gt;&lt;line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/&gt;&lt;line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/&gt;&lt;/svg&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="cat-carousel-wrap"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="cat-scroll-btn left" onclick="scrollRail(this,-1)"&gt;&amp;#8592;&lt;/button&gt;&lt;button class="cat-scroll-btn right" onclick="scrollRail(this,1)"&gt;&amp;#8594;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cat-rail" id="rail-nature"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="cat-expand-hint"&gt;Click section heading to expand grid &amp;rarr;&lt;/p&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;section id="connect" class="reveal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="connect-profile"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Available for prints.&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="connect-methods"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;a href="mailto:flipklik06@gmail.com" class="connect-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="connect-row-left"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect width="20" height="16" x="2" y="4" rx="2"/&gt;&lt;path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="connect-meta"&gt;&lt;p class="type"&gt;Direct Correspondence&lt;/p&gt;&lt;p class="handle"&gt;flipklik06@gmail.com&lt;/p&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="connect-arrow"&gt;&amp;rarr;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="connect-row-left"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect width="20" height="20" x="2" y="2" rx="5" ry="5"/&gt;&lt;path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/&gt;&lt;line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="connect-meta"&gt;&lt;p class="type"&gt;Visual Journal&lt;/p&gt;&lt;p class="handle"&gt;@pradyu_1594&lt;/p&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="connect-arrow"&gt;&amp;rarr;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="lightbox" id="globalLightbox"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lb-close" onclick="closeLightbox()"&gt;Close &amp;times;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)"&gt;&amp;#8592;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="lb-inner"&gt;&lt;img id="lightboxImg" src="" alt=""&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)"&gt;&amp;#8594;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="lb-action-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="lb-caption" id="lightboxCaption"&gt;Loading description...&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="lb-print-btn" onclick="triggerInquiryEmail()"&gt;Inquire About Prints&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="footer-logo"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;span class="f-logo-ps"&gt;PS&lt;/span&gt;&lt;span class="f-logo-naps"&gt;naps&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="footer-copy"&gt;&amp;copy; 2026 PSnaps. All rights reserved.&lt;/p&gt;</p>
-<p class="p1">&lt;/footer&gt;</p>
-<p class="p2"><span class="Apple-converted-space"> </span></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let portfolioData = {};</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let currentGalleryPool = [];</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let currentGalleryIndex = 0;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let currentHlIndex = 0;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function loadPortfolioData() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>fetch('gallery-data.json')</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.then(res =&gt; res.json())</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.then(data =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>portfolioData = data;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>hydrateAllSections();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>})</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.catch(err =&gt; console.error("Error reading portfolio data:", err));</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function hydrateAllSections() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const highlightsPool = portfolioData.highlights || [];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const track = document.getElementById('hlTrack');</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (highlightsPool.length &gt; 0) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>track.innerHTML = highlightsPool.map((hl, idx) =&gt; `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('highlights', ${idx})"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;img src="${hl.src}" alt=""&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="hl-info"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="hl-num"&gt;${String(idx + 1).padStart(2, '0')} / ${String(highlightsPool.length).padStart(2, '0')}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="hl-title"&gt;${hl.description}&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>`).join('');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>initCarouselPips();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>refreshCarouselView();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>['cities', 'architecture', 'nature'].forEach(cat =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const rail = document.getElementById(`rail-${cat}`);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const countLabel = document.getElementById(`count-${cat}`);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const pool = portfolioData[cat] || [];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!rail) return;</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>countLabel.textContent = `${pool.length} Photographs`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>rail.innerHTML = pool.map((item, idx) =&gt; `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;img src="${item.src}" alt=""&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="cat-card-overlay"&gt;&lt;p class="cat-card-desc-preview"&gt;${item.description}&lt;/p&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>`).join('');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>function scrollRail(btn, dir) { const rail = btn.parentElement.querySelector('.cat-rail'); rail.scrollBy({ left: (rail.clientWidth * 0.75) * dir, behavior: 'smooth' }); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function openLightboxCategory(catKey, index) {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>currentGalleryPool = portfolioData[catKey] || [];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>currentGalleryIndex = index;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>displayLightboxInstance();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function displayLightboxInstance() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const box = document.getElementById('globalLightbox');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const img = document.getElementById('lightboxImg');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const caption = document.getElementById('lightboxCaption');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const active = currentGalleryPool[currentGalleryIndex];</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>img.src = active.src;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>caption.textContent = active.description;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box.classList.add('open');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.lb-nav').forEach(n =&gt; n.style.display = currentGalleryPool.length &lt;= 1 ? 'none' : 'flex');</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>function navigateLightbox(dir) { currentGalleryIndex = (currentGalleryIndex + dir + currentGalleryPool.length) % currentGalleryPool.length; displayLightboxInstance(); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function triggerInquiryEmail() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const active = currentGalleryPool[currentGalleryIndex];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (!active) return;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const subject = encodeURIComponent(`Fine Art Print Inquiry: ${active.description}`);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const body = encodeURIComponent(`Hello,\n\nI am interested in acquiring a fine art print of your photograph: "${active.description}" (${active.src}).\n\nPlease provide me with details on available pricing, dimensions, and custom shipping options.\n\nBest regards,`);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.location.href = `mailto:flipklik06@gmail.com?subject=${subject}&amp;body=${body}`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function initCarouselPips() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const container = document.getElementById('hlProgress'); container.innerHTML = '';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>for(let i=0; i&lt;(portfolioData.highlights?.length||0); i++) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const pip = document.createElement('div'); pip.className = `hl-pip ${i === currentHlIndex ? 'active' : ''}`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pip.addEventListener('click', () =&gt; { currentHlIndex = i; refreshCarouselView(); }); container.appendChild(pip);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function refreshCarouselView() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const track = document.getElementById('hlTrack'); const slides = document.querySelectorAll('.hl-slide'); if(slides.length === 0) return;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>track.style.transform = `translateX(-${currentHlIndex * (slides[0].getBoundingClientRect().width + 24)}px)`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>slides.forEach((s, i) =&gt; s.classList.toggle('active', i === currentHlIndex));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('hlCounter').textContent = `${String(currentHlIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.hl-pip').forEach((p, i) =&gt; p.classList.toggle('active', i === currentHlIndex));</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('hlNext').addEventListener('click', () =&gt; { currentHlIndex = (currentHlIndex + 1) % portfolioData.highlights.length; refreshCarouselView(); });</p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('hlPrev').addEventListener('click', () =&gt; { currentHlIndex = (currentHlIndex - 1 + portfolioData.highlights.length) % portfolioData.highlights.length; refreshCarouselView(); });</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const obs = new IntersectionObserver(ents =&gt; ents.forEach(e =&gt; { if (e.isIntersecting) { e.target.classList.add('visible'); } }), { threshold: 0.05 });</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>window.addEventListener('load', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>loadPortfolioData();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.reveal').forEach(el =&gt; obs.observe(el));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const preloader = document.getElementById('site-preloader');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (preloader) { setTimeout(() =&gt; { preloader.classList.add('loaded'); document.body.classList.remove('preloading'); setTimeout(() =&gt; { preloader.remove(); }, 1200); }, 2200); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -326,6 +39,8 @@
   .nav-links { display: flex; gap: 2.2rem; list-style: none; }
   .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-light); text-decoration: none; transition: color 0.25s; }
   .nav-links a:hover { color: var(--gold); }
+  .cart-trigger { background: none; border: none; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+  .cart-count-badge { background: var(--gold); color: var(--dark); font-weight: 600; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
 
   /* Hero Section */
   .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 0 3rem; overflow: hidden; position: relative; }
@@ -411,7 +126,42 @@
   .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
   .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
-  /* Connect Section */
+  /* Cart Panel */
+  .cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px; background: var(--mid); border-left: 1px solid rgba(200,184,154,0.15); z-index: 700; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 3rem 2.5rem; }
+  .cart-panel.open { transform: translateX(0); }
+  .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
+  .cart-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
+  .cart-panel-close { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
+  .cart-items-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; }
+  .cart-item { display: flex; gap: 1rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(200,184,154,0.08); }
+  .cart-item-thumb { width: 65px; height: 65px; object-fit: cover; }
+  .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+  .cart-item-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; }
+  .cart-item-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+  .cart-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--gold); }
+  .cart-item-remove { background: none; border: none; color: rgba(220,90,90,0.7); font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; text-align: left; margin-top: 0.3rem; }
+  .cart-footer { margin-top: 2rem; border-top: 1px solid rgba(200,184,154,0.15); padding-top: 2rem; }
+  .cart-summary-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .cart-summary-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
+  .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); }
+  .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+
+  /* Inquiry Overlay */
+  .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
+  .inquiry-overlay.open { display: flex; }
+  .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; }
+  .inquiry-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
+  .inquiry-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .config-group { margin-bottom: 1.5rem; }
+  .config-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.5rem; }
+  .size-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .size-btn { background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 0.6rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; cursor: pointer; }
+  .size-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
+  .inquiry-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+  .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; flex: 1; }
+  .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; cursor: pointer; }
+
+  /* Connect Section - Optimized */
   #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
   .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
   .connect-profile h2 em { font-style: italic; color: var(--warm); }
@@ -426,12 +176,28 @@
   .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
   .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
   
-  /* Footer Branding */
-  footer { background: #090908; padding: 3.5rem 3rem; display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(200,184,154,0.04); }
+  /* Footer Branding - Optimized */
+  footer {
+    background: #090908;
+    padding: 3.5rem 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200, 184, 154, 0.04);
+  }
   .footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }
   .footer-logo .f-logo-ps { color: var(--gold); }
   .footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }
-  .footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; line-height: 1; padding-bottom: 0.35rem; }
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1;
+    padding-bottom: 0.35rem;
+  }
 
   /* Reveals */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -446,6 +212,7 @@
     .cat-card { flex: 0 0 220px; height: 240px; } 
     .hl-slide { flex: 0 0 100%; height: 380px; } 
     .lb-nav { display: none !important; } 
+    .cart-panel { padding: 2rem 1.5rem; } 
     footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
     .footer-copy { padding-bottom: 0; }
   }
@@ -457,7 +224,7 @@
   <div class="preloader-inner">
     <div class="preloader-logo"><span class="p-letter">PS</span><span class="naps-letters">naps</span></div>
     <div class="preloader-line-wrap"><div class="preloader-line"></div></div>
-    <p class="preloader-manifesto">&bull; Visual Journeys &bull;</p>
+    <p class="preloader-manifesto">&bull;Visual Journeys &bull;</p>
   </div>
 </div>
 
@@ -471,6 +238,9 @@
       <li><a href="#nature">Nature</a></li>
       <li><a href="#connect">Contact</a></li>
     </ul>
+    <button class="cart-trigger" onclick="toggleCartPanel(true)">
+      Cart <span class="cart-count-badge" id="cartBadgeCount">0</span>
+    </button>
   </div>
 </nav>
 
@@ -572,7 +342,34 @@
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   <div class="lb-action-bar">
     <p class="lb-caption" id="lightboxCaption">Loading description...</p>
-    <button class="lb-print-btn" onclick="triggerInquiryEmail()">Inquire About Prints</button>
+    <button class="lb-print-btn" onclick="openPrintConfigurator()">Configure Fine Art Print</button>
+  </div>
+</div>
+
+<div class="inquiry-overlay" id="inquiryOverlay">
+  <div class="inquiry-box">
+    <h3 class="inquiry-title">Configure Gallery Print</h3>
+    <div class="config-group">
+      <span class="config-label">Select Dimensions</span>
+      <div class="size-selector">
+        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
+        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
+        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
+      </div>
+    </div>
+    <div class="inquiry-actions">
+      <button class="inquiry-submit" onclick="addSelectedToCart()">Add To Cart</button>
+      <button class="inquiry-cancel" onclick="closePrintConfigurator()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="cart-panel" id="globalCartPanel">
+  <div class="cart-header-row"><h3 class="cart-panel-title">Your Cart</h3><button class="cart-panel-close" onclick="toggleCartPanel(false)">Close &times;</button></div>
+  <div class="cart-items-container" id="cartItemsContainer"></div>
+  <div class="cart-footer">
+    <div class="cart-summary-line"><span class="cart-summary-label">Total (GBP)</span><span class="cart-summary-value" id="cartSubtotal">£0.00</span></div>
+    <button class="checkout-btn" onclick="executeSecureCheckout()">Proceed to Payment</button>
   </div>
 </div>
 
@@ -588,6 +385,8 @@
   let currentGalleryPool = [];
   let currentGalleryIndex = 0;
   let currentHlIndex = 0;
+  let globalCart = [];
+  let selectedSizeConfig = { size: 'A4', price: 45 };
 
   function loadPortfolioData() {
     fetch('gallery-data.json')
@@ -596,7 +395,7 @@
         portfolioData = data;
         hydrateAllSections();
       })
-      .catch(err => console.error("Error reading portfolio data:", err));
+      .catch(err => console.error("Error reading updated structure:", err));
   }
 
   function hydrateAllSections() {
@@ -635,6 +434,7 @@
 
   function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }
   function scrollRail(btn, dir) { const rail = btn.parentElement.querySelector('.cat-rail'); rail.scrollBy({ left: (rail.clientWidth * 0.75) * dir, behavior: 'smooth' }); }
+  function toggleCartPanel(open) { document.getElementById('globalCartPanel').classList.toggle('open', open); }
 
   function openLightboxCategory(catKey, index) {
     currentGalleryPool = portfolioData[catKey] || [];
@@ -656,424 +456,35 @@
 
   function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); }
   function navigateLightbox(dir) { currentGalleryIndex = (currentGalleryIndex + dir + currentGalleryPool.length) % currentGalleryPool.length; displayLightboxInstance(); }
+  function openPrintConfigurator() { document.getElementById('inquiryOverlay').classList.add('open'); }
+  function closePrintConfigurator() { document.getElementById('inquiryOverlay').classList.remove('open'); }
+  function selectPrintSize(el, size, price) { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); selectedSizeConfig = { size, price }; }
 
-  function triggerInquiryEmail() {
+  function addSelectedToCart() {
     const active = currentGalleryPool[currentGalleryIndex];
-    if (!active) return;
-    const subject = encodeURIComponent(`Fine Art Print Inquiry: ${active.description}`);
-    const body = encodeURIComponent(`Hello,\n\nI am interested in acquiring a fine art print of your photograph: "${active.description}" (${active.src}).\n\nPlease provide me with details on available pricing, dimensions, and custom shipping options.\n\nBest regards,`);
-    window.location.href = `mailto:flipklik06@gmail.com?subject=${subject}&body=${body}`;
+    globalCart.push({ id: 'art-'+Date.now(), src: active.src, description: active.description, size: selectedSizeConfig.size, price: selectedSizeConfig.price });
+    updateCartUI(); closePrintConfigurator(); closeLightbox(); toggleCartPanel(true);
   }
 
-  function initCarouselPips() {
-    const container = document.getElementById('hlProgress'); container.innerHTML = '';
-    for(let i=0; i<(portfolioData.highlights?.length||0); i++) {
-      const pip = document.createElement('div'); pip.className = `hl-pip ${i === currentHlIndex ? 'active' : ''}`;
-      pip.addEventListener('click', () => { currentHlIndex = i; refreshCarouselView(); }); container.appendChild(pip);
-    }
-  }
+  function removeCartItem(id) { globalCart = globalCart.filter(i => i.id !== id); updateCartUI(); }
 
-  function refreshCarouselView() {
-    const track = document.getElementById('hlTrack'); const slides = document.querySelectorAll('.hl-slide'); if(slides.length === 0) return;
-    track.style.transform = `translateX(-${currentHlIndex * (slides[0].getBoundingClientRect().width + 24)}px)`;
-    slides.forEach((s, i) => s.classList.toggle('active', i === currentHlIndex));
-    document.getElementById('hlCounter').textContent = `${String(currentHlIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-    document.querySelectorAll('.hl-pip').forEach((p, i) => p.classList.toggle('active', i === currentHlIndex));
-  }
-
-  document.getElementById('hlNext').addEventListener('click', () => { currentHlIndex = (currentHlIndex + 1) % portfolioData.highlights.length; refreshCarouselView(); });
-  document.getElementById('hlPrev').addEventListener('click', () => { currentHlIndex = (currentHlIndex - 1 + portfolioData.highlights.length) % portfolioData.highlights.length; refreshCarouselView(); });
-
-  const obs = new IntersectionObserver(ents => ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } }), { threshold: 0.05 });
-
-  window.addEventListener('load', () => {
-    loadPortfolioData();
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    const preloader = document.getElementById('site-preloader');
-    if (preloader) { setTimeout(() => { preloader.classList.add('loaded'); document.body.classList.remove('preloading'); setTimeout(() => { preloader.remove(); }, 1200); }, 2200); }
-  });
-</script>
-</body>
-git add index.html
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSnaps — Photography Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playball&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F5F2EC; --dark: #0D0D0B; --mid: #1C1C18; --warm: #C8B89A;
-    --accent: #B8956A; --gold: #C9A84C; --text-muted: #888880; --text-light: #BBBBA8;
-    --gap-standard: 1.5rem;
-  }
-  html { scroll-behavior: smooth; }
-  body { background: var(--dark); color: var(--cream); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
-  body.preloading { overflow: hidden !important; }
-
-  /* Preloader Overlay */
-  #site-preloader { position: fixed; inset: 0; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease; will-change: transform, opacity; }
-  #site-preloader.loaded { transform: translateY(-100%); opacity: 0; }
-  .preloader-inner { text-align: center; display: flex; flex-direction: column; align-items: center; }
-  .preloader-logo { font-family: 'Playball', cursive; font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 1; margin-bottom: 1.5rem; color: var(--cream); opacity: 0; transform: scale(0.96) translateY(15px); animation: preloaderTextIn 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s; }
-  .preloader-logo .p-letter { color: var(--gold); }
-  .preloader-line-wrap { width: 140px; height: 1px; background: rgba(200, 184, 154, 0.15); margin-bottom: 1.5rem; position: relative; overflow: hidden; }
-  .preloader-line { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: center; animation: preloaderLineIn 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards 0.6s; }
-  .preloader-manifesto { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.4em; text-transform: uppercase; color: var(--text-muted); opacity: 0; transform: translateY(10px); animation: preloaderFadeIn 1s ease forwards 1.2s; }
-  @keyframes preloaderTextIn { to { opacity: 1; transform: scale(1) translateY(0); } }
-  @keyframes preloaderLineIn { to { transform: scaleX(1); } }
-  @keyframes preloaderFadeIn { to { opacity: 1; transform: translateY(0); } }
-
-  /* Navigation */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; background: linear-gradient(to bottom, rgba(13,13,11,0.95) 0%, transparent 100%); backdrop-filter: blur(4px); }
-  .logo { font-family: 'Playball', cursive; font-size: 2.1rem; text-decoration: none; display: inline-flex; align-items: center; }
-  .logo-ps { color: var(--gold); } .logo-naps { color: var(--cream); margin-left: -0.05em; }
-  .nav-right { display: flex; align-items: center; gap: 3rem; }
-  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-  .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-light); text-decoration: none; transition: color 0.25s; }
-  .nav-links a:hover { color: var(--gold); }
-
-  /* Hero Section */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 0 3rem; overflow: hidden; position: relative; }
-  .hero-layout { display: grid; grid-template-columns: 1.2fr 1fr; width: 100%; align-items: center; gap: 4rem; }
-  .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
-  .hero-image-pane { position: relative; width: 100%; height: calc(100vh - 6rem); overflow: hidden; background: var(--mid); }
-  .hero-cover-img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.88) contrast(1.02); display: block; }
-  .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
-  .hero-display-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.15; margin-bottom: 2.5rem; display: flex; flex-direction: column; }
-  .hero-display-title .line-primary { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
-  .hero-display-title .line-connective { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-style: italic; color: var(--warm); margin-top: 1.4rem; margin-bottom: 0.6rem; display: block; }
-  .hero-display-title .line-author { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
-  .hero-desc { font-size: 0.95rem; letter-spacing: 0.03em; color: var(--text-light); line-height: 1.65; max-width: 440px; margin-bottom: 3rem; }
-  .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 0.3rem; transition: color 0.3s; }
-  .hero-cta:hover { color: var(--gold); }
-
-  /* Gallery rails */
-  .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
-  .cat-section.alt { background: var(--mid); }
-  .cat-header { display: flex; align-items: center; justify-content: space-between; padding: 0 3rem 2.5rem; cursor: pointer; user-select: none; }
-  .cat-header-left { display: flex; flex-direction: column; gap: 0.3rem; }
-  .cat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); }
-  .cat-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1; color: var(--cream); transition: color 0.3s; }
-  .cat-header:hover .cat-title { color: var(--warm); }
-  .cat-header-right { display: flex; align-items: center; gap: 1.5rem; }
-  .cat-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 200; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--text-muted); }
-  .cat-toggle { width: 44px; height: 44px; border: 1px solid rgba(200,184,154,0.2); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s, transform 0.4s; flex-shrink: 0; }
-  .cat-header:hover .cat-toggle { border-color: var(--gold); }
-  .cat-section.open .cat-toggle svg { transform: rotate(45deg); }
-  .cat-carousel-wrap { position: relative; overflow: hidden; }
-  .cat-rail { display: flex; gap: var(--gap-standard); padding: 0 3rem 1.5rem; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1); max-height: 340px; }
-  .cat-rail::-webkit-scrollbar { display: none; }
-  .cat-section.open .cat-rail { max-height: 2800px; flex-wrap: wrap; overflow-x: hidden; row-gap: 2.5rem; column-gap: var(--gap-standard); }
-  .cat-card { flex: 0 0 290px; height: 310px; overflow: hidden; position: relative; background: var(--mid); cursor: pointer; }
-  .cat-section.open .cat-card { flex: 0 0 calc(25% - 1.15rem); height: 300px; }
-  .cat-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.05); transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s; }
-  .cat-card:hover img { transform: scale(1.05); filter: brightness(0.7) contrast(1.08); }
-  .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.2rem; }
-  .cat-card:hover .cat-card-overlay { opacity: 1; }
-  .cat-card-desc-preview { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--cream); text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%; }
-  .cat-scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 15; width: 42px; height: 42px; background: rgba(13,13,11,0.85); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; opacity: 0; }
-  .cat-carousel-wrap:hover .cat-scroll-btn { opacity: 1; }
-  .cat-scroll-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-  .cat-scroll-btn.left { left: 0.5rem; } .cat-scroll-btn.right { right: 0.5rem; }
-  .cat-section.open .cat-scroll-btn { display: none; }
-  .cat-expand-hint { padding: 0.5rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
-  .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
-
-  /* Highlights Section */
-  #highlights { background: var(--mid); padding: 6rem 0; }
-  #highlights .section-header { padding: 0 3rem 2.5rem; border-bottom: 1px solid rgba(200,184,154,0.1); margin-bottom: 0; }
-  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; }
-  .hl-wrapper { position: relative; overflow: hidden; margin-top: var(--gap-standard); }
-  .hl-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); padding: 0 3rem; gap: var(--gap-standard); }
-  .hl-slide { flex: 0 0 calc(50% - 0.75rem); height: 560px; overflow: hidden; position: relative; background: var(--dark); cursor: pointer; }
-  .hl-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82); transition: filter 0.5s; }
-  .hl-slide.active img { filter: brightness(0.95); }
-  .hl-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem 2rem 2rem; background: linear-gradient(transparent, rgba(13,13,11,0.85)); transform: translateY(100%); transition: transform 0.5s ease; z-index: 15; }
-  .hl-slide.active .hl-info { transform: translateY(0); }
-  .hl-num { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 0.4rem; }
-  .hl-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 1.5rem; color: var(--cream); }
-  .hl-controls { display: flex; align-items: center; gap: 1.5rem; padding: 1.8rem 3rem 0; }
-  .hl-btn { background: none; border: 1px solid rgba(200,184,154,0.22); color: var(--cream); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
-  .hl-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-  .hl-progress { display: flex; gap: 5px; flex: 1; }
-  .hl-pip { height: 1px; background: rgba(200,184,154,0.18); flex: 1; position: relative; overflow: hidden; cursor: pointer; }
-  .hl-pip::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; background: var(--gold); width: 0%; transition: width 0.3s; }
-  .hl-pip.active::after { width: 100%; }
-  .hl-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); }
-
-  /* Lightbox */
-  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
-  .lightbox.open { display: flex; }
-  .lb-inner { position: relative; max-width: 92vw; max-height: 76vh; display: flex; align-items: center; justify-content: center; }
-  .lb-inner img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; }
-  .lb-close { position: absolute; top: 2rem; right: 3rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; }
-  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.7); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
-  .lb-nav:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-  .lb-nav.prev { left: -3.5rem; } .lb-nav.next { right: -3.5rem; }
-  .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-  .lb-caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-light); min-height: 1.6rem; }
-  .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-  .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
-
-  /* Connect Section */
-  #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-  .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
-  .connect-profile h2 em { font-style: italic; color: var(--warm); }
-  .connect-profile p { font-size: 0.95rem; line-height: 1.8; color: var(--text-light); max-width: 440px; margin-bottom: 3rem; }
-  .connect-methods { display: flex; flex-direction: column; gap: 1.5rem; }
-  .connect-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid rgba(200,184,154,0.1); text-decoration: none; color: var(--cream); }
-  .connect-row-left { display: flex; align-items: center; gap: 1.5rem; }
-  .connect-icon { width: 1.6rem; height: 1.6rem; color: var(--text-muted); transition: color 0.3s, transform 0.3s; }
-  .connect-row:hover .connect-icon { color: var(--gold); }
-  .connect-meta .type { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
-  .connect-meta .handle { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; }
-  .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
-  .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
-  
-  /* Footer Branding */
-  footer { background: #090908; padding: 3.5rem 3rem; display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(200,184,154,0.04); }
-  .footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }
-  .footer-logo .f-logo-ps { color: var(--gold); }
-  .footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }
-  .footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; line-height: 1; padding-bottom: 0.35rem; }
-
-  /* Reveals */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* Media Queries */
-  @media (max-width: 992px) { .hero { padding: 6rem 2rem 0 2rem; } .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } .hero-image-pane { height: 55vh; } #connect { grid-template-columns: 1fr; } }
-  @media (max-width: 768px) { 
-    .nav-links { display: none; } 
-    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } 
-    .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } 
-    .cat-card { flex: 0 0 220px; height: 240px; } 
-    .hl-slide { flex: 0 0 100%; height: 380px; } 
-    .lb-nav { display: none !important; } 
-    footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
-    .footer-copy { padding-bottom: 0; }
-  }
-</style>
-</head>
-<body class="preloading">
-
-<div id="site-preloader">
-  <div class="preloader-inner">
-    <div class="preloader-logo"><span class="p-letter">PS</span><span class="naps-letters">naps</span></div>
-    <div class="preloader-line-wrap"><div class="preloader-line"></div></div>
-    <p class="preloader-manifesto">&bull; Visual Journeys &bull;</p>
-  </div>
-</div>
-
-<nav>
-  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#highlights">Highlights</a></li>
-      <li><a href="#cities">Cities</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#nature">Nature</a></li>
-      <li><a href="#connect">Contact</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="hero-layout">
-    <div class="hero-content">
-      <p class="hero-eyebrow">Photography Portfolio</p>
-      <h1 class="hero-display-title">
-        <span class="line-primary">The Fabric</span>
-        <span class="line-primary">of <em>Space &amp; Time</em></span>
-        <span class="line-connective">from the lens of</span>
-        <span class="line-author"><em>Pradyumna Saripalli</em></span>
-      </h1>
-      <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
-      <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
-    </div>
-    <div class="hero-image-pane">
-      <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
-    </div>
-  </div>
-</section>
-
-<section id="highlights">
-  <div class="section-header reveal">
-    <h2 class="section-title">Highlights</h2>
-  </div>
-  <div class="hl-wrapper"><div class="hl-track" id="hlTrack"></div></div>
-  <div class="hl-controls">
-    <button class="hl-btn" id="hlPrev">&#8592;</button>
-    <button class="hl-btn" id="hlNext">&#8594;</button>
-    <div class="hl-progress" id="hlProgress"></div>
-    <span class="hl-counter" id="hlCounter">00 / 00</span>
-  </div>
-</section>
-
-<div id="cities" class="cat-section reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left"><span class="cat-label">Series 01</span><h2 class="cat-title">Cities</h2></div>
-    <div class="cat-header-right"><span class="cat-count" id="count-cities">0 Photographs</span><div class="cat-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/></svg></div></div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button><button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-rail" id="rail-cities"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<div id="architecture" class="cat-section alt reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left"><span class="cat-label">Series 02</span><h2 class="cat-title">Architecture</h2></div>
-    <div class="cat-header-right"><span class="cat-count" id="count-architecture">0 Photographs</span><div class="cat-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/></svg></div></div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button><button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-rail" id="rail-architecture"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<div id="nature" class="cat-section reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left"><span class="cat-label">Series 03</span><h2 class="cat-title">Nature</h2></div>
-    <div class="cat-header-right"><span class="cat-count" id="count-nature">0 Photographs</span><div class="cat-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/></svg></div></div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button><button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-rail" id="rail-nature"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<section id="connect" class="reveal">
-  <div class="connect-profile">
-    <h2>Available for prints.</h2>
-    <p>Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.</p>
-  </div>
-  <div class="connect-methods">
-    <a href="mailto:flipklik06@gmail.com" class="connect-row">
-      <div class="connect-row-left">
-        <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        <div class="connect-meta"><p class="type">Direct Correspondence</p><p class="handle">flipklik06@gmail.com</p></div>
+  function updateCartUI() {
+    document.getElementById('cartBadgeCount').textContent = globalCart.length;
+    const container = document.getElementById('cartItemsContainer');
+    let total = 0;
+    if (globalCart.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:2rem;">Empty Cart</p>`; document.getElementById('cartSubtotal').textContent = "£0.00"; return; }
+    container.innerHTML = globalCart.map(item => { total += item.price; return `
+      <div class="cart-item">
+        <img src="${item.src}" class="cart-item-thumb">
+        <div class="cart-item-details"><h4 class="cart-item-title">${item.description}</h4><span class="cart-item-meta">Size: ${item.size}</span><span class="cart-item-price">£${item.price}.00</span><button class="cart-item-remove" onclick="removeCartItem('${item.id}')">Remove</button></div>
       </div>
-      <div class="connect-arrow">&rarr;</div>
-    </a>
-    <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
-      <div class="connect-row-left">
-        <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-        <div class="connect-meta"><p class="type">Visual Journal</p><p class="handle">@pradyu_1594</p></div>
-      </div>
-      <div class="connect-arrow">&rarr;</div>
-    </a>
-  </div>
-</section>
-
-<div class="lightbox" id="globalLightbox">
-  <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
-  <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
-  <div class="lb-inner"><img id="lightboxImg" src="" alt=""></div>
-  <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
-  <div class="lb-action-bar">
-    <p class="lb-caption" id="lightboxCaption">Loading description...</p>
-    <button class="lb-print-btn" onclick="triggerInquiryEmail()">Inquire About Prints</button>
-  </div>
-</div>
-
-<footer>
-  <div class="footer-logo">
-    <span class="f-logo-ps">PS</span><span class="f-logo-naps">naps</span>
-  </div>
-  <p class="footer-copy">&copy; 2026 PSnaps. All rights reserved.</p>
-</footer>
- 
-<script>
-  let portfolioData = {};
-  let currentGalleryPool = [];
-  let currentGalleryIndex = 0;
-  let currentHlIndex = 0;
-
-  function loadPortfolioData() {
-    fetch('gallery-data.json')
-      .then(res => res.json())
-      .then(data => {
-        portfolioData = data;
-        hydrateAllSections();
-      })
-      .catch(err => console.error("Error reading portfolio data:", err));
+    `; }).join('');
+    document.getElementById('cartSubtotal').textContent = `£${total}.00`;
   }
 
-  function hydrateAllSections() {
-    const highlightsPool = portfolioData.highlights || [];
-    const track = document.getElementById('hlTrack');
-    
-    if (highlightsPool.length > 0) {
-      track.innerHTML = highlightsPool.map((hl, idx) => `
-        <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('highlights', ${idx})">
-          <img src="${hl.src}" alt="">
-          <div class="hl-info">
-            <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(highlightsPool.length).padStart(2, '0')}</p>
-            <h3 class="hl-title">${hl.description}</h3>
-          </div>
-        </div>
-      `).join('');
-      initCarouselPips();
-      refreshCarouselView();
-    }
-
-    ['cities', 'architecture', 'nature'].forEach(cat => {
-      const rail = document.getElementById(`rail-${cat}`);
-      const countLabel = document.getElementById(`count-${cat}`);
-      const pool = portfolioData[cat] || [];
-      if (!rail) return;
-      
-      countLabel.textContent = `${pool.length} Photographs`;
-      rail.innerHTML = pool.map((item, idx) => `
-        <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
-          <img src="${item.src}" alt="">
-          <div class="cat-card-overlay"><p class="cat-card-desc-preview">${item.description}</p></div>
-        </div>
-      `).join('');
-    });
-  }
-
-  function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }
-  function scrollRail(btn, dir) { const rail = btn.parentElement.querySelector('.cat-rail'); rail.scrollBy({ left: (rail.clientWidth * 0.75) * dir, behavior: 'smooth' }); }
-
-  function openLightboxCategory(catKey, index) {
-    currentGalleryPool = portfolioData[catKey] || [];
-    currentGalleryIndex = index;
-    displayLightboxInstance();
-  }
-
-  function displayLightboxInstance() {
-    const box = document.getElementById('globalLightbox');
-    const img = document.getElementById('lightboxImg');
-    const caption = document.getElementById('lightboxCaption');
-    const active = currentGalleryPool[currentGalleryIndex];
-    
-    img.src = active.src;
-    caption.textContent = active.description;
-    box.classList.add('open');
-    document.querySelectorAll('.lb-nav').forEach(n => n.style.display = currentGalleryPool.length <= 1 ? 'none' : 'flex');
-  }
-
-  function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); }
-  function navigateLightbox(dir) { currentGalleryIndex = (currentGalleryIndex + dir + currentGalleryPool.length) % currentGalleryPool.length; displayLightboxInstance(); }
-
-  function triggerInquiryEmail() {
-    const active = currentGalleryPool[currentGalleryIndex];
-    if (!active) return;
-    const subject = encodeURIComponent(`Fine Art Print Inquiry: ${active.description}`);
-    const body = encodeURIComponent(`Hello,\n\nI am interested in acquiring a fine art print of your photograph: "${active.description}" (${active.src}).\n\nPlease provide me with details on available pricing, dimensions, and custom shipping options.\n\nBest regards,`);
-    window.location.href = `mailto:flipklik06@gmail.com?subject=${subject}&body=${body}`;
+  function executeSecureCheckout() {
+    if(globalCart.length === 0) return;
+    window.location.href = `mailto:flipklik06@gmail.com?subject=Order&body=Checkout items: ${globalCart.map(i => i.description).join(', ')}`;
   }
 
   function initCarouselPips() {
