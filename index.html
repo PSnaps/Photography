@@ -121,8 +121,6 @@
   .lb-nav.prev { left: -3.5rem; } .lb-nav.next { right: -3.5rem; }
   .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
   .lb-caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-light); min-height: 1.6rem; }
-  .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-  .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
   /* Connect Section */
   #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
@@ -140,11 +138,27 @@
   .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
   
   /* Footer Branding */
-  footer { background: #090908; padding: 3.5rem 3rem; display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(200,184,154,0.04); }
+  footer {
+    background: #090908;
+    padding: 3.5rem 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-top: 1px solid rgba(200, 184, 154, 0.04);
+  }
   .footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }
   .footer-logo .f-logo-ps { color: var(--gold); }
   .footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }
-  .footer-copy { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; line-height: 1; padding-bottom: 0.35rem; }
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1;
+    padding-bottom: 0.35rem;
+  }
 
   /* Reveals */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -170,7 +184,7 @@
   <div class="preloader-inner">
     <div class="preloader-logo"><span class="p-letter">PS</span><span class="naps-letters">naps</span></div>
     <div class="preloader-line-wrap"><div class="preloader-line"></div></div>
-    <p class="preloader-manifesto">&bull; Visual Journeys &bull;</p>
+    <p class="preloader-manifesto">&bull;Visual Journeys &bull;</p>
   </div>
 </div>
 
@@ -257,8 +271,8 @@
 
 <section id="connect" class="reveal">
   <div class="connect-profile">
-    <h2>Available for prints.</h2>
-    <p>Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.</p>
+    <h2>Available for view.</h2>
+    <p>Every frame represents a dedicated study of symmetry, ambient lighting, and cultural essence. For collaborative work or image usage parameters, please drop a direct line.</p>
   </div>
   <div class="connect-methods">
     <a href="mailto:flipklik06@gmail.com" class="connect-row">
@@ -285,7 +299,6 @@
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   <div class="lb-action-bar">
     <p class="lb-caption" id="lightboxCaption">Loading description...</p>
-    <button class="lb-print-btn" onclick="triggerInquiryEmail()">Inquire About Prints</button>
   </div>
 </div>
 
@@ -309,7 +322,7 @@
         portfolioData = data;
         hydrateAllSections();
       })
-      .catch(err => console.error("Error reading portfolio data:", err));
+      .catch(err => console.error("Error reading updated structure:", err));
   }
 
   function hydrateAllSections() {
@@ -370,16 +383,10 @@
   function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); }
   function navigateLightbox(dir) { currentGalleryIndex = (currentGalleryIndex + dir + currentGalleryPool.length) % currentGalleryPool.length; displayLightboxInstance(); }
 
-  function triggerInquiryEmail() {
-    const active = currentGalleryPool[currentGalleryIndex];
-    if (!active) return;
-    const subject = encodeURIComponent(`Fine Art Print Inquiry: ${active.description}`);
-    const body = encodeURIComponent(`Hello,\n\nI am interested in acquiring a fine art print of your photograph: "${active.description}" (${active.src}).\n\nPlease provide me with details on available pricing, dimensions, and custom shipping options.\n\nBest regards,`);
-    window.location.href = `mailto:flipklik06@gmail.com?subject=${subject}&body=${body}`;
-  }
-
   function initCarouselPips() {
-    const container = document.getElementById('hlProgress'); container.innerHTML = '';
+    const container = document.getElementById('hlProgress'); 
+    if(!container) return;
+    container.innerHTML = '';
     for(let i=0; i<(portfolioData.highlights?.length||0); i++) {
       const pip = document.createElement('div'); pip.className = `hl-pip ${i === currentHlIndex ? 'active' : ''}`;
       pip.addEventListener('click', () => { currentHlIndex = i; refreshCarouselView(); }); container.appendChild(pip);
@@ -394,8 +401,8 @@
     document.querySelectorAll('.hl-pip').forEach((p, i) => p.classList.toggle('active', i === currentHlIndex));
   }
 
-  document.getElementById('hlNext').addEventListener('click', () => { currentHlIndex = (currentHlIndex + 1) % portfolioData.highlights.length; refreshCarouselView(); });
-  document.getElementById('hlPrev').addEventListener('click', () => { currentHlIndex = (currentHlIndex - 1 + portfolioData.highlights.length) % portfolioData.highlights.length; refreshCarouselView(); });
+  document.getElementById('hlNext').addEventListener('click', () => { if(portfolioData.highlights) { currentHlIndex = (currentHlIndex + 1) % portfolioData.highlights.length; refreshCarouselView(); } });
+  document.getElementById('hlPrev').addEventListener('click', () => { if(portfolioData.highlights) { currentHlIndex = (currentHlIndex - 1 + portfolioData.highlights.length) % portfolioData.highlights.length; refreshCarouselView(); } });
 
   const obs = new IntersectionObserver(ents => ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } }), { threshold: 0.05 });
 
