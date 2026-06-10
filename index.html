@@ -39,8 +39,6 @@
   .nav-links { display: flex; gap: 2.2rem; list-style: none; }
   .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-light); text-decoration: none; transition: color 0.25s; }
   .nav-links a:hover { color: var(--gold); }
-  .cart-trigger { background: none; border: none; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
-  .cart-count-badge { background: var(--gold); color: var(--dark); font-weight: 600; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
 
   /* Hero Section */
   .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 0 3rem; overflow: hidden; position: relative; }
@@ -123,45 +121,8 @@
   .lb-nav.prev { left: -3.5rem; } .lb-nav.next { right: -3.5rem; }
   .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
   .lb-caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-light); min-height: 1.6rem; }
-  .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-  .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
 
-  /* Cart Panel */
-  .cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px; background: var(--mid); border-left: 1px solid rgba(200,184,154,0.15); z-index: 700; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 3rem 2.5rem; }
-  .cart-panel.open { transform: translateX(0); }
-  .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
-  .cart-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
-  .cart-panel-close { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
-  .cart-items-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; }
-  .cart-item { display: flex; gap: 1rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(200,184,154,0.08); }
-  .cart-item-thumb { width: 65px; height: 65px; object-fit: cover; }
-  .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
-  .cart-item-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; }
-  .cart-item-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
-  .cart-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--gold); }
-  .cart-item-remove { background: none; border: none; color: rgba(220,90,90,0.7); font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; text-align: left; margin-top: 0.3rem; }
-  .cart-footer { margin-top: 2rem; border-top: 1px solid rgba(200,184,154,0.15); padding-top: 2rem; }
-  .cart-summary-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-  .cart-summary-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
-  .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); }
-  .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
-
-  /* Inquiry Overlay */
-  .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
-  .inquiry-overlay.open { display: flex; }
-  .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; }
-  .inquiry-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
-  .inquiry-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; }
-  .config-group { margin-bottom: 1.5rem; }
-  .config-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.5rem; }
-  .size-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-  .size-btn { background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 0.6rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; cursor: pointer; }
-  .size-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
-  .inquiry-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-  .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; flex: 1; }
-  .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; cursor: pointer; }
-
-  /* Connect Section - Optimized */
+  /* Connect Section */
   #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
   .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
   .connect-profile h2 em { font-style: italic; color: var(--warm); }
@@ -176,7 +137,7 @@
   .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
   .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
   
-  /* Footer Branding - Optimized */
+  /* Footer Branding */
   footer {
     background: #090908;
     padding: 3.5rem 3rem;
@@ -212,7 +173,6 @@
     .cat-card { flex: 0 0 220px; height: 240px; } 
     .hl-slide { flex: 0 0 100%; height: 380px; } 
     .lb-nav { display: none !important; } 
-    .cart-panel { padding: 2rem 1.5rem; } 
     footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
     .footer-copy { padding-bottom: 0; }
   }
@@ -238,9 +198,6 @@
       <li><a href="#nature">Nature</a></li>
       <li><a href="#connect">Contact</a></li>
     </ul>
-    <button class="cart-trigger" onclick="toggleCartPanel(true)">
-      Cart <span class="cart-count-badge" id="cartBadgeCount">0</span>
-    </button>
   </div>
 </nav>
 
@@ -314,8 +271,8 @@
 
 <section id="connect" class="reveal">
   <div class="connect-profile">
-    <h2>Available for prints.</h2>
-    <p>Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.</p>
+    <h2>Available for commissions &amp; collaboration.</h2>
+    <p>Please reach out directly for visual storytelling assignments, print inquiries, or project commissions.</p>
   </div>
   <div class="connect-methods">
     <a href="mailto:flipklik06@gmail.com" class="connect-row">
@@ -342,34 +299,6 @@
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   <div class="lb-action-bar">
     <p class="lb-caption" id="lightboxCaption">Loading description...</p>
-    <button class="lb-print-btn" onclick="openPrintConfigurator()">Configure Fine Art Print</button>
-  </div>
-</div>
-
-<div class="inquiry-overlay" id="inquiryOverlay">
-  <div class="inquiry-box">
-    <h3 class="inquiry-title">Configure Gallery Print</h3>
-    <div class="config-group">
-      <span class="config-label">Select Dimensions</span>
-      <div class="size-selector">
-        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
-      </div>
-    </div>
-    <div class="inquiry-actions">
-      <button class="inquiry-submit" onclick="addSelectedToCart()">Add To Cart</button>
-      <button class="inquiry-cancel" onclick="closePrintConfigurator()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<div class="cart-panel" id="globalCartPanel">
-  <div class="cart-header-row"><h3 class="cart-panel-title">Your Cart</h3><button class="cart-panel-close" onclick="toggleCartPanel(false)">Close &times;</button></div>
-  <div class="cart-items-container" id="cartItemsContainer"></div>
-  <div class="cart-footer">
-    <div class="cart-summary-line"><span class="cart-summary-label">Total (GBP)</span><span class="cart-summary-value" id="cartSubtotal">£0.00</span></div>
-    <button class="checkout-btn" onclick="executeSecureCheckout()">Proceed to Payment</button>
   </div>
 </div>
 
@@ -385,8 +314,6 @@
   let currentGalleryPool = [];
   let currentGalleryIndex = 0;
   let currentHlIndex = 0;
-  let globalCart = [];
-  let selectedSizeConfig = { size: 'A4', price: 45 };
 
   function loadPortfolioData() {
     fetch('gallery-data.json')
@@ -434,7 +361,6 @@
 
   function toggleCat(header) { header.closest('.cat-section').classList.toggle('open'); }
   function scrollRail(btn, dir) { const rail = btn.parentElement.querySelector('.cat-rail'); rail.scrollBy({ left: (rail.clientWidth * 0.75) * dir, behavior: 'smooth' }); }
-  function toggleCartPanel(open) { document.getElementById('globalCartPanel').classList.toggle('open', open); }
 
   function openLightboxCategory(catKey, index) {
     currentGalleryPool = portfolioData[catKey] || [];
@@ -456,36 +382,6 @@
 
   function closeLightbox() { document.getElementById('globalLightbox').classList.remove('open'); }
   function navigateLightbox(dir) { currentGalleryIndex = (currentGalleryIndex + dir + currentGalleryPool.length) % currentGalleryPool.length; displayLightboxInstance(); }
-  function openPrintConfigurator() { document.getElementById('inquiryOverlay').classList.add('open'); }
-  function closePrintConfigurator() { document.getElementById('inquiryOverlay').classList.remove('open'); }
-  function selectPrintSize(el, size, price) { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); selectedSizeConfig = { size, price }; }
-
-  function addSelectedToCart() {
-    const active = currentGalleryPool[currentGalleryIndex];
-    globalCart.push({ id: 'art-'+Date.now(), src: active.src, description: active.description, size: selectedSizeConfig.size, price: selectedSizeConfig.price });
-    updateCartUI(); closePrintConfigurator(); closeLightbox(); toggleCartPanel(true);
-  }
-
-  function removeCartItem(id) { globalCart = globalCart.filter(i => i.id !== id); updateCartUI(); }
-
-  function updateCartUI() {
-    document.getElementById('cartBadgeCount').textContent = globalCart.length;
-    const container = document.getElementById('cartItemsContainer');
-    let total = 0;
-    if (globalCart.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:2rem;">Empty Cart</p>`; document.getElementById('cartSubtotal').textContent = "£0.00"; return; }
-    container.innerHTML = globalCart.map(item => { total += item.price; return `
-      <div class="cart-item">
-        <img src="${item.src}" class="cart-item-thumb">
-        <div class="cart-item-details"><h4 class="cart-item-title">${item.description}</h4><span class="cart-item-meta">Size: ${item.size}</span><span class="cart-item-price">£${item.price}.00</span><button class="cart-item-remove" onclick="removeCartItem('${item.id}')">Remove</button></div>
-      </div>
-    `; }).join('');
-    document.getElementById('cartSubtotal').textContent = `£${total}.00`;
-  }
-
-  function executeSecureCheckout() {
-    if(globalCart.length === 0) return;
-    window.location.href = `mailto:flipklik06@gmail.com?subject=Order&body=Checkout items: ${globalCart.map(i => i.description).join(', ')}`;
-  }
 
   function initCarouselPips() {
     const container = document.getElementById('hlProgress'); container.innerHTML = '';
