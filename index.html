@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSnaps — Photography Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- IP Protection -->
+  <meta name="robots" content="noindex, noimageindex">
+  <meta name="copyright" content="© 2026 PSnaps. All rights reserved.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playball&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -176,6 +179,51 @@
     footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
     .footer-copy { padding-bottom: 0; }
   }
+
+  /* ── IMAGE PROTECTION ── */
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
+  /* Transparent overlay on image containers blocks right-click reaching the img element */
+  .cat-card::after, .hl-slide::after, .hero-image-pane::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: transparent;
+  }
+  /* Prevent text/image selection sitewide */
+  * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  /* Diagonal watermark in lightbox */
+  .lb-watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 20;
+  }
+  .lb-watermark span {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.07);
+    transform: rotate(-25deg);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
 </style>
 </head>
 <body class="preloading">
@@ -295,7 +343,7 @@
 <div class="lightbox" id="globalLightbox">
   <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
   <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
-  <div class="lb-inner"><img id="lightboxImg" src="" alt=""></div>
+  <div class="lb-inner"><img id="lightboxImg" src="" alt=""><div class="lb-watermark"><span>© PSnaps — psnaps.com</span></div></div>
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   <div class="lb-action-bar">
     <p class="lb-caption" id="lightboxCaption">Loading description...</p>
@@ -410,6 +458,87 @@
     const preloader = document.getElementById('site-preloader');
     if (preloader) { setTimeout(() => { preloader.classList.add('loaded'); document.body.classList.remove('preloading'); setTimeout(() => { preloader.remove(); }, 1200); }, 2200); }
   });
+
+  // ── IP PROTECTION ──
+
+  // Block right-click everywhere
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+  });
+
+  // Block keyboard shortcuts: Ctrl/Cmd + S, U, A, C, P and devtools keys
+  document.addEventListener('keydown', function(e) {
+    const key = e.key.toLowerCase();
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (ctrl && ['s','u','a','c','p'].includes(key)) { e.preventDefault(); return false; }
+    if (e.key === 'F12') { e.preventDefault(); return false; }
+    if (ctrl && e.shiftKey && ['i','j','c','k'].includes(key)) { e.preventDefault(); return false; }
+    if (e.key === 'PrintScreen') {
+      e.preventDefault();
+      if (navigator.clipboard) navigator.clipboard.writeText('');
+      return false;
+    }
+  });
+
+  // Block image drag
+  document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') { e.preventDefault(); return false; }
+  });
+
+  // Intercept clipboard copy — replace with copyright notice
+  document.addEventListener('copy', function(e) {
+    e.preventDefault();
+    if (e.clipboardData) e.clipboardData.setData('text/plain', '© PSnaps — All rights reserved. psnaps.com');
+    return false;
+  });
+
+  // Block cut
+  document.addEventListener('cut', function(e) { e.preventDefault(); return false; });
+
+  // Block iOS touch-and-hold callout (Save Image)
+  document.addEventListener('touchstart', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('touchend', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, { passive: false });
+
+  // Devtools deterrent: blur images if devtools panel width/height detected
+  (function devtoolsGuard() {
+    function check() {
+      const widthDiff = window.outerWidth - window.innerWidth;
+      const heightDiff = window.outerHeight - window.innerHeight;
+      const open = widthDiff > 160 || heightDiff > 160;
+      document.querySelectorAll('img').forEach(function(img) {
+        img.style.filter = open ? 'blur(14px) brightness(0.3)' : '';
+      });
+    }
+    window.addEventListener('resize', check);
+    setInterval(check, 1500);
+  })();
+
+  // Apply per-image protections (for statically present images)
+  function protectImages(root) {
+    (root || document).querySelectorAll('img').forEach(function(img) {
+      img.setAttribute('draggable', 'false');
+      img.addEventListener('mousedown', function(e) { e.preventDefault(); });
+      img.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+      img.addEventListener('touchstart', function(e) { e.preventDefault(); }, { passive: false });
+    });
+  }
+  protectImages(document);
+
+  // Re-apply protections to dynamically injected images (gallery hydration)
+  new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (node.nodeType === 1) protectImages(node);
+      });
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+
 </script>
 </body>
 </html>
