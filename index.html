@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSnaps — Photography Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- IP Protection -->
+  <meta name="robots" content="noindex, noimageindex">
+  <meta name="copyright" content="© 2026 PSnaps. All rights reserved.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playball&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -40,19 +43,198 @@
   .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-light); text-decoration: none; transition: color 0.25s; }
   .nav-links a:hover { color: var(--gold); }
 
-  /* Hero Section */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 0 3rem; overflow: hidden; position: relative; }
-  .hero-layout { display: grid; grid-template-columns: 1.2fr 1fr; width: 100%; align-items: center; gap: 4rem; }
-  .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
-  .hero-image-pane { position: relative; width: 100%; height: calc(100vh - 6rem); overflow: hidden; background: var(--mid); }
-  .hero-cover-img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.88) contrast(1.02); display: block; }
-  .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
-  .hero-display-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.15; margin-bottom: 2.5rem; display: flex; flex-direction: column; }
-  .hero-display-title .line-primary { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
-  .hero-display-title .line-connective { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-style: italic; color: var(--warm); margin-top: 1.4rem; margin-bottom: 0.6rem; display: block; }
-  .hero-display-title .line-author { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
-  .hero-desc { font-size: 0.95rem; letter-spacing: 0.03em; color: var(--text-light); line-height: 1.65; max-width: 440px; margin-bottom: 3rem; }
-  .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 0.3rem; transition: color 0.3s; }
+  /* ── HERO FILMSTRIP ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: #050503;
+  }
+
+  /* Filmstrip full-bleed background */
+  .filmstrip {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    background: #0A0906;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Sprocket rows */
+  .sprocket-row {
+    flex: 0 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 10px;
+    background: #080704;
+    z-index: 2;
+    position: relative;
+  }
+  .sprocket-row::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: rgba(201,168,76,0.12);
+  }
+  .sprocket-row.top::before { bottom: 0; }
+  .sprocket-row.bottom::before { top: 0; }
+
+  .sprocket-hole {
+    width: 14px; height: 10px;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 2px;
+    flex-shrink: 0;
+    background: #050503;
+  }
+
+  /* Film frames strip */
+  .film-frames {
+    flex: 1;
+    display: flex;
+    gap: 6px;
+    padding: 0 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Each frame */
+  .film-frame {
+    flex: 0 0 auto;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-left: 3px solid #080704;
+    border-right: 3px solid #080704;
+  }
+
+  .film-frame img {
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(0.12) brightness(0.72) contrast(1.08);
+    transition: filter 0.6s;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  /* Frame number badge — like real film */
+  .film-frame-num {
+    position: absolute;
+    bottom: 6px; left: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.45);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Continuous slow pan animation */
+  .film-frames.animating {
+    animation: filmPan 40s linear infinite;
+  }
+  @keyframes filmPan {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .film-frames:hover { animation-play-state: paused; }
+
+  /* Overlay — gradient darkens filmstrip so text pops */
+  .hero-film-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to right,
+        rgba(5,5,3,0.92) 0%,
+        rgba(5,5,3,0.78) 38%,
+        rgba(5,5,3,0.35) 65%,
+        rgba(5,5,3,0.18) 100%
+      ),
+      linear-gradient(to bottom,
+        rgba(5,5,3,0.5) 0%,
+        transparent 20%,
+        transparent 80%,
+        rgba(5,5,3,0.5) 100%
+      );
+  }
+
+  /* Text sits on top of everything */
+  .hero-text-overlay {
+    position: relative;
+    z-index: 3;
+    padding: 8rem 4rem 4rem 4rem;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  .hero-display-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+  }
+  .hero-display-title .line-primary {
+    font-size: clamp(2.8rem, 5.2vw, 5.2rem);
+    color: var(--cream);
+    display: block;
+  }
+  .hero-display-title .line-connective {
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-style: italic;
+    color: var(--warm);
+    margin-top: 1.2rem; margin-bottom: 0.5rem;
+    display: block;
+  }
+  .hero-display-title .line-author {
+    font-size: clamp(2.8rem, 5.2vw, 5.2rem);
+    color: var(--cream);
+    display: block;
+  }
+  .hero-desc {
+    font-size: 0.93rem;
+    letter-spacing: 0.03em;
+    color: rgba(187,187,168,0.85);
+    line-height: 1.7;
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.9);
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.3rem;
+    transition: color 0.3s;
+  }
   .hero-cta:hover { color: var(--gold); }
 
   /* Gallery rails */
@@ -165,10 +347,10 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* Media Queries */
-  @media (max-width: 992px) { .hero { padding: 6rem 2rem 0 2rem; } .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } .hero-image-pane { height: 55vh; } #connect { grid-template-columns: 1fr; } }
+  @media (max-width: 992px) { .hero-text-overlay { padding: 7rem 2rem 3rem; } #connect { grid-template-columns: 1fr; } }
   @media (max-width: 768px) { 
     .nav-links { display: none; } 
-    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } 
+    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.2rem; } .hero-text-overlay { padding: 6rem 1.5rem 3rem; } 
     .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } 
     .cat-card { flex: 0 0 220px; height: 240px; } 
     .hl-slide { flex: 0 0 100%; height: 380px; } 
@@ -176,6 +358,51 @@
     footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
     .footer-copy { padding-bottom: 0; }
   }
+
+  /* ── IMAGE PROTECTION ── */
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
+  /* Transparent overlay on image containers blocks right-click reaching the img element */
+  .cat-card::after, .hl-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: transparent;
+  }
+  /* Prevent text/image selection sitewide */
+  * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  /* Diagonal watermark in lightbox */
+  .lb-watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 20;
+  }
+  .lb-watermark span {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.07);
+    transform: rotate(-25deg);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
 </style>
 </head>
 <body class="preloading">
@@ -202,21 +429,28 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-layout">
-    <div class="hero-content">
-      <p class="hero-eyebrow">Photography Portfolio</p>
-      <h1 class="hero-display-title">
-        <span class="line-primary">The Fabric</span>
-        <span class="line-primary">of <em>Space &amp; Time</em></span>
-        <span class="line-connective">from the lens of</span>
-        <span class="line-author"><em>Pradyumna Saripalli</em></span>
-      </h1>
-      <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
-      <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
-    </div>
-    <div class="hero-image-pane">
-      <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
-    </div>
+  <!-- FILMSTRIP BACKGROUND — auto-populated from gallery-data.json cover array -->
+  <div class="filmstrip" id="heroFilmstrip">
+    <!-- Sprocket holes top -->
+    <div class="sprocket-row top" id="sprocketTop"></div>
+    <!-- Film frames injected by JS -->
+    <div class="film-frames" id="filmFrames"></div>
+    <!-- Sprocket holes bottom -->
+    <div class="sprocket-row bottom" id="sprocketBottom"></div>
+  </div>
+  <!-- Dark gradient so text is readable over filmstrip -->
+  <div class="hero-film-overlay"></div>
+  <!-- TEXT OVERLAY — sits on top of filmstrip -->
+  <div class="hero-text-overlay">
+    <p class="hero-eyebrow">Photography Portfolio</p>
+    <h1 class="hero-display-title">
+      <span class="line-primary">The Fabric</span>
+      <span class="line-primary">of <em>Space &amp; Time</em></span>
+      <span class="line-connective">from the lens of</span>
+      <span class="line-author"><em>Pradyumna Saripalli</em></span>
+    </h1>
+    <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
+    <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
   </div>
 </section>
 
@@ -295,7 +529,7 @@
 <div class="lightbox" id="globalLightbox">
   <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
   <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
-  <div class="lb-inner"><img id="lightboxImg" src="" alt=""></div>
+  <div class="lb-inner"><img id="lightboxImg" src="" alt=""><div class="lb-watermark"><span>© PSnaps — psnaps.com</span></div></div>
   <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
   <div class="lb-action-bar">
     <p class="lb-caption" id="lightboxCaption">Loading description...</p>
@@ -343,7 +577,11 @@
       refreshCarouselView();
     }
 
-    ['cities', 'architecture', 'nature'].forEach(cat => {
+    // Build filmstrip from cover images
+    const coverImages = portfolioData.cover || portfolioData.highlights || [];
+    buildFilmstrip(coverImages);
+
+    ['cities', 'architecture', 'nature', 'buildings', 'patterns'].forEach(cat => {
       const rail = document.getElementById(`rail-${cat}`);
       const countLabel = document.getElementById(`count-${cat}`);
       const pool = portfolioData[cat] || [];
@@ -404,12 +642,130 @@
 
   const obs = new IntersectionObserver(ents => ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } }), { threshold: 0.05 });
 
+
+  // ── FILMSTRIP HERO ──
+  function buildFilmstrip(images) {
+    const framesEl = document.getElementById('filmFrames');
+    const sprTop = document.getElementById('sprocketTop');
+    const sprBot = document.getElementById('sprocketBottom');
+    if (!framesEl || !images || images.length === 0) return;
+
+    // Duplicate frames for seamless infinite loop
+    const allImages = [...images, ...images, ...images];
+
+    framesEl.innerHTML = allImages.map((img, i) => `
+      <div class="film-frame">
+        <img src="${img.src}" alt="" draggable="false">
+        <span class="film-frame-num">${String((i % images.length) + 1).padStart(2,'0')}</span>
+      </div>
+    `).join('');
+
+    // Generate sprocket holes to fill width
+    const holeCount = Math.ceil(window.innerWidth / 32) + 4;
+    const holeHTML = Array(holeCount).fill('<div class="sprocket-hole"></div>').join('');
+    sprTop.innerHTML = holeHTML;
+    sprBot.innerHTML = holeHTML;
+
+    // Size frames: 3 visible at a time on right side
+    const frameH = framesEl.offsetHeight || (window.innerHeight - 56);
+    const frameW = Math.round(frameH * 0.72);
+    framesEl.querySelectorAll('.film-frame').forEach(f => { f.style.width = frameW + 'px'; });
+
+    // Start animation after a short delay
+    setTimeout(() => framesEl.classList.add('animating'), 400);
+
+    // Adjust animation duration based on count
+    const speed = images.length * 8; // ~8s per original image
+    framesEl.style.animationDuration = speed + 's';
+  }
+
   window.addEventListener('load', () => {
     loadPortfolioData();
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     const preloader = document.getElementById('site-preloader');
     if (preloader) { setTimeout(() => { preloader.classList.add('loaded'); document.body.classList.remove('preloading'); setTimeout(() => { preloader.remove(); }, 1200); }, 2200); }
   });
+
+  // ── IP PROTECTION ──
+
+  // Block right-click everywhere
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+  });
+
+  // Block keyboard shortcuts: Ctrl/Cmd + S, U, A, C, P and devtools keys
+  document.addEventListener('keydown', function(e) {
+    const key = e.key.toLowerCase();
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (ctrl && ['s','u','a','c','p'].includes(key)) { e.preventDefault(); return false; }
+    if (e.key === 'F12') { e.preventDefault(); return false; }
+    if (ctrl && e.shiftKey && ['i','j','c','k'].includes(key)) { e.preventDefault(); return false; }
+    if (e.key === 'PrintScreen') {
+      e.preventDefault();
+      if (navigator.clipboard) navigator.clipboard.writeText('');
+      return false;
+    }
+  });
+
+  // Block image drag
+  document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') { e.preventDefault(); return false; }
+  });
+
+  // Intercept clipboard copy — replace with copyright notice
+  document.addEventListener('copy', function(e) {
+    e.preventDefault();
+    if (e.clipboardData) e.clipboardData.setData('text/plain', '© PSnaps — All rights reserved. psnaps.com');
+    return false;
+  });
+
+  // Block cut
+  document.addEventListener('cut', function(e) { e.preventDefault(); return false; });
+
+  // Block iOS touch-and-hold callout (Save Image)
+  document.addEventListener('touchstart', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('touchend', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, { passive: false });
+
+  // Devtools deterrent: blur images if devtools panel width/height detected
+  (function devtoolsGuard() {
+    function check() {
+      const widthDiff = window.outerWidth - window.innerWidth;
+      const heightDiff = window.outerHeight - window.innerHeight;
+      const open = widthDiff > 160 || heightDiff > 160;
+      document.querySelectorAll('img').forEach(function(img) {
+        img.style.filter = open ? 'blur(14px) brightness(0.3)' : '';
+      });
+    }
+    window.addEventListener('resize', check);
+    setInterval(check, 1500);
+  })();
+
+  // Apply per-image protections (for statically present images)
+  function protectImages(root) {
+    (root || document).querySelectorAll('img').forEach(function(img) {
+      img.setAttribute('draggable', 'false');
+      img.addEventListener('mousedown', function(e) { e.preventDefault(); });
+      img.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+      img.addEventListener('touchstart', function(e) { e.preventDefault(); }, { passive: false });
+    });
+  }
+  protectImages(document);
+
+  // Re-apply protections to dynamically injected images (gallery hydration)
+  new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (node.nodeType === 1) protectImages(node);
+      });
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+
 </script>
 </body>
 </html>
