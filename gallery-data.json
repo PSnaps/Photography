@@ -69,20 +69,6 @@
       "description": "Zanseschans"
     }
   ],
-  "cover": [
-    {
-      "src": "photos/Cover/Heart.jpg",
-      "description": "Heart"
-    },
-    {
-      "src": "photos/Cover/Rome.jpeg",
-      "description": "Rome"
-    },
-    {
-      "src": "photos/Cover/Screenshot%202021-01-27%20at%204.28.01%20PM.png",
-      "description": "Screenshot 2021 01 27 At 4.28.01 Pm"
-    }
-  ],
   "highlights": [
     {
       "src": "photos/Highlights/Big%20Sur.jpg",
