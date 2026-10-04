@@ -1,645 +1,896 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSnaps — Photography Portfolio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playball&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F5F2EC; --dark: #0D0D0B; --mid: #1C1C18; --warm: #C8B89A;
-    --accent: #B8956A; --gold: #C9A84C; --text-muted: #888880; --text-light: #BBBBA8;
-    --gap-standard: 1.5rem;
-  }
-  html { scroll-behavior: smooth; }
-  body { background: var(--dark); color: var(--cream); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
-  body.preloading { overflow: hidden !important; }
-
-  /* --- ADVANCED IMAGE PROTECTION STYLES --- */
-  img {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-    -webkit-touch-callout: none; /* Blocks native iOS long-press save options */
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
-
-  /* Preloader Overlay */
-  #site-preloader { position: fixed; inset: 0; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease; will-change: transform, opacity; }
-  #site-preloader.loaded { transform: translateY(-100%); opacity: 0; }
-  .preloader-inner { text-align: center; display: flex; flex-direction: column; align-items: center; }
-  .preloader-logo { font-family: 'Playball', cursive; font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 1; margin-bottom: 1.5rem; color: var(--cream); opacity: 0; transform: scale(0.96) translateY(15px); animation: preloaderTextIn 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s; }
-  .preloader-logo .p-letter { color: var(--gold); }
-  .preloader-line-wrap { width: 140px; height: 1px; background: rgba(200, 184, 154, 0.15); margin-bottom: 1.5rem; position: relative; overflow: hidden; }
-  .preloader-line { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: center; animation: preloaderLineIn 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards 0.6s; }
-  .preloader-manifesto { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 300; letter-spacing: 0.4em; text-transform: uppercase; color: var(--text-muted); opacity: 0; transform: translateY(10px); animation: preloaderFadeIn 1s ease forwards 1.2s; }
-  @keyframes preloaderTextIn { to { opacity: 1; transform: scale(1) translateY(0); } }
-  @keyframes preloaderLineIn { to { transform: scaleX(1); } }
-  @keyframes preloaderFadeIn { to { opacity: 1; transform: translateY(0); } }
-
-  /* Navigation */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 3rem; background: linear-gradient(to bottom, rgba(13,13,11,0.95) 0%, transparent 100%); backdrop-filter: blur(4px); }
-  .logo { font-family: 'Playball', cursive; font-size: 2.1rem; text-decoration: none; display: inline-flex; align-items: center; }
-  .logo-ps { color: var(--gold); } .logo-naps { color: var(--cream); margin-left: -0.05em; }
-  .nav-right { display: flex; align-items: center; gap: 3rem; }
-  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
-  .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-light); text-decoration: none; transition: color 0.25s; }
-  .nav-links a:hover { color: var(--gold); }
-  .cart-trigger { background: none; border: none; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
-  .cart-count-badge { background: var(--gold); color: var(--dark); font-weight: 600; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
-
-  /* Hero Section */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 0 3rem; overflow: hidden; position: relative; }
-  .hero-layout { display: grid; grid-template-columns: 1.2fr 1fr; width: 100%; align-items: center; gap: 4rem; }
-  .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
-  .hero-image-pane { position: relative; width: 100%; height: calc(100vh - 6rem); overflow: hidden; background: var(--mid); }
-  .hero-cover-img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.88) contrast(1.02); display: block; }
-  .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
-  .hero-display-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.15; margin-bottom: 2.5rem; display: flex; flex-direction: column; }
-  .hero-display-title .line-primary { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
-  .hero-display-title .line-connective { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-style: italic; color: var(--warm); margin-top: 1.4rem; margin-bottom: 0.6rem; display: block; }
-  .hero-display-title .line-author { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
-  .hero-desc { font-size: 0.95rem; letter-spacing: 0.03em; color: var(--text-light); line-height: 1.65; max-width: 440px; margin-bottom: 3rem; }
-  .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 0.3rem; transition: color 0.3s; }
-  .hero-cta:hover { color: var(--gold); }
-
-  /* Gallery rails */
-  .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
-  .cat-section.alt { background: var(--mid); }
-  .cat-header { display: flex; align-items: center; justify-content: space-between; padding: 0 3rem 2.5rem; cursor: pointer; user-select: none; }
-  .cat-header-left { display: flex; flex-direction: column; gap: 0.3rem; }
-  .cat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); }
-  .cat-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1; color: var(--cream); transition: color 0.3s; }
-  .cat-header:hover .cat-title { color: var(--warm); }
-  .cat-header-right { display: flex; align-items: center; gap: 1.5rem; }
-  .cat-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 200; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--text-muted); }
-  .cat-toggle { width: 44px; height: 44px; border: 1px solid rgba(200,184,154,0.2); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s, transform 0.4s; flex-shrink: 0; }
-  .cat-header:hover .cat-toggle { border-color: var(--gold); }
-  .cat-section.open .cat-toggle svg { transform: rotate(45deg); }
-  .cat-carousel-wrap { position: relative; overflow: hidden; }
-  .cat-rail { display: flex; gap: var(--gap-standard); padding: 0 3rem 1.5rem; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1); max-height: 340px; }
-  .cat-rail::-webkit-scrollbar { display: none; }
-  .cat-section.open .cat-rail { max-height: 2800px; flex-wrap: wrap; overflow-x: hidden; row-gap: 2.5rem; column-gap: var(--gap-standard); }
-  .cat-card { flex: 0 0 290px; height: 310px; overflow: hidden; position: relative; background: var(--mid); cursor: pointer; }
-  .cat-section.open .cat-card { flex: 0 0 calc(25% - 1.15rem); height: 300px; }
-  .cat-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.05); transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s; }
-  .cat-card:hover img { transform: scale(1.05); filter: brightness(0.7) contrast(1.08); }
-  .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.2rem; }
-  .cat-card:hover .cat-card-overlay { opacity: 1; }
-  .cat-card-desc-preview { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--cream); text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%; }
-  .cat-scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 15; width: 42px; height: 42px; background: rgba(13,13,11,0.85); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; opacity: 0; }
-  .cat-carousel-wrap:hover .cat-scroll-btn { opacity: 1; }
-  .cat-scroll-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-  .cat-scroll-btn.left { left: 0.5rem; } .cat-scroll-btn.right { right: 0.5rem; }
-  .cat-section.open .cat-scroll-btn { display: none; }
-  .cat-expand-hint { padding: 0.5rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
-  .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
-
-  /* Highlights Section */
-  #Highlights { background: var(--mid); padding: 6rem 0; }
-  #Highlights .section-header { padding: 0 3rem 2.5rem; border-bottom: 1px solid rgba(200,184,154,0.1); margin-bottom: 0; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; }
-  .hl-wrapper { position: relative; overflow: hidden; margin-top: var(--gap-standard); }
-  .hl-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); padding: 0 3rem; gap: var(--gap-standard); }
-  .hl-slide { flex: 0 0 calc(50% - 0.75rem); height: 560px; overflow: hidden; position: relative; background: var(--dark); cursor: pointer; }
-  .hl-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82); transition: filter 0.5s; }
-  .hl-slide.active img { filter: brightness(0.95); }
-  .hl-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem 2rem 2rem; background: linear-gradient(transparent, rgba(13,13,11,0.85)); transform: translateY(100%); transition: transform 0.5s ease; z-index: 15; }
-  .hl-slide.active .hl-info { transform: translateY(0); }
-  .hl-num { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 0.4rem; }
-  .hl-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 1.5rem; color: var(--cream); }
-  .hl-controls { display: flex; align-items: center; gap: 1.5rem; padding: 1.8rem 3rem 0; }
-  .hl-btn { background: none; border: 1px solid rgba(200,184,154,0.22); color: var(--cream); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
-  .hl-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-  .hl-progress { display: flex; gap: 5px; flex: 1; }
-  .hl-pip { height: 1px; background: rgba(200,184,154,0.18); flex: 1; position: relative; overflow: hidden; cursor: pointer; }
-  .hl-pip::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; background: var(--gold); width: 0%; transition: width 0.3s; }
-  .hl-pip.active::after { width: 100%; }
-  .hl-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); }
-
-  /* Lightbox */
-  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
-  .lightbox.open { display: flex; }
-  .lb-inner { position: relative; max-width: 92vw; max-height: 76vh; display: flex; align-items: center; justify-content: center; }
-  .lb-inner img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; z-index: 1; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSnaps — Photography Portfolio</title>
   
-  /* Transparent Ghost Shield: Covers image entirely to intercept drag-drops and direct clicks */
-  .lb-ghost-shield { position: absolute; inset: 0; z-index: 10; background: transparent; cursor: default; }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playball&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@200;300;400;500&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
 
-  .lb-close { position: absolute; top: 2rem; right: 3rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; z-index: 20; }
-  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.7); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 25; }
-  .lb-nav:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-  .lb-nav.prev { left: -3.5rem; } .lb-nav.next { right: -3.5rem; }
-  .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
-  .lb-caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-light); min-height: 1.6rem; }
-  .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-  .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
+  <style>
+    /* ==========================================================================
+       1. VARIABLES, RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    :root {
+      --cream: #F5F2EC; 
+      --dark: #0D0D0B; 
+      --mid: #1C1C18; 
+      --warm: #C8B89A;
+      --accent: #B8956A; 
+      --gold: #C9A84C; 
+      --text-muted: #888880; 
+      --text-light: #BBBBA8;
+      --gap-standard: 1.5rem;
+    }
 
-  /* Cart Panel */
-  .cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px; background: var(--mid); border-left: 1px solid rgba(200,184,154,0.15); z-index: 700; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 3rem 2.5rem; }
-  .cart-panel.open { transform: translateX(0); }
-  .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
-  .cart-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
-  .cart-panel-close { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
-  .cart-items-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; }
-  .cart-item { display: flex; gap: 1rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(200,184,154,0.08); }
-  .cart-item-thumb { width: 65px; height: 65px; object-fit: cover; }
-  .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
-  .cart-item-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; }
-  .cart-item-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
-  .cart-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--gold); }
-  .cart-item-remove { background: none; border: none; color: rgba(220,90,90,0.7); font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; text-align: left; margin-top: 0.3rem; }
-  .cart-footer { margin-top: 2rem; border-top: 1px solid rgba(200,184,154,0.15); padding-top: 2rem; }
-  .cart-summary-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-  .cart-summary-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
-  .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); }
-  .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+    html { scroll-behavior: smooth; }
+    
+    body { 
+      background: var(--dark); 
+      color: var(--cream); 
+      font-family: 'Barlow', sans-serif; 
+      font-weight: 300; 
+      overflow-x: hidden; 
+    }
+    
+    body.preloading { overflow: hidden !important; }
 
-  /* Inquiry Overlay */
-  .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
-  .inquiry-overlay.open { display: flex; }
-  .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; }
-  .inquiry-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
-  .config-group { margin-bottom: 1.5rem; }
-  .config-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.5rem; }
-  .size-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-  .size-btn { background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 0.6rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; cursor: pointer; }
-  .size-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
-  .inquiry-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-  .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; flex: 1; }
-  .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; cursor: pointer; }
+    /* Image Protection */
+    img {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      -webkit-touch-callout: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
 
-  /* Connect Section */
-  #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-  .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
-  .connect-profile h2 em { font-style: italic; color: var(--warm); }
-  .connect-profile p { font-size: 0.95rem; line-height: 1.8; color: var(--text-light); max-width: 440px; margin-bottom: 3rem; }
-  .connect-methods { display: flex; flex-direction: column; gap: 1.5rem; }
-  .connect-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid rgba(200,184,154,0.1); text-decoration: none; color: var(--cream); }
-  .connect-row-left { display: flex; align-items: center; gap: 1.5rem; }
-  .connect-icon { width: 1.6rem; height: 1.6rem; color: var(--text-muted); transition: color 0.3s, transform 0.3s; }
-  .connect-row:hover .connect-icon { color: var(--gold); }
-  .connect-meta .type { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
-  .connect-meta .handle { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; }
-  .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
-  .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
-  
-  /* Footer Branding */
-  footer {
-    background: #090908;
-    padding: 3.5rem 3rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    border-top: 1px solid rgba(200, 184, 154, 0.04);
-  }
-  .footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }
-  .footer-logo .f-logo-ps { color: var(--gold); }
-  .footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }
-  .footer-copy {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 300;
-    letter-spacing: 0.16em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    line-height: 1;
-    padding-bottom: 0.35rem;
-  }
+    /* Animation Utilities */
+    .reveal { 
+      opacity: 0; 
+      transform: translateY(24px); 
+      transition: opacity 0.8s ease, transform 0.8s ease; 
+    }
+    .reveal.visible { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
 
-  /* Reveals */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* ==========================================================================
+       2. PRELOADER
+       ========================================================================== */
+    #site-preloader { 
+      position: fixed; 
+      inset: 0; 
+      background: var(--dark); 
+      z-index: 9999; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease; 
+      will-change: transform, opacity; 
+    }
+    #site-preloader.loaded { 
+      transform: translateY(-100%); 
+      opacity: 0; 
+    }
+    .preloader-inner { 
+      text-align: center; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+    }
+    .preloader-logo { 
+      font-family: 'Playball', cursive; 
+      font-size: clamp(3.5rem, 8vw, 6.5rem); 
+      line-height: 1; 
+      margin-bottom: 1.5rem; 
+      color: var(--cream); 
+      opacity: 0; 
+      transform: scale(0.96) translateY(15px); 
+      animation: preloaderTextIn 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s; 
+    }
+    .preloader-logo .p-letter { color: var(--gold); }
+    .preloader-line-wrap { 
+      width: 140px; 
+      height: 1px; 
+      background: rgba(200, 184, 154, 0.15); 
+      margin-bottom: 1.5rem; 
+      position: relative; 
+      overflow: hidden; 
+    }
+    .preloader-line { 
+      position: absolute; 
+      left: 0; 
+      top: 0; 
+      bottom: 0; 
+      width: 100%; 
+      background: var(--gold); 
+      transform: scaleX(0); 
+      transform-origin: center; 
+      animation: preloaderLineIn 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards 0.6s; 
+    }
+    .preloader-manifesto { 
+      font-family: 'Barlow Condensed', sans-serif; 
+      font-size: 0.72rem; 
+      font-weight: 300; 
+      letter-spacing: 0.4em; 
+      text-transform: uppercase; 
+      color: var(--text-muted); 
+      opacity: 0; 
+      transform: translateY(10px); 
+      animation: preloaderFadeIn 1s ease forwards 1.2s; 
+    }
 
-  /* Media Queries */
-  @media (max-width: 992px) { .hero { padding: 6rem 2rem 0 2rem; } .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } .hero-image-pane { height: 55vh; } #connect { grid-template-columns: 1fr; } }
-  @media (max-width: 768px) { 
-    .nav-links { display: none; } 
-    .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } 
-    .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } 
-    .cat-card { flex: 0 0 220px; height: 240px; } 
-    .hl-slide { flex: 0 0 100%; height: 380px; } 
-    .lb-nav { display: none !important; } 
-    .cart-panel { padding: 2rem 1.5rem; } 
-    footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
-    .footer-copy { padding-bottom: 0; }
-  }
-</style>
+    @keyframes preloaderTextIn { to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes preloaderLineIn { to { transform: scaleX(1); } }
+    @keyframes preloaderFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* ==========================================================================
+       3. NAVIGATION & HEADER
+       ========================================================================== */
+    nav { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      z-index: 200; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 1.4rem 3rem; 
+      background: linear-gradient(to bottom, rgba(13,13,11,0.95) 0%, transparent 100%); 
+      backdrop-filter: blur(4px); 
+    }
+    .logo { 
+      font-family: 'Playball', cursive; 
+      font-size: 2.1rem; 
+      text-decoration: none; 
+      display: inline-flex; 
+      align-items: center; 
+    }
+    .logo-ps { color: var(--gold); } 
+    .logo-naps { color: var(--cream); margin-left: -0.05em; }
+    .nav-right { display: flex; align-items: center; gap: 3rem; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { 
+      font-family: 'Barlow Condensed', sans-serif; 
+      font-size: 0.78rem; 
+      letter-spacing: 0.22em; 
+      text-transform: uppercase; 
+      color: var(--text-light); 
+      text-decoration: none; 
+      transition: color 0.25s; 
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .cart-trigger { 
+      background: none; 
+      border: none; 
+      color: var(--cream); 
+      font-family: 'Barlow Condensed', sans-serif; 
+      font-size: 0.85rem; 
+      letter-spacing: 0.15em; 
+      text-transform: uppercase; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+    }
+    .cart-count-badge { 
+      background: var(--gold); 
+      color: var(--dark); 
+      font-weight: 600; 
+      font-size: 0.65rem; 
+      padding: 2px 6px; 
+      border-radius: 10px; 
+      min-width: 18px; 
+      text-align: center; 
+    }
+
+    /* ==========================================================================
+       4. HERO SECTION
+       ========================================================================== */
+    .hero { 
+      min-height: 100vh; 
+      display: flex; 
+      align-items: center; 
+      padding: 6rem 0 0 3rem; 
+      overflow: hidden; 
+      position: relative; 
+    }
+    .hero-layout { 
+      display: grid; 
+      grid-template-columns: 1.2fr 1fr; 
+      width: 100%; 
+      align-items: center; 
+      gap: 4rem; 
+    }
+    .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
+    .hero-image-pane { 
+      position: relative; 
+      width: 100%; 
+      height: calc(100vh - 6rem); 
+      overflow: hidden; 
+      background: var(--mid); 
+    }
+    .hero-cover-img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      object-position: center; 
+      filter: brightness(0.88) contrast(1.02); 
+      display: block; 
+    }
+    .hero-eyebrow { 
+      font-family: 'Barlow Condensed', sans-serif; 
+      font-size: 0.72rem; 
+      letter-spacing: 0.45em; 
+      text-transform: uppercase; 
+      color: var(--gold); 
+      margin-bottom: 2rem; 
+    }
+    .hero-display-title { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-weight: 300; 
+      line-height: 1.15; 
+      margin-bottom: 2.5rem; 
+      display: flex; 
+      flex-direction: column; 
+    }
+    .hero-display-title .line-primary { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
+    .hero-display-title .line-connective { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-style: italic; color: var(--warm); margin-top: 1.4rem; margin-bottom: 0.6rem; display: block; }
+    .hero-display-title .line-author { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
+    .hero-desc { font-size: 0.95rem; letter-spacing: 0.03em; color: var(--text-light); line-height: 1.65; max-width: 440px; margin-bottom: 3rem; }
+    .hero-cta { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.8rem; 
+      font-family: 'Barlow Condensed', sans-serif; 
+      font-size: 0.78rem; 
+      letter-spacing: 0.28em; 
+      text-transform: uppercase; 
+      color: var(--cream); 
+      text-decoration: none; 
+      border-bottom: 1px solid var(--gold); 
+      padding-bottom: 0.3rem; 
+      transition: color 0.3s; 
+    }
+    .hero-cta:hover { color: var(--gold); }
+
+    /* ==========================================================================
+       5. GALLERY CATEGORY SECTIONS & CAROUSEL RAILS
+       ========================================================================== */
+    .cat-section { padding: 6rem 0; border-top: 1px solid rgba(200,184,154,0.07); }
+    .cat-section.alt { background: var(--mid); }
+    .cat-header { display: flex; align-items: center; justify-content: space-between; padding: 0 3rem 2.5rem; cursor: pointer; user-select: none; }
+    .cat-header-left { display: flex; flex-direction: column; gap: 0.3rem; }
+    .cat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); }
+    .cat-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1; color: var(--cream); transition: color 0.3s; }
+    .cat-header:hover .cat-title { color: var(--warm); }
+    .cat-header-right { display: flex; align-items: center; gap: 1.5rem; }
+    .cat-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 200; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--text-muted); }
+    .cat-toggle { width: 44px; height: 44px; border: 1px solid rgba(200,184,154,0.2); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s, transform 0.4s; flex-shrink: 0; }
+    .cat-header:hover .cat-toggle { border-color: var(--gold); }
+    .cat-section.open .cat-toggle svg { transform: rotate(45deg); }
+    .cat-carousel-wrap { position: relative; overflow: hidden; }
+    .cat-rail { display: flex; gap: var(--gap-standard); padding: 0 3rem 1.5rem; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1); max-height: 340px; }
+    .cat-rail::-webkit-scrollbar { display: none; }
+    .cat-section.open .cat-rail { max-height: 2800px; flex-wrap: wrap; overflow-x: hidden; row-gap: 2.5rem; column-gap: var(--gap-standard); }
+    .cat-card { flex: 0 0 290px; height: 310px; overflow: hidden; position: relative; background: var(--mid); cursor: pointer; }
+    .cat-section.open .cat-card { flex: 0 0 calc(25% - 1.15rem); height: 300px; }
+    .cat-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) contrast(1.05); transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s; }
+    .cat-card:hover img { transform: scale(1.05); filter: brightness(0.7) contrast(1.08); }
+    .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.2rem; }
+    .cat-card:hover .cat-card-overlay { opacity: 1; }
+    .cat-card-desc-preview { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--cream); text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%; }
+    .cat-scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 15; width: 42px; height: 42px; background: rgba(13,13,11,0.85); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; opacity: 0; }
+    .cat-carousel-wrap:hover .cat-scroll-btn { opacity: 1; }
+    .cat-scroll-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .cat-scroll-btn.left { left: 0.5rem; } 
+    .cat-scroll-btn.right { right: 0.5rem; }
+    .cat-section.open .cat-scroll-btn { display: none; }
+    .cat-expand-hint { padding: 0.5rem 3rem 0; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
+    .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
+
+    /* ==========================================================================
+       6. CONTACT / CONNECT SECTION
+       ========================================================================== */
+    #connect { padding: 8rem 3rem; border-top: 1px solid rgba(200,184,154,0.07); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .connect-profile h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 1.5rem; }
+    .connect-profile h2 em { font-style: italic; color: var(--warm); }
+    .connect-profile p { font-size: 0.95rem; line-height: 1.8; color: var(--text-light); max-width: 440px; margin-bottom: 3rem; }
+    .connect-methods { display: flex; flex-direction: column; gap: 1.5rem; }
+    .connect-row { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid rgba(200,184,154,0.1); text-decoration: none; color: var(--cream); }
+    .connect-row-left { display: flex; align-items: center; gap: 1.5rem; }
+    .connect-icon { width: 1.6rem; height: 1.6rem; color: var(--text-muted); transition: color 0.3s, transform 0.3s; }
+    .connect-row:hover .connect-icon { color: var(--gold); }
+    .connect-meta .type { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+    .connect-meta .handle { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; }
+    .connect-arrow { font-size: 1.5rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
+    .connect-row:hover .connect-arrow { transform: translateX(6px); color: var(--gold); }
+
+    /* ==========================================================================
+       7. OVERLAYS, MODALS & PANELS
+       ========================================================================== */
+    /* Lightbox Modal */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lb-inner { position: relative; max-width: 92vw; max-height: 76vh; display: flex; align-items: center; justify-content: center; }
+    .lb-inner img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; z-index: 1; }
+    .lb-ghost-shield { position: absolute; inset: 0; z-index: 10; background: transparent; cursor: default; }
+    .lb-close { position: absolute; top: 2rem; right: 3rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; z-index: 20; }
+    .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.7); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 25; }
+    .lb-nav:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .lb-nav.prev { left: -3.5rem; } 
+    .lb-nav.next { right: -3.5rem; }
+    .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+    .lb-caption { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-light); min-height: 1.6rem; }
+    .lb-print-btn { background: transparent; border: 1px solid var(--gold); color: var(--cream); padding: 0.5rem 1.4rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+    .lb-print-btn:hover { background: var(--gold); color: var(--dark); }
+
+    /* Print Configurator Modal */
+    .inquiry-overlay { position: fixed; inset: 0; background: rgba(13,13,11,0.96); z-index: 600; display: none; align-items: center; justify-content: center; padding: 2rem; }
+    .inquiry-overlay.open { display: flex; }
+    .inquiry-box { background: var(--mid); border: 1px solid rgba(200,184,154,0.15); padding: 3rem; width: 100%; max-width: 520px; }
+    .inquiry-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
+    .config-group { margin-bottom: 1.5rem; }
+    .config-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.5rem; }
+    .size-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .size-btn { background: var(--dark); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); padding: 0.6rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; cursor: pointer; }
+    .size-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.1); color: var(--gold); }
+    .inquiry-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    .inquiry-submit { background: var(--gold); color: var(--dark); border: none; padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 500; cursor: pointer; flex: 1; }
+    .inquiry-cancel { background: transparent; border: 1px solid rgba(200,184,154,0.3); color: var(--text-light); padding: 0.7rem 1.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; cursor: pointer; }
+
+    /* Shopping Cart Side Panel */
+    .cart-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 440px; background: var(--mid); border-left: 1px solid rgba(200,184,154,0.15); z-index: 700; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; padding: 3rem 2.5rem; }
+    .cart-panel.open { transform: translateX(0); }
+    .cart-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; }
+    .cart-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
+    .cart-panel-close { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
+    .cart-items-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; }
+    .cart-item { display: flex; gap: 1rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(200,184,154,0.08); }
+    .cart-item-thumb { width: 65px; height: 65px; object-fit: cover; }
+    .cart-item-details { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+    .cart-item-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; }
+    .cart-item-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+    .cart-item-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--gold); }
+    .cart-item-remove { background: none; border: none; color: rgba(220,90,90,0.7); font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; text-align: left; margin-top: 0.3rem; }
+    .cart-footer { margin-top: 2rem; border-top: 1px solid rgba(200,184,154,0.15); padding-top: 2rem; }
+    .cart-summary-line { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .cart-summary-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
+    .cart-summary-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; color: var(--gold); }
+    .checkout-btn { display: block; width: 100%; background: var(--gold); color: var(--dark); text-align: center; text-decoration: none; padding: 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+
+    /* ==========================================================================
+       8. FOOTER
+       ========================================================================== */
+    footer {
+      background: #090908;
+      padding: 3.5rem 3rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-top: 1px solid rgba(200, 184, 154, 0.04);
+    }
+    .footer-logo { font-family: 'Playball', cursive; font-size: 2.2rem; line-height: 1; user-select: none; }
+    .footer-logo .f-logo-ps { color: var(--gold); }
+    .footer-logo .f-logo-naps { color: var(--cream); margin-left: -0.04em; }
+    .footer-copy {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      line-height: 1;
+      padding-bottom: 0.35rem;
+    }
+
+    /* ==========================================================================
+       9. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 992px) { 
+      .hero { padding: 6rem 2rem 0 2rem; } 
+      .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } 
+      .hero-image-pane { height: 55vh; } 
+      #connect { grid-template-columns: 1fr; } 
+    }
+    @media (max-width: 768px) { 
+      .nav-links { display: none; } 
+      .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } 
+      .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } 
+      .cat-card { flex: 0 0 220px; height: 240px; } 
+      .lb-nav { display: none !important; } 
+      .cart-panel { padding: 2rem 1.5rem; } 
+      footer { padding: 3rem 1.5rem; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
+      .footer-copy { padding-bottom: 0; }
+    }
+  </style>
 </head>
 <body class="preloading">
 
-<div id="site-preloader">
-  <div class="preloader-inner">
-    <div class="preloader-logo"><span class="p-letter">PS</span><span class="naps-letters">naps</span></div>
-    <div class="preloader-line-wrap"><div class="preloader-line"></div></div>
-    <p class="preloader-manifesto">&bull;Visual Journeys &bull;</p>
-  </div>
-</div>
-
-<nav>
-  <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#Highlights">Highlights</a></li>
-      <li><a href="#Cities & Architecture">Cities &amp; Architecture</a></li>
-      <li><a href="#Nature & Escapes">Nature Escapes</a></li>
-      <li><a href="#connect">Contact</a></li>
-    </ul>
-    <button class="cart-trigger" onclick="toggleCartPanel(true)">
-      Cart <span class="cart-count-badge" id="cartBadgeCount">0</span>
-    </button>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="hero-layout">
-    <div class="hero-content">
-      <p class="hero-eyebrow">Photography Portfolio</p>
-      <h1 class="hero-display-title">
-        <span class="line-primary">The Fabric</span>
-        <span class="line-primary">of <em>Space &amp; Time</em></span>
-        <span class="line-connective">from the lens of</span>
-        <span class="line-author"><em>Pradyumna Saripalli</em></span>
-      </h1>
-      <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
-      <a href="#Highlights" class="hero-cta">View Highlights &rarr;</a>
-    </div>
-    <div class="hero-image-pane">
-      <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
+  <!-- ==========================================================================
+       PRELOADER OVERLAY
+       ========================================================================== -->
+  <div id="site-preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo"><span class="p-letter">PS</span><span class="naps-letters">naps</span></div>
+      <div class="preloader-line-wrap"><div class="preloader-line"></div></div>
+      <p class="preloader-manifesto">&bull; Visual Journeys &bull;</p>
     </div>
   </div>
-</section>
 
-<section id="Highlights">
-  <div class="section-header reveal">
-    <h2 class="section-title">Highlights</h2>
-  </div>
-  <div class="hl-wrapper"><div class="hl-track" id="hlTrack"></div></div>
-  <div class="hl-controls">
-    <button class="hl-btn" id="hlPrev">&#8592;</button>
-    <button class="hl-btn" id="hlNext">&#8594;</button>
-    <div class="hl-progress" id="hlProgress"></div>
-    <span class="hl-counter" id="hlCounter">00 / 00</span>
-  </div>
-</section>
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <nav>
+    <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#Highlights">Highlights</a></li>
+        <li><a href="#Cities & Architecture">Cities &amp; Architecture</a></li>
+        <li><a href="#Nature & Escapes">Nature Escapes</a></li>
+        <li><a href="#connect">Contact</a></li>
+      </ul>
+      <button class="cart-trigger" onclick="toggleCartPanel(true)">
+        Cart <span class="cart-count-badge" id="cartBadgeCount">0</span>
+      </button>
+    </div>
+  </nav>
 
-<div id="Cities & Architecture" class="cat-section reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left"><span class="cat-label">Series 01</span><h2 class="cat-title">Cities &amp; Architecture</h2></div>
-    <div class="cat-header-right"><span class="cat-count" id="count-Cities & Architecture">0 Photographs</span><div class="cat-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/></svg></div></div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button><button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-rail" id="rail-Cities & Architecture"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<div id="Nature & Escapes" class="cat-section alt reveal">
-  <div class="cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left"><span class="cat-label">Series 02</span><h2 class="cat-title">Nature Escapes</h2></div>
-    <div class="cat-header-right"><span class="cat-count" id="count-Nature & Escapes">0 Photographs</span><div class="cat-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/></svg></div></div>
-  </div>
-  <div class="cat-carousel-wrap">
-    <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button><button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-    <div class="cat-rail" id="rail-Nature & Escapes"></div>
-  </div>
-  <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
-</div>
-
-<section id="connect" class="reveal">
-  <div class="connect-profile">
-    <h2>Available for prints.</h2>
-    <p>Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.</p>
-  </div>
-  <div class="connect-methods">
-    <a href="mailto:flipklik06@gmail.com" class="connect-row">
-      <div class="connect-row-left">
-        <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        <div class="connect-meta"><p class="type">Direct Correspondence</p><p class="handle">flipklik06@gmail.com</p></div>
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+  <section class="hero">
+    <div class="hero-layout">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Photography Portfolio</p>
+        <h1 class="hero-display-title">
+          <span class="line-primary">The Fabric</span>
+          <span class="line-primary">of <em>Space &amp; Time</em></span>
+          <span class="line-connective">from the lens of</span>
+          <span class="line-author"><em>Pradyumna Saripalli</em></span>
+        </h1>
+        <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
+        <a href="#Highlights" class="hero-cta">View Highlights &rarr;</a>
       </div>
-      <div class="connect-arrow">&rarr;</div>
-    </a>
-    <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
-      <div class="connect-row-left">
-        <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-        <div class="connect-meta"><p class="type">Visual Journal</p><p class="handle">@pradyu_1594</p></div>
-      </div>
-      <div class="connect-arrow">&rarr;</div>
-    </a>
-  </div>
-</section>
-
-<div class="lightbox" id="globalLightbox">
-  <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
-  <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
-  <div class="lb-inner"><img id="lightboxImg" src="" alt=""></div>
-  <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
-  <div class="lb-action-bar">
-    <p class="lb-caption" id="lightboxCaption">Loading description...</p>
-    <button class="lb-print-btn" onclick="openPrintConfigurator()">Configure Fine Art Print</button>
-  </div>
-</div>
-
-<div class="inquiry-overlay" id="inquiryOverlay">
-  <div class="inquiry-box">
-    <h3 class="inquiry-title">Configure Gallery Print</h3>
-    <div class="config-group">
-      <span class="config-label">Select Dimensions</span>
-      <div class="size-selector">
-        <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
-        <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
+      <div class="hero-image-pane">
+        <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
       </div>
     </div>
-    <div class="inquiry-actions">
-      <button class="inquiry-submit" onclick="addSelectedToCart()">Add To Cart</button>
-      <button class="inquiry-cancel" onclick="closePrintConfigurator()">Cancel</button>
+  </section>
+
+  <!-- ==========================================================================
+       GALLERY SECTIONS
+       ========================================================================== -->
+  <!-- 1. Highlights Section -->
+  <div id="Highlights" class="cat-section alt reveal">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <div class="cat-header-left">
+        <span class="cat-label">Featured</span>
+        <h2 class="cat-title">Highlights</h2>
+      </div>
+      <div class="cat-header-right">
+        <span class="cat-count" id="count-Highlights">0 Photographs</span>
+        <div class="cat-toggle">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="cat-carousel-wrap">
+      <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
+      <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
+      <div class="cat-rail" id="rail-Highlights"></div>
+    </div>
+    <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
+  </div>
+
+  <!-- 2. Cities & Architecture Section -->
+  <div id="Cities & Architecture" class="cat-section reveal">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <div class="cat-header-left">
+        <span class="cat-label">Series 01</span>
+        <h2 class="cat-title">Cities &amp; Architecture</h2>
+      </div>
+      <div class="cat-header-right">
+        <span class="cat-count" id="count-Cities & Architecture">0 Photographs</span>
+        <div class="cat-toggle">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="cat-carousel-wrap">
+      <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
+      <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
+      <div class="cat-rail" id="rail-Cities & Architecture"></div>
+    </div>
+    <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
+  </div>
+
+  <!-- 3. Nature & Escapes Section -->
+  <div id="Nature & Escapes" class="cat-section alt reveal">
+    <div class="cat-header" onclick="toggleCat(this)">
+      <div class="cat-header-left">
+        <span class="cat-label">Series 02</span>
+        <h2 class="cat-title">Nature Escapes</h2>
+      </div>
+      <div class="cat-header-right">
+        <span class="cat-count" id="count-Nature & Escapes">0 Photographs</span>
+        <div class="cat-toggle">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="cat-carousel-wrap">
+      <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
+      <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
+      <div class="cat-rail" id="rail-Nature & Escapes"></div>
+    </div>
+    <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
+  </div>
+
+  <!-- ==========================================================================
+       CONTACT / CONNECT SECTION
+       ========================================================================== -->
+  <section id="connect" class="reveal">
+    <div class="connect-profile">
+      <h2>Available for prints.</h2>
+      <p>Every frame your choice can be tailored for amplifying the mood of your comfort spaces. Please reach out for shipping related queries.</p>
+    </div>
+    <div class="connect-methods">
+      <a href="mailto:flipklik06@gmail.com" class="connect-row">
+        <div class="connect-row-left">
+          <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <div class="connect-meta">
+            <p class="type">Direct Correspondence</p>
+            <p class="handle">flipklik06@gmail.com</p>
+          </div>
+        </div>
+        <div class="connect-arrow">&rarr;</div>
+      </a>
+      <a href="https://instagram.com/pradyu_1594" target="_blank" class="connect-row">
+        <div class="connect-row-left">
+          <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+          </svg>
+          <div class="connect-meta">
+            <p class="type">Visual Journal</p>
+            <p class="handle">@pradyu_1594</p>
+          </div>
+        </div>
+        <div class="connect-arrow">&rarr;</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       OVERLAYS & MODALS
+       ========================================================================== -->
+  <!-- 1. Global Image Lightbox -->
+  <div class="lightbox" id="globalLightbox">
+    <button class="lb-close" onclick="closeLightbox()">Close &times;</button>
+    <button class="lb-nav prev" id="lbPrev" onclick="navigateLightbox(-1)">&#8592;</button>
+    <div class="lb-inner">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-ghost-shield"></div>
+    </div>
+    <button class="lb-nav next" id="lbNext" onclick="navigateLightbox(1)">&#8594;</button>
+    <div class="lb-action-bar">
+      <p class="lb-caption" id="lightboxCaption">Loading description...</p>
+      <button class="lb-print-btn" onclick="openPrintConfigurator()">Configure Fine Art Print</button>
     </div>
   </div>
-</div>
 
-<div class="cart-panel" id="globalCartPanel">
-  <div class="cart-header-row"><h3 class="cart-panel-title">Your Cart</h3><button class="cart-panel-close" onclick="toggleCartPanel(false)">Close &times;</button></div>
-  <div class="cart-items-container" id="cartItemsContainer"></div>
-  <div class="cart-footer">
-    <div class="cart-summary-line"><span class="cart-summary-label">Total (GBP)</span><span class="cart-summary-value" id="cartSubtotal">£0.00</span></div>
-    <button class="checkout-btn" onclick="executeSecureCheckout()">Proceed to Payment</button>
+  <!-- 2. Fine Art Print Configurator -->
+  <div class="inquiry-overlay" id="inquiryOverlay">
+    <div class="inquiry-box">
+      <h3 class="inquiry-title">Configure Gallery Print</h3>
+      <div class="config-group">
+        <span class="config-label">Select Dimensions</span>
+        <div class="size-selector">
+          <button class="size-btn active" onclick="selectPrintSize(this, 'A4', 45)">A4 — £45</button>
+          <button class="size-btn" onclick="selectPrintSize(this, 'A3', 65)">A3 — £65</button>
+          <button class="size-btn" onclick="selectPrintSize(this, 'A2', 95)">A2 — £95</button>
+        </div>
+      </div>
+      <div class="inquiry-actions">
+        <button class="inquiry-submit" onclick="addSelectedToCart()">Add To Cart</button>
+        <button class="inquiry-cancel" onclick="closePrintConfigurator()">Cancel</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<footer>
-  <div class="footer-logo">
-    <span class="f-logo-ps">PS</span><span class="f-logo-naps">naps</span>
+  <!-- 3. Shopping Cart Drawer -->
+  <div class="cart-panel" id="globalCartPanel">
+    <div class="cart-header-row">
+      <h3 class="cart-panel-title">Your Cart</h3>
+      <button class="cart-panel-close" onclick="toggleCartPanel(false)">Close &times;</button>
+    </div>
+    <div class="cart-items-container" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+      <div class="cart-summary-line">
+        <span class="cart-summary-label">Total (GBP)</span>
+        <span class="cart-summary-value" id="cartSubtotal">£0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="executeSecureCheckout()">Proceed to Payment</button>
+    </div>
   </div>
-  <p class="footer-copy">&copy; 2026 PSnaps. All rights reserved.</p>
-</footer>
- 
-<script>
-  let portfolioData = {};
-  let currentGalleryPool = [];
-  let currentGalleryIndex = 0;
-  let currentHlIndex = 0;
-  let globalCart = [];
-  let selectedSizeConfig = { size: 'A4', price: 45 };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      const preloader = document.getElementById('site-preloader');
-      if (preloader) {
-        preloader.classList.add('loaded');
-        document.body.classList.remove('preloading');
-      }
-    }, 1800);
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer>
+    <div class="footer-logo">
+      <span class="f-logo-ps">PS</span><span class="f-logo-naps">naps</span>
+    </div>
+    <p class="footer-copy">&copy; 2026 PSnaps. All rights reserved.</p>
+  </footer>
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+  <!-- ==========================================================================
+       JAVASCRIPT ARCHITECTURE
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. GLOBAL STATE & CONFIGURATION
+       -------------------------------------------------------------------------- */
+    let portfolioData = {};
+    let currentGalleryPool = [];
+    let currentGalleryIndex = 0;
+    let globalCart = [];
+    let selectedSizeConfig = { size: 'A4', price: 45 };
+
+    /* --------------------------------------------------------------------------
+       2. INITIALIZATION & LIFECYCLE
+       -------------------------------------------------------------------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Preloader dismissal
+      setTimeout(() => {
+        const preloader = document.getElementById('site-preloader');
+        if (preloader) {
+          preloader.classList.add('loaded');
+          document.body.classList.remove('preloading');
+        }
+      }, 1800);
+
+      // Scroll Reveal Observer
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Image Security Listeners
+      setupImageSecurity();
+
+      // Load gallery data
+      loadPortfolioData();
+    });
+
+    /* --------------------------------------------------------------------------
+       3. SECURITY & PROTECTION
+       -------------------------------------------------------------------------- */
+    function setupImageSecurity() {
+      document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+          e.preventDefault();
         }
       });
-    }, { threshold: 0.1 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    document.getElementById('hlPrev')?.addEventListener('click', () => stepHighlights(-1));
-    document.getElementById('hlNext')?.addEventListener('click', () => stepHighlights(1));
-
-    // ADD THIS LINE HERE:
-    window.addEventListener('resize', refreshCarouselView);
-
-    loadPortfolioData();
-  });
-
-  function loadPortfolioData() {
-    fetch('gallery-data.json')
-      .then(res => res.json())
-      .then(data => {
-        portfolioData = data;
-        hydrateAllSections();
-      })
-      .catch(err => console.error("Error reading updated structure:", err));
-  }
-
-  function hydrateAllSections() {
-    const HighlightsPool = portfolioData.Highlights || [];
-    const track = document.getElementById('hlTrack');
-    
-    if (track && HighlightsPool.length > 0) {
-      track.innerHTML = HighlightsPool.map((hl, idx) => `
-        <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('Highlights', ${idx})">
-          <img src="${hl.src}" alt="${hl.description || ''}">
-          <div class="hl-info">
-            <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(HighlightsPool.length).padStart(2, '0')}</p>
-            <h3 class="hl-title">${hl.description || 'Untitled'}</h3>
-          </div>
-        </div>
-      `).join('');
-      initCarouselPips(HighlightsPool.length);
-      refreshCarouselView();
-    }
-
-    ['Cities & Architecture', 'Nature & Escapes'].forEach(cat => {
-      const rail = document.getElementById(`rail-${cat}`);
-      const countLabel = document.getElementById(`count-${cat}`);
-      const pool = portfolioData[cat] || [];
-      if (!rail) return;
-      
-      if (countLabel) countLabel.textContent = `${pool.length} Photographs`;
-      rail.innerHTML = pool.map((item, idx) => `
-        <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
-          <img src="${item.src}" alt="${item.description || ''}">
-          <div class="cat-card-overlay">
-            <p class="cat-card-desc-preview">${item.description || 'View Photograph'}</p>
-          </div>
-        </div>
-      `).join('');
-    });
-  }
-
-  function toggleCat(headerElem) {
-    const section = headerElem.closest('.cat-section');
-    if (section) {
-      section.classList.toggle('open');
-    }
-  }
-
-  function scrollRail(btnElem, direction) {
-    const wrap = btnElem.closest('.cat-carousel-wrap');
-    const rail = wrap?.querySelector('.cat-rail');
-    if (rail) {
-      rail.scrollBy({ left: direction * 320, behavior: 'smooth' });
-    }
-  }
-
-  function initCarouselPips(total) {
-    const pipsContainer = document.getElementById('hlProgress');
-    if (!pipsContainer) return;
-    pipsContainer.innerHTML = Array.from({ length: total }, (_, i) => 
-      `<div class="hl-pip ${i === 0 ? 'active' : ''}" onclick="goToHighlight(${i})"></div>`
-    ).join('');
-  }
-
-  function goToHighlight(index) {
-    const pool = portfolioData.Highlights || [];
-    if (index < 0 || index >= pool.length) return;
-    currentHlIndex = index;
-    refreshCarouselView();
-  }
-
-  function stepHighlights(dir) {
-    const pool = portfolioData.Highlights || [];
-    if (pool.length === 0) return;
-    currentHlIndex = (currentHlIndex + dir + pool.length) % pool.length;
-    refreshCarouselView();
-  }
-
-  function refreshCarouselView() {
-    const pool = portfolioData.Highlights || [];
-    const track = document.getElementById('hlTrack');
-    const counter = document.getElementById('hlCounter');
-    
-    if (track) {
-      const activeSlide = track.querySelector('.hl-slide');
-      if (activeSlide) {
-        // Measure real gap and slide width dynamically from computed styles
-        const trackStyle = window.getComputedStyle(track);
-        const gap = parseFloat(trackStyle.gap) || 24;
-        const slideWidth = activeSlide.offsetWidth;
-        
-        track.style.transform = `translateX(-${currentHlIndex * (slideWidth + gap)}px)`;
-      }
-      
-      track.querySelectorAll('.hl-slide').forEach((slide, idx) => {
-        slide.classList.toggle('active', idx === currentHlIndex);
+      document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+          e.preventDefault();
+        }
       });
     }
 
-    if (counter && pool.length > 0) {
-      counter.textContent = `${String(currentHlIndex + 1).padStart(2, '0')} / ${String(pool.length).padStart(2, '0')}`;
+    /* --------------------------------------------------------------------------
+       4. DATA FETCHING & HYDRATION
+       -------------------------------------------------------------------------- */
+    function loadPortfolioData() {
+      fetch('gallery-data.json')
+        .then(res => res.json())
+        .then(data => {
+          portfolioData = data;
+          hydrateAllSections();
+        })
+        .catch(err => console.error("Error reading updated structure:", err));
     }
 
-    document.querySelectorAll('.hl-pip').forEach((pip, idx) => {
-      pip.classList.toggle('active', idx === currentHlIndex);
-    });
-  }
+    function hydrateAllSections() {
+      // Future category keys added to JSON can easily be added to this array
+      const activeCategories = ['Highlights', 'Cities & Architecture', 'Nature & Escapes'];
 
-  function openLightboxCategory(category, index) {
-    currentGalleryPool = portfolioData[category] || [];
-    currentGalleryIndex = index;
-    if (currentGalleryPool.length > 0) {
-      updateLightboxContent();
-      document.getElementById('globalLightbox')?.classList.add('open');
-    }
-  }
+      activeCategories.forEach(cat => {
+        const rail = document.getElementById(`rail-${cat}`);
+        const countLabel = document.getElementById(`count-${cat}`);
+        const pool = portfolioData[cat] || portfolioData[cat.toLowerCase()] || [];
+        
+        if (!rail) return;
+        
+        if (countLabel) {
+          countLabel.textContent = `${pool.length} Photographs`;
+        }
 
-  function updateLightboxContent() {
-    const item = currentGalleryPool[currentGalleryIndex];
-    if (!item) return;
-    const img = document.getElementById('lightboxImg');
-    const caption = document.getElementById('lightboxCaption');
-    if (img) img.src = item.src;
-    if (caption) caption.textContent = item.description || '';
-  }
-
-  function navigateLightbox(direction) {
-    if (currentGalleryPool.length === 0) return;
-    currentGalleryIndex = (currentGalleryIndex + direction + currentGalleryPool.length) % currentGalleryPool.length;
-    updateLightboxContent();
-  }
-
-  function closeLightbox() {
-    document.getElementById('globalLightbox')?.classList.remove('open');
-  }
-
-  function openPrintConfigurator() {
-    document.getElementById('inquiryOverlay')?.classList.add('open');
-  }
-
-  function closePrintConfigurator() {
-    document.getElementById('inquiryOverlay')?.classList.remove('open');
-  }
-
-  function selectPrintSize(btn, size, price) {
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedSizeConfig = { size, price };
-  }
-
-  function addSelectedToCart() {
-    const item = currentGalleryPool[currentGalleryIndex];
-    if (!item) return;
-
-    globalCart.push({
-      id: Date.now(),
-      title: item.description || 'Fine Art Print',
-      src: item.src,
-      size: selectedSizeConfig.size,
-      price: selectedSizeConfig.price
-    });
-
-    closePrintConfigurator();
-    closeLightbox();
-    renderCart();
-    toggleCartPanel(true);
-  }
-
-  function renderCart() {
-    const container = document.getElementById('cartItemsContainer');
-    const badge = document.getElementById('cartBadgeCount');
-    const subtotalElem = document.getElementById('cartSubtotal');
-
-    if (badge) badge.textContent = globalCart.length;
-
-    let subtotal = 0;
-    if (container) {
-      container.innerHTML = globalCart.map(item => {
-        subtotal += item.price;
-        return `
-          <div class="cart-item">
-            <img class="cart-item-thumb" src="${item.src}" alt="">
-            <div class="cart-item-details">
-              <p class="cart-item-title">${item.title}</p>
-              <p class="cart-item-meta">Size: ${item.size}</p>
-              <p class="cart-item-price">£${item.price}.00</p>
-              <button class="cart-item-remove" onclick="removeCartItem(${item.id})">Remove</button>
+        rail.innerHTML = pool.map((item, idx) => `
+          <div class="cat-card" onclick="openLightboxCategory('${cat}', ${idx})">
+            <img src="${item.src}" alt="${item.description || ''}">
+            <div class="cat-card-overlay">
+              <p class="cat-card-desc-preview">${item.description || 'View Photograph'}</p>
             </div>
           </div>
-        `;
-      }).join('');
+        `).join('');
+      });
     }
 
-    if (subtotalElem) subtotalElem.textContent = `£${subtotal.toFixed(2)}`;
-  }
-
-  function removeCartItem(id) {
-    globalCart = globalCart.filter(item => item.id !== id);
-    renderCart();
-  }
-
-  function toggleCartPanel(show) {
-    const panel = document.getElementById('globalCartPanel');
-    if (panel) {
-      if (show) panel.classList.add('open');
-      else panel.classList.remove('open');
+    /* --------------------------------------------------------------------------
+       5. GALLERY INTERACTION (COLLAPSE & SCROLL)
+       -------------------------------------------------------------------------- */
+    function toggleCat(headerElem) {
+      const section = headerElem.closest('.cat-section');
+      if (section) {
+        section.classList.toggle('open');
+      }
     }
-  }
 
-  function executeSecureCheckout() {
-    if (globalCart.length === 0) {
-      alert("Your cart is currently empty.");
-      return;
+    function scrollRail(btnElem, direction) {
+      const wrap = btnElem.closest('.cat-carousel-wrap');
+      const rail = wrap?.querySelector('.cat-rail');
+      if (rail) {
+        rail.scrollBy({ left: direction * 320, behavior: 'smooth' });
+      }
     }
-    alert("Redirecting to secure payment portal...");
-  }
-</script>
+
+    /* --------------------------------------------------------------------------
+       6. LIGHTBOX CONTROLLER
+       -------------------------------------------------------------------------- */
+    function openLightboxCategory(category, index) {
+      currentGalleryPool = portfolioData[category] || portfolioData[category.toLowerCase()] || [];
+      currentGalleryIndex = index;
+      if (currentGalleryPool.length > 0) {
+        updateLightboxContent();
+        document.getElementById('globalLightbox')?.classList.add('open');
+      }
+    }
+
+    function updateLightboxContent() {
+      const item = currentGalleryPool[currentGalleryIndex];
+      if (!item) return;
+      
+      const img = document.getElementById('lightboxImg');
+      const caption = document.getElementById('lightboxCaption');
+      
+      if (img) img.src = item.src;
+      if (caption) caption.textContent = item.description || '';
+    }
+
+    function navigateLightbox(direction) {
+      if (currentGalleryPool.length === 0) return;
+      currentGalleryIndex = (currentGalleryIndex + direction + currentGalleryPool.length) % currentGalleryPool.length;
+      updateLightboxContent();
+    }
+
+    function closeLightbox() {
+      document.getElementById('globalLightbox')?.classList.remove('open');
+    }
+
+    /* --------------------------------------------------------------------------
+       7. FINE ART PRINT CONFIGURATOR
+       -------------------------------------------------------------------------- */
+    function openPrintConfigurator() {
+      document.getElementById('inquiryOverlay')?.classList.add('open');
+    }
+
+    function closePrintConfigurator() {
+      document.getElementById('inquiryOverlay')?.classList.remove('open');
+    }
+
+    function selectPrintSize(btn, size, price) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedSizeConfig = { size, price };
+    }
+
+    /* --------------------------------------------------------------------------
+       8. SHOPPING CART ENGINE
+       -------------------------------------------------------------------------- */
+    function addSelectedToCart() {
+      const item = currentGalleryPool[currentGalleryIndex];
+      if (!item) return;
+
+      globalCart.push({
+        id: Date.now(),
+        title: item.description || 'Fine Art Print',
+        src: item.src,
+        size: selectedSizeConfig.size,
+        price: selectedSizeConfig.price
+      });
+
+      closePrintConfigurator();
+      closeLightbox();
+      renderCart();
+      toggleCartPanel(true);
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItemsContainer');
+      const badge = document.getElementById('cartBadgeCount');
+      const subtotalElem = document.getElementById('cartSubtotal');
+
+      if (badge) badge.textContent = globalCart.length;
+
+      let subtotal = 0;
+      if (container) {
+        container.innerHTML = globalCart.map(item => {
+          subtotal += item.price;
+          return `
+            <div class="cart-item">
+              <img class="cart-item-thumb" src="${item.src}" alt="">
+              <div class="cart-item-details">
+                <p class="cart-item-title">${item.title}</p>
+                <p class="cart-item-meta">Size: ${item.size}</p>
+                <p class="cart-item-price">£${item.price}.00</p>
+                <button class="cart-item-remove" onclick="removeCartItem(${item.id})">Remove</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (subtotalElem) subtotalElem.textContent = `£${subtotal.toFixed(2)}`;
+    }
+
+    function removeCartItem(id) {
+      globalCart = globalCart.filter(item => item.id !== id);
+      renderCart();
+    }
+
+    function toggleCartPanel(show) {
+      const panel = document.getElementById('globalCartPanel');
+      if (panel) {
+        if (show) panel.classList.add('open');
+        else panel.classList.remove('open');
+      }
+    }
+
+    function executeSecureCheckout() {
+      if (globalCart.length === 0) {
+        alert("Your cart is currently empty.");
+        return;
+      }
+      alert("Redirecting to secure payment portal...");
+    }
+  </script>
 </body>
 </html>
