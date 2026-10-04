@@ -395,6 +395,9 @@
     document.getElementById('hlPrev')?.addEventListener('click', () => stepHighlights(-1));
     document.getElementById('hlNext')?.addEventListener('click', () => stepHighlights(1));
 
+    // ADD THIS LINE HERE:
+    window.addEventListener('resize', refreshCarouselView);
+
     loadPortfolioData();
   });
 
@@ -487,8 +490,15 @@
     const counter = document.getElementById('hlCounter');
     
     if (track) {
-      const slideWidth = track.querySelector('.hl-slide')?.offsetWidth || 0;
-      track.style.transform = `translateX(-${currentHlIndex * (slideWidth + 24)}px)`;
+      const activeSlide = track.querySelector('.hl-slide');
+      if (activeSlide) {
+        // Measure real gap and slide width dynamically from computed styles
+        const trackStyle = window.getComputedStyle(track);
+        const gap = parseFloat(trackStyle.gap) || 24;
+        const slideWidth = activeSlide.offsetWidth;
+        
+        track.style.transform = `translateX(-${currentHlIndex * (slideWidth + gap)}px)`;
+      }
       
       track.querySelectorAll('.hl-slide').forEach((slide, idx) => {
         slide.classList.toggle('active', idx === currentHlIndex);
