@@ -18,6 +18,20 @@
   body { background: var(--dark); color: var(--cream); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
   body.preloading { overflow: hidden !important; }
 
+  /* --- ADVANCED IMAGE PROTECTION STYLES --- */
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none; /* Blocks native iOS long-press save options */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
   /* Preloader Overlay */
   #site-preloader { position: fixed; inset: 0; background: var(--dark); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease; will-change: transform, opacity; }
   #site-preloader.loaded { transform: translateY(-100%); opacity: 0; }
@@ -90,8 +104,8 @@
   .cat-section.open .cat-expand-hint { opacity: 0; pointer-events: none; }
 
   /* Highlights Section */
-  #highlights { background: var(--mid); padding: 6rem 0; }
-  #highlights .section-header { padding: 0 3rem 2.5rem; border-bottom: 1px solid rgba(200,184,154,0.1); margin-bottom: 0; }
+  #Highlights { background: var(--mid); padding: 6rem 0; }
+  #Highlights .section-header { padding: 0 3rem 2.5rem; border-bottom: 1px solid rgba(200,184,154,0.1); margin-bottom: 0; }
   .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; }
   .hl-wrapper { position: relative; overflow: hidden; margin-top: var(--gap-standard); }
   .hl-track { display: flex; transition: transform 0.7s cubic-bezier(0.77,0,0.175,1); padding: 0 3rem; gap: var(--gap-standard); }
@@ -115,9 +129,13 @@
   .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 500; display: none; flex-direction: column; align-items: center; justify-content: center; }
   .lightbox.open { display: flex; }
   .lb-inner { position: relative; max-width: 92vw; max-height: 76vh; display: flex; align-items: center; justify-content: center; }
-  .lb-inner img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; }
-  .lb-close { position: absolute; top: 2rem; right: 3rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; }
-  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.7); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+  .lb-inner img { max-width: 90vw; max-height: 74vh; object-fit: contain; display: block; z-index: 1; }
+  
+  /* Transparent Ghost Shield: Covers image entirely to intercept drag-drops and direct clicks */
+  .lb-ghost-shield { position: absolute; inset: 0; z-index: 10; background: transparent; cursor: default; }
+
+  .lb-close { position: absolute; top: 2rem; right: 3rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; z-index: 20; }
+  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.7); border: 1px solid rgba(200,184,154,0.2); color: var(--cream); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 25; }
   .lb-nav:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
   .lb-nav.prev { left: -3.5rem; } .lb-nav.next { right: -3.5rem; }
   .lb-action-bar { width: 100%; max-width: 600px; margin-top: 2rem; padding: 0 1rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
@@ -230,7 +248,7 @@
   <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="#highlights">Highlights</a></li>
+      <li><a href="#Highlights">Highlights</a></li>
       <li><a href="#Cities & Architecture">Cities &amp; Architecture</a></li>
       <li><a href="#Nature & Escapes">Nature Escapes</a></li>
       <li><a href="#connect">Contact</a></li>
@@ -252,7 +270,7 @@
         <span class="line-author"><em>Pradyumna Saripalli</em></span>
       </h1>
       <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
-      <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
+      <a href="#Highlights" class="hero-cta">View Highlights &rarr;</a>
     </div>
     <div class="hero-image-pane">
       <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
@@ -260,7 +278,7 @@
   </div>
 </section>
 
-<section id="highlights">
+<section id="Highlights">
   <div class="section-header reveal">
     <h2 class="section-title">Highlights</h2>
   </div>
@@ -412,20 +430,20 @@
   }
 
   function hydrateAllSections() {
-    const highlightsPool = portfolioData.highlights || [];
+    const HighlightsPool = portfolioData.Highlights || [];
     const track = document.getElementById('hlTrack');
     
-    if (track && highlightsPool.length > 0) {
-      track.innerHTML = highlightsPool.map((hl, idx) => `
-        <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('highlights', ${idx})">
+    if (track && HighlightsPool.length > 0) {
+      track.innerHTML = HighlightsPool.map((hl, idx) => `
+        <div class="hl-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}" onclick="openLightboxCategory('Highlights', ${idx})">
           <img src="${hl.src}" alt="${hl.description || ''}">
           <div class="hl-info">
-            <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(highlightsPool.length).padStart(2, '0')}</p>
+            <p class="hl-num">${String(idx + 1).padStart(2, '0')} / ${String(HighlightsPool.length).padStart(2, '0')}</p>
             <h3 class="hl-title">${hl.description || 'Untitled'}</h3>
           </div>
         </div>
       `).join('');
-      initCarouselPips(highlightsPool.length);
+      initCarouselPips(HighlightsPool.length);
       refreshCarouselView();
     }
 
@@ -471,21 +489,21 @@
   }
 
   function goToHighlight(index) {
-    const pool = portfolioData.highlights || [];
+    const pool = portfolioData.Highlights || [];
     if (index < 0 || index >= pool.length) return;
     currentHlIndex = index;
     refreshCarouselView();
   }
 
   function stepHighlights(dir) {
-    const pool = portfolioData.highlights || [];
+    const pool = portfolioData.Highlights || [];
     if (pool.length === 0) return;
     currentHlIndex = (currentHlIndex + dir + pool.length) % pool.length;
     refreshCarouselView();
   }
 
   function refreshCarouselView() {
-    const pool = portfolioData.highlights || [];
+    const pool = portfolioData.Highlights || [];
     const track = document.getElementById('hlTrack');
     const counter = document.getElementById('hlCounter');
     
