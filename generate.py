@@ -29,10 +29,10 @@ def scan_gallery_folder(folder_path):
             clean_caption = filename_raw.replace("-", " ").replace("_", " ").title()
             
             # URL-encode spaces and special characters like '&' while preserving '/'
-            encoded_web_path = urllib.parse.quote(web_path, safe="/")
+            #encoded_web_path = urllib.parse.quote(web_path, safe="/")
             
             items.append({
-                "src": encoded_web_path,
+                "src": web_path,
                 "description": clean_caption
             })
     else:
