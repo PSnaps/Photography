@@ -1,71 +1,71 @@
 {
   "cities_architecture": [
     {
-      "src": "photos/Cities & Architecture/Amsterdam.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Amsterdam.jpg",
       "description": "Amsterdam"
     },
     {
-      "src": "photos/Cities & Architecture/Basilica di Superga.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Basilica%20di%20Superga.jpg",
       "description": "Basilica Di Superga"
     },
     {
-      "src": "photos/Cities & Architecture/Brooklyn.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Brooklyn.jpg",
       "description": "Brooklyn"
     },
     {
-      "src": "photos/Cities & Architecture/Budapest.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Budapest.jpg",
       "description": "Budapest"
     },
     {
-      "src": "photos/Cities & Architecture/Capitol Building.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Capitol%20Building.jpg",
       "description": "Capitol Building"
     },
     {
-      "src": "photos/Cities & Architecture/Deewan-e-Dilli.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Deewan-e-Dilli.jpg",
       "description": "Deewan E Dilli"
     },
     {
-      "src": "photos/Cities & Architecture/Dravidian Marvels.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Dravidian%20Marvels.jpg",
       "description": "Dravidian Marvels"
     },
     {
-      "src": "photos/Cities & Architecture/Florence.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Florence.jpg",
       "description": "Florence"
     },
     {
-      "src": "photos/Cities & Architecture/Har Ki Dun.JPG",
+      "src": "photos/Cities%20%26%20Architecture/Har%20Ki%20Dun.JPG",
       "description": "Har Ki Dun"
     },
     {
-      "src": "photos/Cities & Architecture/IMG_1103.jpg",
+      "src": "photos/Cities%20%26%20Architecture/IMG_1103.jpg",
       "description": "Img 1103"
     },
     {
-      "src": "photos/Cities & Architecture/IMG_1211.jpg",
+      "src": "photos/Cities%20%26%20Architecture/IMG_1211.jpg",
       "description": "Img 1211"
     },
     {
-      "src": "photos/Cities & Architecture/Milano.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Milano.jpg",
       "description": "Milano"
     },
     {
-      "src": "photos/Cities & Architecture/Rome.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Rome.jpg",
       "description": "Rome"
     },
     {
-      "src": "photos/Cities & Architecture/San Fransisco.jpg",
+      "src": "photos/Cities%20%26%20Architecture/San%20Fransisco.jpg",
       "description": "San Fransisco"
     },
     {
-      "src": "photos/Cities & Architecture/The Grand Throne.jpg",
+      "src": "photos/Cities%20%26%20Architecture/The%20Grand%20Throne.jpg",
       "description": "The Grand Throne"
     },
     {
-      "src": "photos/Cities & Architecture/Vegas.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Vegas.jpg",
       "description": "Vegas"
     },
     {
-      "src": "photos/Cities & Architecture/Zanseschans.jpg",
+      "src": "photos/Cities%20%26%20Architecture/Zanseschans.jpg",
       "description": "Zanseschans"
     }
   ],
@@ -79,13 +79,13 @@
       "description": "Rome"
     },
     {
-      "src": "photos/Cover/Screenshot 2021-01-27 at 4.28.01 PM.png",
+      "src": "photos/Cover/Screenshot%202021-01-27%20at%204.28.01%20PM.png",
       "description": "Screenshot 2021 01 27 At 4.28.01 Pm"
     }
   ],
   "highlights": [
     {
-      "src": "photos/Highlights/Big Sur.jpg",
+      "src": "photos/Highlights/Big%20Sur.jpg",
       "description": "Big Sur"
     },
     {
@@ -93,45 +93,45 @@
       "description": "Himalays"
     },
     {
-      "src": "photos/Highlights/Love is in the air.JPG",
+      "src": "photos/Highlights/Love%20is%20in%20the%20air.JPG",
       "description": "Love Is In The Air"
     },
     {
-      "src": "photos/Highlights/Prashar Lake.jpg",
+      "src": "photos/Highlights/Prashar%20Lake.jpg",
       "description": "Prashar Lake"
     },
     {
-      "src": "photos/Highlights/The Guests.jpg",
+      "src": "photos/Highlights/The%20Guests.jpg",
       "description": "The Guests"
     },
     {
-      "src": "photos/Highlights/The Palette.jpg",
+      "src": "photos/Highlights/The%20Palette.jpg",
       "description": "The Palette"
     }
   ],
   "nature_escapes": [
     {
-      "src": "photos/Nature & Escapes/Home Away.jpg",
+      "src": "photos/Nature%20%26%20Escapes/Home%20Away.jpg",
       "description": "Home Away"
     },
     {
-      "src": "photos/Nature & Escapes/Serenity.jpg",
+      "src": "photos/Nature%20%26%20Escapes/Serenity.jpg",
       "description": "Serenity"
     },
     {
-      "src": "photos/Nature & Escapes/Solar Eclipse.png",
+      "src": "photos/Nature%20%26%20Escapes/Solar%20Eclipse.png",
       "description": "Solar Eclipse"
     },
     {
-      "src": "photos/Nature & Escapes/The ball of fire.jpg",
+      "src": "photos/Nature%20%26%20Escapes/The%20ball%20of%20fire.jpg",
       "description": "The Ball Of Fire"
     },
     {
-      "src": "photos/Nature & Escapes/The other side.jpg",
+      "src": "photos/Nature%20%26%20Escapes/The%20other%20side.jpg",
       "description": "The Other Side"
     },
     {
-      "src": "photos/Nature & Escapes/Up above the Lake.png",
+      "src": "photos/Nature%20%26%20Escapes/Up%20above%20the%20Lake.png",
       "description": "Up Above The Lake"
     }
   ]
