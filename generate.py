@@ -67,11 +67,11 @@ def build_portfolio():
         cover_image_path = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1600"
         print("--> Notice: 'photos/Cover/' is empty. Using high-res fallback.")
 
-    # 2. Map JSON keys to actual folder names on disk
+    # 2. Map JSON keys to actual folder names on disk matching template section IDs
     category_map = {
-        "cities_architecture": "photos/Cities & Architecture",
+        "Cities & Architecture": "photos/Cities & Architecture",
         "highlights": "photos/Highlights",
-        "nature_escapes": "photos/Nature & Escapes"
+        "Nature & Escapes": "photos/Nature & Escapes"
     }
     
     gallery_database = {}

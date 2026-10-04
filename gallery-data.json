@@ -1,5 +1,5 @@
 {
-  "cities_architecture": [
+  "Cities & Architecture": [
     {
       "src": "photos/Cities%20%26%20Architecture/Amsterdam.jpg",
       "description": "Amsterdam"
@@ -95,7 +95,7 @@
       "description": "The Palette"
     }
   ],
-  "nature_escapes": [
+  "Nature & Escapes": [
     {
       "src": "photos/Nature%20%26%20Escapes/Home%20Away.jpg",
       "description": "Home Away"
