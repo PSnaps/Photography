@@ -441,7 +441,7 @@
     <a href="#" class="logo"><span class="logo-ps">PS</span><span class="logo-naps">naps</span></a>
     <div class="nav-right">
       <ul class="nav-links">
-        <li><a href="#highlights">highlights</a></li>
+        <li><a href="#Highlights">Highlights</a></li>
         <li><a href="#Cities & Architecture">Cities &amp; Architecture</a></li>
         <li><a href="#Nature & Escapes">Nature Escapes</a></li>
         <li><a href="#connect">Contact</a></li>
@@ -466,7 +466,7 @@
           <span class="line-author"><em>Pradyumna Saripalli</em></span>
         </h1>
         <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
-        <a href="#highlights" class="hero-cta">View highlights &rarr;</a>
+        <a href="#Highlights" class="hero-cta">View Highlights &rarr;</a>
       </div>
       <div class="hero-image-pane">
         <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
@@ -477,15 +477,15 @@
   <!-- ==========================================================================
        GALLERY SECTIONS
        ========================================================================== -->
-  <!-- 1. highlights Section -->
-  <div id="highlights" class="cat-section alt reveal">
+  <!-- 1. Highlights Section -->
+  <div id="Highlights" class="cat-section alt reveal">
     <div class="cat-header" onclick="toggleCat(this)">
       <div class="cat-header-left">
         <span class="cat-label">Featured</span>
-        <h2 class="cat-title">highlights</h2>
+        <h2 class="cat-title">Highlights</h2>
       </div>
       <div class="cat-header-right">
-        <span class="cat-count" id="count-highlights">0 Photographs</span>
+        <span class="cat-count" id="count-Highlights">0 Photographs</span>
         <div class="cat-toggle">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.2"/>
@@ -497,7 +497,7 @@
     <div class="cat-carousel-wrap">
       <button class="cat-scroll-btn left" onclick="scrollRail(this,-1)">&#8592;</button>
       <button class="cat-scroll-btn right" onclick="scrollRail(this,1)">&#8594;</button>
-      <div class="cat-rail" id="rail-highlights"></div>
+      <div class="cat-rail" id="rail-Highlights"></div>
     </div>
     <p class="cat-expand-hint">Click section heading to expand grid &rarr;</p>
   </div>
@@ -730,7 +730,7 @@
 
     function hydrateAllSections() {
       // Future category keys added to JSON can easily be added to this array
-      const activeCategories = ['highlights', 'Cities & Architecture', 'Nature & Escapes'];
+      const activeCategories = ['Highlights', 'Cities & Architecture', 'Nature & Escapes'];
 
       activeCategories.forEach(cat => {
         const rail = document.getElementById(`rail-${cat}`);

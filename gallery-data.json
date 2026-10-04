@@ -69,29 +69,29 @@
       "description": "Zanseschans"
     }
   ],
-  "highlights": [
+  "Highlights": [
     {
-      "src": "photos/highlights/Big_Sur.jpg",
+      "src": "photos/Highlights/Big_Sur.jpg",
       "description": "Big Sur"
     },
     {
-      "src": "photos/highlights/Himalays.jpg",
+      "src": "photos/Highlights/Himalays.jpg",
       "description": "Himalays"
     },
     {
-      "src": "photos/highlights/Love_is_in_the_air.jpg",
+      "src": "photos/Highlights/Love_is_in_the_air.jpg",
       "description": "Love Is In The Air"
     },
     {
-      "src": "photos/highlights/Prashar_Lake.jpg",
+      "src": "photos/Highlights/Prashar_Lake.jpg",
       "description": "Prashar Lake"
     },
     {
-      "src": "photos/highlights/The_Guests.jpg",
+      "src": "photos/Highlights/The_Guests.jpg",
       "description": "The Guests"
     },
     {
-      "src": "photos/highlights/The_Palette.jpg",
+      "src": "photos/Highlights/The_Palette.jpg",
       "description": "The Palette"
     }
   ],

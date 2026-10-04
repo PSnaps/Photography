@@ -70,7 +70,7 @@ def build_portfolio():
     # 2. Map JSON keys to actual folder names on disk matching template section IDs
     category_map = {
         "Cities & Architecture": "photos/Cities & Architecture",
-        "highlights": "photos/highlights",
+        "Highlights": "photos/Highlights",
         "Nature & Escapes": "photos/Nature & Escapes"
     }
     
