@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BQDN1QMLJX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BQDN1QMLJX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-BQDN1QMLJX');
-  
-</script>
+    gtag('config', 'G-BQDN1QMLJX');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PSnaps — Photography Portfolio</title>
@@ -211,39 +211,41 @@
     }
 
     /* ==========================================================================
-       4. HERO SECTION
+       4. HERO SECTION (FULL BACKGROUND COVER)
        ========================================================================== */
     .hero { 
       min-height: 100vh; 
       display: flex; 
       align-items: center; 
-      padding: 6rem 0 0 3rem; 
-      overflow: hidden; 
+      justify-content: flex-start;
+      padding: 8rem 3rem 4rem 3rem; 
       position: relative; 
-    }
-    .hero-layout { 
-      display: grid; 
-      grid-template-columns: 1.2fr 1fr; 
-      width: 100%; 
-      align-items: center; 
-      gap: 4rem; 
-    }
-    .hero-content { position: relative; z-index: 2; padding-right: 1rem; }
-    .hero-image-pane { 
-      position: relative; 
-      width: 100%; 
-      height: calc(100vh - 6rem); 
       overflow: hidden; 
-      background: var(--mid); 
     }
+
+    /* Background image container across all screen sizes */
+    .hero-bg-pane {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
     .hero-cover-img { 
       width: 100%; 
       height: 100%; 
       object-fit: cover; 
       object-position: center; 
-      filter: brightness(0.88) contrast(1.02); 
+      filter: brightness(0.4) contrast(1.05); /* Darker overlay for strong readability */
       display: block; 
     }
+
+    /* Content placed on top of background */
+    .hero-content { 
+      position: relative; 
+      z-index: 2; 
+      max-width: 650px; 
+    }
+
     .hero-eyebrow { 
       font-family: 'Barlow Condensed', sans-serif; 
       font-size: 0.72rem; 
@@ -252,6 +254,7 @@
       color: var(--gold); 
       margin-bottom: 2rem; 
     }
+
     .hero-display-title { 
       font-family: 'Cormorant Garamond', serif; 
       font-weight: 300; 
@@ -260,10 +263,13 @@
       display: flex; 
       flex-direction: column; 
     }
+
     .hero-display-title .line-primary { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
     .hero-display-title .line-connective { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-style: italic; color: var(--warm); margin-top: 1.4rem; margin-bottom: 0.6rem; display: block; }
     .hero-display-title .line-author { font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cream); display: block; }
+    
     .hero-desc { font-size: 0.95rem; letter-spacing: 0.03em; color: var(--text-light); line-height: 1.65; max-width: 440px; margin-bottom: 3rem; }
+    
     .hero-cta { 
       display: inline-flex; 
       align-items: center; 
@@ -414,12 +420,10 @@
        9. RESPONSIVE BREAKPOINTS
        ========================================================================== */
     @media (max-width: 992px) { 
-      .hero { padding: 6rem 2rem 0 2rem; } 
-      .hero-layout { grid-template-columns: 1fr; gap: 2.5rem; } 
-      .hero-image-pane { height: 55vh; } 
       #connect { grid-template-columns: 1fr; } 
     }
     @media (max-width: 768px) { 
+      .hero { padding: 7rem 1.5rem 3rem 1.5rem; }
       .nav-links { display: none; } 
       .hero-display-title .line-primary, .hero-display-title .line-author { font-size: 2.5rem; } 
       .cat-section.open .cat-card { flex: 0 0 calc(50% - 0.5rem); height: 220px; } 
@@ -466,21 +470,19 @@
        HERO SECTION
        ========================================================================== -->
   <section class="hero">
-    <div class="hero-layout">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Photography Portfolio</p>
-        <h1 class="hero-display-title">
-          <span class="line-primary">The Fabric</span>
-          <span class="line-primary">of <em>Space &amp; Time</em></span>
-          <span class="line-connective">from the lens of</span>
-          <span class="line-author"><em>Pradyumna Saripalli</em></span>
-        </h1>
-        <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
-        <a href="#Highlights" class="hero-cta">View Highlights &rarr;</a>
-      </div>
-      <div class="hero-image-pane">
-        <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
-      </div>
+    <div class="hero-bg-pane">
+      <img class="hero-cover-img" src="photos/cover/Rome.jpeg" alt="Featured Cover Art Canvas">
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Photography Portfolio</p>
+      <h1 class="hero-display-title">
+        <span class="line-primary">The Fabric</span>
+        <span class="line-primary">of <em>Space &amp; Time</em></span>
+        <span class="line-connective">from the lens of</span>
+        <span class="line-author"><em>Pradyumna Saripalli</em></span>
+      </h1>
+      <p class="hero-desc">Capturing life, light and culture, one frame at a time.</p>
+      <a href="#Highlights" class="hero-cta">View Highlights &rarr;</a>
     </div>
   </section>
 
@@ -739,7 +741,6 @@
     }
 
     function hydrateAllSections() {
-      // Future category keys added to JSON can easily be added to this array
       const activeCategories = ['Highlights', 'Cities & Architecture', 'Nature & Escapes'];
 
       activeCategories.forEach(cat => {
