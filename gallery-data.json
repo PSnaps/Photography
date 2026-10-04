@@ -33,6 +33,10 @@
       "description": "Florence"
     },
     {
+      "src": "photos/Cities & Architecture/Freud Park.jpg",
+      "description": "Freud Park"
+    },
+    {
       "src": "photos/Cities & Architecture/Har Ki Dun.JPG",
       "description": "Har Ki Dun"
     },
@@ -75,6 +79,10 @@
       "description": "Big Sur"
     },
     {
+      "src": "photos/Highlights/Hide & Seek.jpg",
+      "description": "Hide & Seek"
+    },
+    {
       "src": "photos/Highlights/Himalayas.jpg",
       "description": "Himalayas"
     },
@@ -107,6 +115,10 @@
     {
       "src": "photos/Nature & Escapes/Home Away.jpg",
       "description": "Home Away"
+    },
+    {
+      "src": "photos/Nature & Escapes/Morphed.jpg",
+      "description": "Morphed"
     },
     {
       "src": "photos/Nature & Escapes/Serenity.jpg",
